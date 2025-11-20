@@ -8,14 +8,14 @@ using UnityEngine;
 public class CharacterSlotContainterScript : MonoBehaviour
 {
     [Header("Container Attributes")]
-    [Tooltip("The current number of cards within the container.")]
-    public int currentNumberOfCards = 0;
+    [Tooltip("The current number of slots within the container.")]
+    public int currentNumberOfSlots = 0;
     private GameObject[] characterSlots;     // used to get the game object of the character slot
 
 
     /// <summary>
     /// Updates each slot in the container with it's own unique ID.
-    /// It also updates the current number of cards within the container.
+    /// It also updates the current number of slots within the container.
     /// </summary>
     void UpdateSlotIDs()
     {
@@ -29,7 +29,7 @@ public class CharacterSlotContainterScript : MonoBehaviour
             }
 
             slotScript.ID = i;
-            currentNumberOfCards += 1;
+            currentNumberOfSlots += 1;
         }
     }
 
@@ -43,7 +43,7 @@ public class CharacterSlotContainterScript : MonoBehaviour
         UpdateSlotIDs();
         // Debug.Log(characterSlots.Length);
 
-        if (currentNumberOfCards == 0)
+        if (currentNumberOfSlots == 0)
             Debug.LogWarning("Number of slots is currently ZERO!");
     }
 
