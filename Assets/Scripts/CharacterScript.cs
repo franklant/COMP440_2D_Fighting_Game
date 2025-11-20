@@ -20,6 +20,9 @@ public class CharacterScript : MonoBehaviour
     [Header("Access Hitbox Components")]
     public GameObject midJabHitBox;
 
+    [Header("Stats Integration")]
+    public FighterStatsManager myStats; // Reference to the new stats system
+
     [Header("Player Attributes")]
     public float GRAVITY = 0.098f;
     public Vector3 velocity = Vector3.zero;
@@ -47,7 +50,9 @@ public class CharacterScript : MonoBehaviour
         WALKING = 1,
         JUMPING = 2,
         FALLING = 3,
-        ATTACKING = 4
+        ATTACKING = 4,
+        DIZZIED = 5, // Added for Stun mechanics
+        DEAD = 6     // Added for Health mechanics
     };
 
     /// <summary>
@@ -97,6 +102,21 @@ public class CharacterScript : MonoBehaviour
         if (midJabHitBox == null)
             Debug.LogError("Could not access 'MidJabHitBox'!");
 
+        // --- STATS INTEGRATION START ---
+        myStats = GetComponent<FighterStatsManager>();
+        if (myStats != null)
+        {
+            // Listen for events from the Stats Manager
+            myStats.OnDizzyStart.AddListener(EnableDizzyState);
+            myStats.OnDeath.AddListener(EnableDeadState);
+            // Note: You should likely also listen to OnDizzyEnd if you want to auto-recover
+             myStats.OnDizzyEnd.AddListener(() => SetState(STATE.IDLE));
+        }
+        else
+        {
+            Debug.LogError("FighterStatsManager is missing from this GameObject! Please attach it.");
+        }
+        // --- STATS INTEGRATION END ---
 
         SetState(STATE.IDLE);
         isGrounded = false;
@@ -105,6 +125,14 @@ public class CharacterScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Block input if Dizzied or Dead
+        if (currentState == (int)STATE.DIZZIED || currentState == (int)STATE.DEAD)
+        {
+            HandleStates(); // Continue handling physics/logic for these states
+            myRigidBody.linearVelocity = velocity;
+            return; 
+        }
+
         hDirection = Input.GetAxisRaw("Horizontal");
         isJumping = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W);
         isAttacking = Input.GetKeyDown(KeyCode.P);
@@ -150,6 +178,35 @@ public class CharacterScript : MonoBehaviour
         myRigidBody.linearVelocity = velocity;
         mySpriteRenderer.color = Color.aliceBlue;
     }
+
+    // --- NEW METHODS FOR COMBAT SYSTEM ---
+
+    public void GetHit(float damage, float stunDamage)
+    {
+        // If we are dead, ignore hits
+        if (currentState == (int)STATE.DEAD) return;
+
+        // Pass data to Stats Manager
+        // Fixed 5f meter gain when getting hit
+        if(myStats != null)
+            myStats.TakeDamage(damage, 5f, stunDamage);
+
+        // Optional: Trigger "Hurt" animation here if you add a HURT state later
+    }
+
+    void EnableDizzyState() 
+    { 
+        SetState(STATE.DIZZIED); 
+        Debug.Log("Player is Dizzied!");
+    }
+
+    void EnableDeadState() 
+    { 
+        SetState(STATE.DEAD); 
+        Debug.Log("Player is Dead!");
+    }
+
+    // -------------------------------------
 
     /// <summary>
     ///     -NOT BEING USED-
@@ -208,6 +265,12 @@ public class CharacterScript : MonoBehaviour
                 break;
             case (int) STATE.ATTACKING:
                 AttackingState();
+                break;
+            case (int) STATE.DIZZIED:
+                DizziedState();
+                break;
+            case (int) STATE.DEAD:
+                DeadState();
                 break;
             default:
                 Debug.LogError("Current State '" + currentState + "' not recognized or implemented!");
@@ -341,6 +404,28 @@ public class CharacterScript : MonoBehaviour
             SetState(STATE.JUMPING);
             //isGrounded = false;
         }
+    }
+
+    /// <summary>
+    /// New State: Logic for when player is Stunned/Dizzied
+    /// </summary>
+    void DizziedState()
+    {
+        velocity.x = 0;
+        // The transition out of this state is handled by the event listener in Start()
+        // which listens for myStats.OnDizzyEnd
+        mySpriteRenderer.color = Color.gray; // Visual feedback
+    }
+
+    /// <summary>
+    /// New State: Logic for when player is Dead
+    /// </summary>
+    void DeadState()
+    {
+        velocity.x = 0;
+        //velocity.y = 0; // Optional: stop falling?
+        myRigidBody.simulated = false; // Stop physics
+        mySpriteRenderer.color = Color.red; // Visual feedback
     }
 
     void OnCollisionEnter2D(Collision2D collision)
