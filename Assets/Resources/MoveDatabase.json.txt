@@ -1,0 +1,88 @@
+{
+  "_comment": "This is the central database for all character moves. The game engine loads this file at startup.",
+  "Kensei": {
+    "_comment": "Kensei is our balanced 'Ryu' archetype.",
+    "movement": {
+      "_comment": "This is the database for this characters movement options",
+      "walkForward": {
+        "input": "6",
+        "speed": 1.5,
+        "_comment": "Speed in units per second"
+      },
+      "walkBack": {
+        "input": "4",
+        "speed": 1.0
+      },
+      "forwardDash": {
+        "input": "66",
+        "startupFrames": 2,
+        "activeFrames": 14,
+        "recoveryFrames": 4,
+        "totalFrames": 20,
+        "distance": 3.0,
+        "_comment": "Active frames are the 'moving' part of the dash.",
+        "specialEffects": [
+          "canCancelIntoAttack_After_Frame_10",
+          "isAirborne_Frames_5-15"
+        ]
+      },
+      "backDash": {
+        "input": "44",
+        "startupFrames": 1,
+        "activeFrames": 12,
+        "recoveryFrames": 8,
+        "totalFrames": 21,
+        "distance": -2.5,
+        "specialEffects": [
+          "invincible_FullBody_Frames_1-10",
+          "isAirborne_Frames_3-15"
+        ]
+      },
+      "jumpNeutral": {
+        "input": "8",
+        "startupFrames": 4,
+        "activeFrames": 32,
+        "recoveryFrames": 4,
+        "totalFrames": 40,
+        "_comment": "Startup = pre-jump frames (on ground). Active = airborne frames. Recovery = landing frames (on ground).",
+        "jumpHeight": 5.0,
+        "specialEffects": [
+          "isAirborne_Frames_5-35",
+          "invincible_LowerBody_Frames_1-4"
+        ]
+      }
+    },
+    "attacks": {
+      "_comment": "This is the database for this characters attack options.",
+      "lightPunch": {
+        "input": "5LP",
+        "startupFrames": 4,
+        "activeFrames": 2,
+        "recoveryFrames": 6,
+        "totalFrames": 12,
+        "damage": 30,
+        "onHitAdvantage": 4,
+        "onBlockAdvantage": -1,
+        "_comment": "OnHit/OnBlock advantage is how many frames you recover before the opponent. Positive is good, negative is bad.",
+        "specialEffects": [
+          "hitbox_High_Frames_4-5",
+          "canCancelIntoSpecial_OnHitOrBlock"
+        ]
+      },
+      "heavySlash": {
+        "input": "5HP",
+        "startupFrames": 12,
+        "activeFrames": 4,
+        "recoveryFrames": 20,
+        "totalFrames": 36,
+        "damage": 100,
+        "onHitAdvantage": -2,
+        "onBlockAdvantage": -8,
+        "specialEffects": [
+          "hitbox_Mid_Frames_12-15",
+          "causesKnockdown_OnHit"
+        ]
+      }
+    }
+  }
+}
