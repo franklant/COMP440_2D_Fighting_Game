@@ -3,6 +3,9 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.AI;
 
+// NOTE: 11.5 (x-axis) center of the canvas on horizontal
+//      -6.35 (y-axis) center of the canvas on the vertical
+
 /// <summary>
 /// CharacterSlotScript manages the properties of it's specific instance of the 'Character Slot' object.
 /// It's ID and position, relative to the screen, is assigned at the start of execution, with the help of the
@@ -15,8 +18,11 @@ public class CharacterSlotScript : MonoBehaviour
     public int ID = -1;
     [Tooltip("The 'character slot container' assigns the position to the slot at the start of execution.")]
     public Vector3 position;
+    [Tooltip("Assigned to true or false based on the mouse's position over the slot.")]
+    public bool isHovering;
     private GameObject characterSlotContainer;
     private CharacterSlotContainterScript containerScript;
+    private GameObject myBorder;
 
 
     /// <summary>
@@ -70,7 +76,7 @@ public class CharacterSlotScript : MonoBehaviour
     }
 
     /// <summary>
-    /// - PROTOTYPE - Sets the background color for this instance.
+    /// Sets the background color for this instance.
     /// </summary>
     /// <param name="color">The 'Color' object used to set the background color of this instance.</param>
     public void SetBackgroundColor(Color color)
@@ -79,10 +85,33 @@ public class CharacterSlotScript : MonoBehaviour
         SpriteRenderer backgroundRenderer = background.GetComponent<SpriteRenderer>();
 
         if (backgroundRenderer == null)
-            Debug.LogError("Could not find the Background object Sprite Renderer!");
+            Debug.LogError("Could not find the 'Background' object Sprite Renderer!");
 
         // Set the color
         backgroundRenderer.color = color;
+    }
+
+    /// <summary>
+    /// Sets the border color for this instance.
+    /// </summary>
+    /// <param name="color">The 'Color' object used to set the border color of this instance.</param>
+    public void SetBorderColor(Color color)
+    {
+        GameObject border;
+
+        // Grab our instance of the border if we don't have it already.
+        if (myBorder == null)
+            border = GetBorder();
+        else
+            border = myBorder;
+        
+        SpriteRenderer borderRenderer = border.GetComponent<SpriteRenderer>();
+
+        if (borderRenderer == null)
+            Debug.LogError("Could not find the 'Border' object Sprite Renderer!");
+
+        // Set the color
+        borderRenderer.color = color;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -97,11 +126,33 @@ public class CharacterSlotScript : MonoBehaviour
             Debug.LogError(ID.ToString() + " Cannot find Character Container Script!");
 
         // Debug.Log("Set Position: " + position);
+        myBorder = GetBorder();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        // Vector3 mousePosition = Input.mousePosition;
+        // Debug.Log(mousePosition);
+
+        if (isHovering)
+        {
+            SetBorderColor(Color.white);
+        } else
+        {
+            SetBorderColor(Color.black);
+        }
+    }
+
+    void OnMouseEnter()
+    {
+        Debug.Log("Hovering over <color=blue>" + name + "</color> !");
+        isHovering = true;
+    }
+
+    void OnMouseExit()
+    {
+        Debug.Log("No longer hovering over <color=blue>" + name + "</color> !");
+        isHovering = false;
     }
 }

@@ -21,6 +21,7 @@ public class CharacterSlotContainterScript : MonoBehaviour
     [Tooltip("The amount of padding in between each slot.")]
     public int padding = 1;            // pixel padding
     private GameObject[] characterSlots;     // used to get the game object of the character slot
+    private Color[] colors = {Color.green, Color.greenYellow, Color.blue, Color.red, Color.orange};
 
 
     /// <summary>
@@ -75,12 +76,17 @@ public class CharacterSlotContainterScript : MonoBehaviour
             }
 
             scale = border.transform.localScale;
-            
-            float relativeX = (-currentNumberOfSlots * scale.x * padding) / 2;      // calculate the relative postition based on the amout of cards  
 
-            float offsetX = slotIndex * scale.x + (slotIndex * padding);
-            Vector3 finalPosition = new Vector3(offsetX + relativeX, 0, 0);
+            // calculate the relative postition based on the amout of slots in the container
+            float relativeX = ((currentNumberOfSlots - 1) * scale.x) / 2;  
+
+            float offsetX = slotIndex * scale.x;
+            Vector3 finalPosition = new Vector3(relativeX - offsetX, 0, 0);
             slotScript.SetPosition(finalPosition);
+
+            // set the slot color as well
+            int colorIndex = Random.Range(0, colors.Length);
+            slotScript.SetBackgroundColor(colors[colorIndex]);
 
             // update the slot index
             slotIndex += 1; 

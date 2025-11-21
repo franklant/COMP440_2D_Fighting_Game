@@ -1,0 +1,14 @@
+-- AI Generated
+
+How to Use This in Your Unity Project
+This might seem like a lot, but you only need to set it up once!
+
+Place Your JSON: In your Unity "Project" window, create a folder named Resources. Drag your MoveDatabase.json file into this Resources folder.
+
+Rename File: Unity won't see it as a "Text Asset" unless you rename it. Change the file name from MoveDatabase.json to MoveDatabase.json.txt. (This is a small Unity trick).
+
+Create Manager: Create an empty GameObject in your scene. A good name for it is GameDataManager.
+
+Attach Script: Attach the FighterDataManager.cs script to your GameDataManager GameObject.
+
+Assign File: In the Inspector for GameDataManager, you'll see a "Move Database File" slot. Drag your MoveDatabase.json.txt file from the Resources folder into this slot.
