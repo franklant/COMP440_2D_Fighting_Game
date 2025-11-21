@@ -57,6 +57,22 @@ public class CharacterSlotScript : MonoBehaviour
     }
 
     /// <summary>
+    /// Used to get the original position of this instance.
+    /// The original position is determined by the 'original position' object.
+    /// </summary>
+    /// <returns>A transform object for the original position.</returns>
+    public Transform GetOriginalPosition()
+    {
+        Transform originalPosition = transform.GetChild(2);          // the border component should be the first component
+        //Debug.Log("Border Name: <color=yellow>" + border.name + "</color>");
+
+        if (originalPosition == null)
+            Debug.LogError("Could not find the original position!");
+        
+        return originalPosition;
+    }
+
+    /// <summary>
     /// Used by the 'CharacterSlotContainerScript' to set the ID of this instance. 
     /// </summary>
     /// <param name="sID">The ID value used to set the ID of this instance.</param>
@@ -113,6 +129,64 @@ public class CharacterSlotScript : MonoBehaviour
         // Set the color
         borderRenderer.color = color;
     }
+    
+    /// <summary>
+    /// Translates the position of this instance's background and border object by a certain amount.
+    /// </summary>
+    /// <param name="moveAmount">The amount specified to move the border and background.</param>
+    public void MoveBorderBackground(float moveAmount)
+    {
+        GameObject border;
+        if (myBorder == null)
+            border = GetBorder();
+        else
+            border = myBorder;
+
+        GameObject background = GetBackground();
+
+        Vector3 movePosition = new Vector3(0, moveAmount, 0) + transform.position;
+        background.transform.position = Vector3.Lerp(
+            background.transform.position,
+            movePosition,
+            0.1f
+        );  // smooth translation
+
+        border.transform.position = Vector3.Lerp(
+            border.transform.position,
+            movePosition,
+            0.1f
+        );  // smooth translation
+    }
+
+    /// <summary>
+    /// Resets the position of the 'Border' and 'Background' objects to the original position of this slot instance.
+    /// </summary>
+    public void ResetBorderBackgroundPosition()
+    {
+        GameObject border;
+        if (myBorder == null)
+            border = GetBorder();
+        else
+            border = myBorder;
+
+        GameObject background = GetBackground();
+
+        Transform originalPosition = GetOriginalPosition();
+        // background.transform.position = originalPosition.position;
+        // border.transform.position = originalPosition.position;
+
+        background.transform.position = Vector3.Lerp(
+            background.transform.position,
+            originalPosition.position,
+            0.1f
+        );  // smooth reset translation
+
+        border.transform.position = Vector3.Lerp(
+            border.transform.position,
+            originalPosition.position,
+            0.1f
+        );  // smooth reset translation
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -138,9 +212,11 @@ public class CharacterSlotScript : MonoBehaviour
         if (isHovering)
         {
             SetBorderColor(Color.white);
+            MoveBorderBackground(1f);
         } else
         {
             SetBorderColor(Color.black);
+            ResetBorderBackgroundPosition();
         }
     }
 
