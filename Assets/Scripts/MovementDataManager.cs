@@ -16,6 +16,8 @@ public class MoveDetails
 {
     // Make sure variable names (e.g., "startupFrames")
     // exactly match the keys in your JSON file!
+    public string input;
+    public int speed;
     public int startupFrames;
     public int activeFrames;
     public int recoveryFrames;
