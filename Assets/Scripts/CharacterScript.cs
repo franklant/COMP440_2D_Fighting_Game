@@ -1,459 +1,395 @@
-using System;
-using Mono.Cecil.Cil;
-using NUnit.Framework;
-using TMPro;
-using Unity.Mathematics;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.TextCore.Text;
+using UnityEngine.Events;
+using System;
 
 public class CharacterScript : MonoBehaviour
 {
-    [Header("Access Components")]
+    [Header("--- Components ---")]
     public SpriteRenderer mySpriteRenderer;
     public Rigidbody2D myRigidBody;
     public GameObject myGroundCheck;
-    //public CharacterController myController;      // Character Controller does not work well for unity.
+    public Animator myAnimator; 
+    public FighterStatsManager myStats; 
 
-    [Header("Access Hitbox Components")]
-    public GameObject midJabHitBox;
+    [Header("--- Combat References ---")]
+    public GameObject midJabHitBox;      // The red box for punching
+    public Transform enemyTarget;        // DRAG PLAYER 2 HERE! (To face them)
+    
+    [Header("--- Projectile Settings (Red) ---")]
+    public GameObject redProjectilePrefab; // Drag your 'Red_Projectile' prefab here
+    public Transform firePoint;            // Drag the 'FirePoint' child object here
 
-    [Header("Stats Integration")]
-    public FighterStatsManager myStats; // Reference to the new stats system
-
-    [Header("Player Attributes")]
+    [Header("--- Attributes ---")]
     public float GRAVITY = 0.098f;
     public Vector3 velocity = Vector3.zero;
     public float movementSpeed = 4f;
     public float maxSpeed = 8f;
     public float acceleration = 3f;
     public float jumpHeight = 7f;
+    
+    [Header("--- State Tracking ---")]
     public int currentState;
-    public float attackCoolDownDuration = 0.5f;
-    public float attackLevel = 0;
+    public float attackCoolDownDuration = 0.4f; // Tweak this to match animation length
     public float attackTimer = 0;
+    
     private float hDirection = 0;
-    private bool isAttackChain = false;
 
-    [Header("Player Status")]
+    [Header("--- Status Flags ---")]
     public bool isGrounded;
     public bool isJumping;
     public bool isAttacking;
-    
-    /// <summary>
-    ///     List of all the possible states of the character.
-    /// </summary>
+    public bool isBlocking; 
+
+    // State Machine Enum
     private enum STATE {
         IDLE = 0,
         WALKING = 1,
         JUMPING = 2,
         FALLING = 3,
         ATTACKING = 4,
-        DIZZIED = 5, // Added for Stun mechanics
-        DEAD = 6     // Added for Health mechanics
+        DIZZIED = 5, 
+        DEAD = 6,
+        BLOCKING = 7 
     };
 
-    /// <summary>
-    ///     HELPER to remove repetitive type casting of enum.
-    ///     Sets the current state with the enum state casted properly to integer.
-    /// </summary>
-    /// <param name="state">
-    ///     The STATE attribute given as the argument.
-    /// </param>
     void SetState(STATE state)
     {
         currentState = (int) state;
-        /// Debug.Log("Setting State: " + state);
     }
 
-    /// <summary>
-    ///     Casts the enum value type of the state to proper integer type for comparison.
-    /// </summary>
-    /// <param name="state">
-    ///     The STATE attribute given as the argument.
-    /// </param>
-    /// <returns>
-    ///     The STATE value in the argument casted to an integer type.
-    /// </returns>  
-    int GetState(STATE state)
-    {
-        return (int) state;
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // Get Components automatically
         mySpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         myRigidBody = GetComponent<Rigidbody2D>();
-        myGroundCheck = GameObject.FindGameObjectWithTag("GroundCheck");        // not accessing a specific component
-
-        // NOTE: Potentially use FindGameObjectsWithTag to get an array of all the hitbox objects.
-        midJabHitBox = GameObject.FindGameObjectWithTag("MidJabHitBox");
-
-        if (mySpriteRenderer == null)
-            Debug.LogError("Could not access 'Sprite Renderer'!");
-        if (myRigidBody == null)
-            Debug.LogError("Could not access 'Character Controller'!");
-        if (myGroundCheck == null)
-            Debug.LogError("Could not access 'Ground Check'!");
-
-        if (midJabHitBox == null)
-            Debug.LogError("Could not access 'MidJabHitBox'!");
-
-        // --- STATS INTEGRATION START ---
+        myAnimator = GetComponent<Animator>(); 
         myStats = GetComponent<FighterStatsManager>();
+        
+        // Find objects by tag if not assigned
+        if (myGroundCheck == null) myGroundCheck = GameObject.FindGameObjectWithTag("GroundCheck");
+        if (midJabHitBox == null) midJabHitBox = GameObject.FindGameObjectWithTag("MidJabHitBox");
+
+        // Subscribe to Stats Events
         if (myStats != null)
         {
-            // Listen for events from the Stats Manager
             myStats.OnDizzyStart.AddListener(EnableDizzyState);
             myStats.OnDeath.AddListener(EnableDeadState);
-            // Note: You should likely also listen to OnDizzyEnd if you want to auto-recover
-             myStats.OnDizzyEnd.AddListener(() => SetState(STATE.IDLE));
+            myStats.OnDizzyEnd.AddListener(() => SetState(STATE.IDLE));
         }
         else
         {
-            Debug.LogError("FighterStatsManager is missing from this GameObject! Please attach it.");
+            Debug.LogError("FighterStatsManager is missing! Please attach it to Gojo.");
         }
-        // --- STATS INTEGRATION END ---
 
         SetState(STATE.IDLE);
         isGrounded = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // Block input if Dizzied or Dead
+        // 1. Dead/Dizzy Check (Input disabled)
         if (currentState == (int)STATE.DIZZIED || currentState == (int)STATE.DEAD)
         {
-            HandleStates(); // Continue handling physics/logic for these states
+            HandleStates(); 
             myRigidBody.linearVelocity = velocity;
             return; 
         }
 
+        // 2. Input Processing
         hDirection = Input.GetAxisRaw("Horizontal");
         isJumping = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W);
-        isAttacking = Input.GetKeyDown(KeyCode.P);
-        /// Debug.Log("Current Horizontal Direction: " + hDirection);
+        isBlocking = Input.GetKey(KeyCode.S); 
 
+        // --- FIXED ATTACK LOGIC (J Key) ---
+        // We use an 'if' statement so we can set specific timers/triggers immediately
+        if (Input.GetKeyDown(KeyCode.J)) 
+        {
+            isAttacking = true;
+            
+            // A. Fire the specific animation trigger HERE
+            myAnimator.SetTrigger("Attack"); 
+            
+            // B. Set the duration for a normal punch (Short)
+            attackCoolDownDuration = 0.4f; 
+            attackTimer = 0;
+            
+            // C. Lock the state
+            SetState(STATE.ATTACKING);
+        }
+
+        // --- KICK INPUT (K Key) ---
+        if (Input.GetKeyDown(KeyCode.K)) 
+        {
+            isAttacking = true;
+            
+            // 1. Fire the Kick Trigger
+            myAnimator.SetTrigger("Kick"); 
+            
+            // 2. Set Duration (Kicks are usually slightly slower than jabs, e.g., 0.5s)
+            attackCoolDownDuration = 0.5f; 
+            attackTimer = 0;
+            
+            // 3. Lock State
+            SetState(STATE.ATTACKING);
+        }
+
+        // 3. Facing Logic (Always Face Enemy)
+        if (enemyTarget != null)
+        {
+            if (transform.position.x > enemyTarget.position.x)
+                mySpriteRenderer.flipX = true;  
+            else
+                mySpriteRenderer.flipX = false; 
+        }
+
+        // 4. Gravity Check
         if (!isGrounded)
         {
             SetState(STATE.FALLING);
-            //velocity.y -= GRAVITY;
         } 
 
-        // Keeps the hitbox in the correct position relative to the way in which the player is facing
-        if (hDirection != 0)
-        {
-            // player +- 0.75 
-            Vector3 hitBoxPosition = midJabHitBox.transform.position;
-            hitBoxPosition.x = transform.position.x + (float) (hDirection * 0.75);
-            midJabHitBox.transform.position = hitBoxPosition;
-        }
+        // 5. Execute Logic
+        HandleStates();
+        UpdateAnimator();
+        myRigidBody.linearVelocity = velocity;
 
-        // Start the attack chain
-        if (isAttacking)
+        // --- SUPER INPUT (I Key) ---
+        if (Input.GetKeyDown(KeyCode.I)) 
         {
-            isAttackChain = true;
-        }
-
-        // start attack chain
-        if (isAttackChain)
-        {
-            if (attackTimer < attackCoolDownDuration)
+            if (myStats.TrySpendMeter(100f)) 
             {
-                attackTimer += Time.deltaTime;
-            } else
+                PerformSuperMove();
+            }
+            else
             {
-                attackTimer = 0;
-                attackLevel = 0;
-                isAttackChain = false;
+                Debug.Log("Not enough Meter!");
             }
         }
-
-        //HandleMovement();
-        HandleStates();
-        myRigidBody.linearVelocity = velocity;
-        mySpriteRenderer.color = Color.aliceBlue;
     }
 
-    // --- NEW METHODS FOR COMBAT SYSTEM ---
+    // --- ANIMATION HANDLING ---
+    void UpdateAnimator()
+    {
+        if (myAnimator != null)
+        {
+            // Calculate if we are walking Forward or Backward (Moonwalk)
+            // If facing Right (FlipX false) and moving Right (+), speed is Positive.
+            // If facing Right (FlipX false) and moving Left (-), speed is Negative.
+            float facingMult = mySpriteRenderer.flipX ? -1 : 1;
+            float directionalSpeed = velocity.x * facingMult;
 
+            myAnimator.SetFloat("Speed", Mathf.Abs(velocity.x));     // For transitioning to Walk
+            myAnimator.SetFloat("WalkDirection", directionalSpeed);  // For reversing the animation
+            myAnimator.SetBool("IsBlocking", currentState == (int)STATE.BLOCKING);
+        }
+    }
+
+    // --- COMBAT EVENTS ---
+    
+    // This is called by the Animation Event for "Cursed Technique Red"
+    public void CastRed()
+    {
+        if (redProjectilePrefab != null && firePoint != null)
+        {
+            Instantiate(redProjectilePrefab, firePoint.position, firePoint.rotation);
+        }
+    }
+
+    // This is called when we get hit by an enemy Hitbox
     public void GetHit(float damage, float stunDamage)
     {
-        // If we are dead, ignore hits
         if (currentState == (int)STATE.DEAD) return;
-
-        // Pass data to Stats Manager
-        // Fixed 5f meter gain when getting hit
-        if(myStats != null)
-            myStats.TakeDamage(damage, 5f, stunDamage);
-
-        // Optional: Trigger "Hurt" animation here if you add a HURT state later
+        
+        // Check Blocking
+        if (currentState == (int)STATE.BLOCKING)
+        {
+            // Block Logic: Reduced damage, no stun, gain meter
+            float chipDamage = damage * 0.1f; 
+            if(myStats != null) myStats.BlockAttack(chipDamage, 5f);
+            Debug.Log("Blocked!");
+        }
+        else
+        {
+            // Hit Logic: Full damage, full stun, gain catch-up meter
+            if(myStats != null) myStats.TakeDamage(damage, 10f, stunDamage);
+            
+            // Visual Feedback
+            StartCoroutine(FlashRed());
+        }
     }
 
+    System.Collections.IEnumerator FlashRed()
+    {
+        mySpriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        if (currentState != (int)STATE.DIZZIED) mySpriteRenderer.color = Color.white;
+    }
+
+    // --- STATE MACHINE ---
+
+    
     void EnableDizzyState() 
     { 
         SetState(STATE.DIZZIED); 
-        Debug.Log("Player is Dizzied!");
     }
 
     void EnableDeadState() 
     { 
         SetState(STATE.DEAD); 
-        Debug.Log("Player is Dead!");
     }
 
-    // -------------------------------------
-
-    /// <summary>
-    ///     -NOT BEING USED-
-    ///     A back-up method that acts as a prototype for how the character will move in the game.
-    ///     This is before implemeneting them into state machines.
-    /// </summary>
-    void HandleMovement()
-    {   
-        // MOVEMENT
-        velocity.x += hDirection * movementSpeed * acceleration * Time.deltaTime;
-
-        // Clamp the value to prevent infinitely increasing vel
-        float absVelocity = Math.Abs(velocity.x);
-        velocity.x = Math.Clamp(absVelocity, 0, maxSpeed) * hDirection;
-
-        // JUMPING
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        {
-            // SetState(STATE.JUMPING);
-            velocity.y = jumpHeight;
-            isGrounded = false;
-        }
-
-        // FALLING OR GROUNDED
-        // if (!isGrounded)
-        // {
-        //     SetState(STATE.FALLING);
-        //     //velocity.y -= GRAVITY;
-        // } else
-        // {
-        //     velocity.y = 0;
-        // }
-    }
-
-    /// <summary>
-    ///     Acts as the state manager of the character.
-    ///     Given the current state of the character, handle it's respective character action.
-    ///     Each state needs to be responsible for it's own respective action, as well as the transition from
-    ///     it's state to another one. 
-    /// </summary>
     void HandleStates()
     {
         switch (currentState)
         {   
-            case (int) STATE.IDLE:
-                IdleState();
-                break;
-            case (int) STATE.WALKING:
-                WalkingState();
-                break;
-            case (int) STATE.JUMPING:
-                JumpingState();
-                break;
-            case (int) STATE.FALLING:
-                FallingState();
-                break;
-            case (int) STATE.ATTACKING:
-                AttackingState();
-                break;
-            case (int) STATE.DIZZIED:
-                DizziedState();
-                break;
-            case (int) STATE.DEAD:
-                DeadState();
-                break;
-            default:
-                Debug.LogError("Current State '" + currentState + "' not recognized or implemented!");
-                break;
+            case (int) STATE.IDLE:      IdleState(); break;
+            case (int) STATE.WALKING:   WalkingState(); break;
+            case (int) STATE.JUMPING:   JumpingState(); break;
+            case (int) STATE.FALLING:   FallingState(); break;
+            case (int) STATE.ATTACKING: AttackingState(); break; // Updated
+            case (int) STATE.DIZZIED:   DizziedState(); break;
+            case (int) STATE.DEAD:      DeadState(); break;
+            case (int) STATE.BLOCKING:  BlockingState(); break;
         }
+
+        
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void IdleState()
     {
-        // isJumping = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W);
-        // Whatever happens with idle state
         velocity.x = 0;
 
-        if (hDirection != 0)
-        {
-            SetState(STATE.WALKING);
-        }
-
-        if (isJumping && isGrounded)
-        {
-            SetState(STATE.JUMPING);
-            //isGrounded = false;
-        }
-
-        if (isAttacking)
-        {
-            // NOTE: We can be more specific when determining an aerial or grounded attack later on
-            SetState(STATE.ATTACKING);
-        }
+        if (hDirection != 0) SetState(STATE.WALKING);
+        if (isJumping && isGrounded) SetState(STATE.JUMPING);
+        if (isAttacking) SetState(STATE.ATTACKING);
+        if (isBlocking) SetState(STATE.BLOCKING);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void WalkingState()
     {
-        // isJumping = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W);
-        // myController.Move(new Vector3(hDirection, 0, 0) * movementSpeed * Time.deltaTime);
         velocity.x += hDirection * movementSpeed * acceleration * Time.deltaTime;
-
-        // Clamp the value to prevent infinitely increasing vel
         float absVelocity = Math.Abs(velocity.x);
         velocity.x = Math.Clamp(absVelocity, 0, maxSpeed) * hDirection;
 
-        if (hDirection == 0 && isGrounded)
+        if (hDirection == 0 && isGrounded) SetState(STATE.IDLE);
+        if (isJumping && isGrounded) SetState(STATE.JUMPING);
+        if (isAttacking) SetState(STATE.ATTACKING);
+        if (isBlocking) SetState(STATE.BLOCKING);
+    }
+
+    void BlockingState()
+    {
+        velocity.x = 0; 
+        if (!isBlocking) SetState(STATE.IDLE);
+    }
+
+    void AttackingState()
+    {
+        velocity.x = 0; 
+
+        // --- DELETE THIS PART ---
+        // if (attackTimer == 0) 
+        // {
+        //    myAnimator.SetTrigger("Attack");
+        // }
+        // ------------------------
+
+        // Keep the timer logic!
+        attackTimer += Time.deltaTime;
+
+        if (attackTimer > attackCoolDownDuration) 
         {
+            attackTimer = 0; 
             SetState(STATE.IDLE);
-        }
-
-        if (isJumping && isGrounded)
-        {
-            SetState(STATE.JUMPING);
-            //isGrounded = false;
-        }
-
-        if (isAttacking)
-        {
-            SetState(STATE.ATTACKING);
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void JumpingState()
     {
         velocity.y = jumpHeight;
-
         SetState(STATE.FALLING);
         isGrounded = false;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void FallingState()
     {
         velocity.y -= GRAVITY;
-
         if (isGrounded)
         {
             velocity.y = 0;
-            if (hDirection != 0)
-            {
-                SetState(STATE.WALKING);
-            } else
-            {
-                SetState(STATE.IDLE);
-            }
+            if (hDirection != 0) SetState(STATE.WALKING);
+            else SetState(STATE.IDLE);
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    void AttackingState()
-    {
-        // logic
-        Debug.Log("Just Attacked!");
-        attackLevel += 1;
-        velocity.x = 0;
-        
-        // transitions
-        // if (!isAttackChain)
-        // {   
-        //     if (hDirection == 0)
-        //     {
-        //         if (isGrounded && !isAttacking)
-        //             SetState(STATE.IDLE);
-        //     } else
-        //     {
-        //         if (isGrounded && !isAttacking)
-        //             SetState(STATE.WALKING);
-        //     }
-        // }
-        if (hDirection == 0)
-        {
-            if (isGrounded && !isAttacking)
-                SetState(STATE.IDLE);
-        } else
-        {
-            if (isGrounded && !isAttacking)
-                SetState(STATE.WALKING);
-        }
-
-        if (isJumping && isGrounded)
-        {
-            SetState(STATE.JUMPING);
-            //isGrounded = false;
-        }
-    }
-
-    /// <summary>
-    /// New State: Logic for when player is Stunned/Dizzied
-    /// </summary>
     void DizziedState()
     {
         velocity.x = 0;
-        // The transition out of this state is handled by the event listener in Start()
-        // which listens for myStats.OnDizzyEnd
-        mySpriteRenderer.color = Color.gray; // Visual feedback
+        mySpriteRenderer.color = Color.gray; 
     }
 
-    /// <summary>
-    /// New State: Logic for when player is Dead
-    /// </summary>
     void DeadState()
     {
         velocity.x = 0;
-        //velocity.y = 0; // Optional: stop falling?
-        myRigidBody.simulated = false; // Stop physics
-        mySpriteRenderer.color = Color.red; // Visual feedback
+        myRigidBody.simulated = false; 
+        mySpriteRenderer.color = Color.red; 
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    // --- COLLISION ---
+    void OnCollisionStay2D(Collision2D collision)
     {
-        /// TODO: Check the bottom of the player collider only
-        Debug.Log("Colliding with " + collision.collider.name);
-
-        if (collision.collider.CompareTag("Ground"))
-        {
-            if (collision.collider.OverlapPoint(myGroundCheck.transform.position))
-            {
-                Debug.Log("Standing on " + collision.collider.name);
-                isGrounded = true;
-            }
-        }
+         if (collision.collider.CompareTag("Ground")) isGrounded = true;
     }
-
     void OnCollisionExit2D(Collision2D collision)
     {
-        Debug.Log("No longer colliding with " + collision.collider.name);
+        if (collision.collider.CompareTag("Ground")) isGrounded = false;
+    }
 
-        if (collision.collider.CompareTag("Ground"))
-        {
-            if (!collision.collider.OverlapPoint(myGroundCheck.transform.position))
-            {
-                Debug.Log("No longer standing on " + collision.collider.name);
-                isGrounded = false;
-            }
-        }
+    // --- DEBUGGER ---
+    void OnGUI()
+    {
+        // Create a style to make the text big and readable
+        GUIStyle style = new GUIStyle();
+        style.fontSize = 24;
+        style.normal.textColor = Color.white; // Or Color.red if background is bright
+
+        // 1. Show the Raw Input (-1 for Left, 0 for None, 1 for Right)
+        float inputVal = Input.GetAxisRaw("Horizontal");
+        GUI.Label(new Rect(20, 20, 400, 40), "Input Axis: " + inputVal, style);
+
+        // 2. Show the actual key presses (Did Unity detect the button?)
+        string keysPressed = "";
+        if (Input.GetKey(KeyCode.A)) keysPressed += "[A] ";
+        if (Input.GetKey(KeyCode.D)) keysPressed += "[D] ";
+        if (Input.GetKey(KeyCode.LeftArrow)) keysPressed += "[Left] ";
+        if (Input.GetKey(KeyCode.RightArrow)) keysPressed += "[Right] ";
+        GUI.Label(new Rect(20, 60, 400, 40), "Keys Held: " + keysPressed, style);
+
+        // 3. Show the Current State (Is the script locking you in Block?)
+        GUI.Label(new Rect(20, 100, 400, 40), "Current State: " + (STATE)currentState, style);
+        
+        // 4. Show Velocity (Is physics trying to move you?)
+        GUI.Label(new Rect(20, 140, 400, 40), "Velocity X: " + velocity.x, style);
+        
+        // 5. Show Blocking status
+        GUI.Label(new Rect(20, 180, 400, 40), "Is Blocking: " + isBlocking, style);
+    }
+
+    void PerformSuperMove()
+    {
+        // 1. Stop moving
+        velocity.x = 0;
+
+        // 2. Set State to ATTACKING (locks movement)
+        SetState(STATE.ATTACKING);
+
+        // 3. Trigger the specific animation
+        myAnimator.SetTrigger("Meter1");
+
+        // 4. IMPORTANT: Update the cooldown!
+        // Basic punch is fast (0.4s), but Super is long (e.g., 1.5s).
+        // We need to extend the timer so Gojo doesn't go back to Idle halfway through.
+        attackCoolDownDuration = 1.5f; // Change this to match your Super's length in seconds!
+        attackTimer = 0;
     }
 }
