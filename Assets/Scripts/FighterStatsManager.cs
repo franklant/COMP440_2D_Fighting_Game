@@ -55,7 +55,7 @@ public class FighterStatsManager : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
-        currentHyper = 0f;
+        currentHyper = maxHyperMeter;
         currentStun = 0f;
         currentComboCount = 0;
         
