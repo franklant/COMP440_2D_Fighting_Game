@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System;
+using UnityEngine.InputSystem.LowLevel;
 
 public class CharacterScript : MonoBehaviour
 {
@@ -57,6 +58,11 @@ public class CharacterScript : MonoBehaviour
         currentState = (int) state;
     }
 
+    int GetState(STATE state)
+    {
+        return (int) state;
+    }
+
     void Start()
     {
         // Get Components automatically
@@ -88,7 +94,8 @@ public class CharacterScript : MonoBehaviour
     void Update()
     {
         // 1. Dead/Dizzy Check (Input disabled)
-        if (currentState == (int)STATE.DIZZIED || currentState == (int)STATE.DEAD)
+        // (int)STATE -> GetState(STATE)
+        if (currentState == GetState(STATE.DIZZIED) || currentState == GetState(STATE.DEAD))
         {
             HandleStates(); 
             myRigidBody.linearVelocity = velocity;
@@ -143,14 +150,24 @@ public class CharacterScript : MonoBehaviour
         }
 
         // 4. Gravity Check
-        if (!isGrounded)
-        {
-            SetState(STATE.FALLING);
-        } 
+        // if (!isGrounded)
+        // {
+        //     SetState(STATE.FALLING);
+        // } 
 
         // 5. Execute Logic
         HandleStates();
         UpdateAnimator();
+
+        // 6. hangle gravity (test)
+        if (isGrounded)
+        {
+            velocity.y = 0;
+        } else
+        {
+            velocity.y -= GRAVITY;
+        }
+
         myRigidBody.linearVelocity = velocity;
 
         // --- SUPER INPUT (I Key) ---
@@ -180,7 +197,7 @@ public class CharacterScript : MonoBehaviour
 
             myAnimator.SetFloat("Speed", Mathf.Abs(velocity.x));     // For transitioning to Walk
             myAnimator.SetFloat("WalkDirection", directionalSpeed);  // For reversing the animation
-            myAnimator.SetBool("IsBlocking", currentState == (int)STATE.BLOCKING);
+            myAnimator.SetBool("IsBlocking", currentState == GetState(STATE.BLOCKING));
         }
     }
 
@@ -198,10 +215,11 @@ public class CharacterScript : MonoBehaviour
     // This is called when we get hit by an enemy Hitbox
     public void GetHit(float damage, float stunDamage)
     {
-        if (currentState == (int)STATE.DEAD) return;
+        // (int)STATE.DEAD -> GetState(STATE.DEAD)
+        if (currentState == GetState(STATE.DEAD)) return;
         
         // Check Blocking
-        if (currentState == (int)STATE.BLOCKING)
+        if (currentState == GetState(STATE.BLOCKING))
         {
             // Block Logic: Reduced damage, no stun, gain meter
             float chipDamage = damage * 0.1f; 
@@ -299,24 +317,51 @@ public class CharacterScript : MonoBehaviour
 
         if (attackTimer > attackCoolDownDuration) 
         {
-            attackTimer = 0; 
             SetState(STATE.IDLE);
+            attackTimer = 0; 
+
+            // isAttacking was never set back to false
+            isAttacking = false;
         }
     }
 
+    bool applyGravity = false;
     void JumpingState()
     {
-        velocity.y = jumpHeight;
-        SetState(STATE.FALLING);
         isGrounded = false;
+
+        // the actions in the jumping state take control of the properties of the character when called
+        // which means we need to apply gravity manually when in this state 
+        if (!applyGravity)
+        {
+            velocity.y = jumpHeight;
+            applyGravity = true;
+        }
+        else
+        {
+            velocity.y -= GRAVITY;
+        }
+
+        if (velocity.y <= 2) 
+        {
+            SetState(STATE.FALLING);
+            applyGravity = false;
+        }
     }
 
     void FallingState()
     {
-        velocity.y -= GRAVITY;
+        // player holds down, add more gravity
+        if (isBlocking)
+        {
+            // Debug.Log("HELLOOO");
+            velocity.y -= GRAVITY * 5;  // add 1 half more gravity
+        }
+
+        // gravity should always be affecting the player, restricting it to a state causes issue
         if (isGrounded)
         {
-            velocity.y = 0;
+            // velocity.y = 0;
             if (hDirection != 0) SetState(STATE.WALKING);
             else SetState(STATE.IDLE);
         }
@@ -338,6 +383,7 @@ public class CharacterScript : MonoBehaviour
     // --- COLLISION ---
     void OnCollisionStay2D(Collision2D collision)
     {
+        // let the player leave the ground if jumping
          if (collision.collider.CompareTag("Ground")) isGrounded = true;
     }
     void OnCollisionExit2D(Collision2D collision)
