@@ -38,8 +38,6 @@ public class CharacterScript : MonoBehaviour
     public float attackTimer = 0;
     public float dashDuration = 0f;
     public float dashTimer = 0f;
-    private bool isDash = false;
-    private bool isBackDash = false;
     
     private float hDirection = 0;
 
@@ -276,7 +274,8 @@ public class CharacterScript : MonoBehaviour
         if (isGrounded)
         {
             velocity.y = 0;
-        } else
+        }
+        else
         {
             velocity.y -= GRAVITY;
         }
