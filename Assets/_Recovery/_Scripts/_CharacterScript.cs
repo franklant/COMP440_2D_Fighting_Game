@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public class CharacterScript : MonoBehaviour
+public class _CharacterScript : MonoBehaviour
 {
     [Header("--- Components ---")]
     public SpriteRenderer mySpriteRenderer;
