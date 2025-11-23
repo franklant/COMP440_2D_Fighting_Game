@@ -57,7 +57,8 @@ public class AttackContainer
 {
     // These variable names MUST match the JSON keys
     public MoveDetails lightPunch;
-    public MoveDetails heavySlash;
+    public MoveDetails kick;
+    public MoveDetails superMove;
 }
 
 /// <summary>
@@ -79,8 +80,8 @@ public class CharacterData
 [System.Serializable]
 public class MoveDatabase
 {
-    // This top-level variable MUST match the "Kensei" key in your JSON
-    public CharacterData Kensei;
+    // This top-level variable MUST match the "Gojo" key in your JSON
+    public CharacterData Gojo;
     // If you add a new character "Monk" to your JSON,
     // you would add: public CharacterData Monk;
 }
@@ -111,7 +112,7 @@ public class MovementDataManager : MonoBehaviour
             
             // You can log to check if it worked!
             Debug.Log("Move Database Loaded!");
-            Debug.Log($"Kensei's Light Punch Startup: {moveDB.Kensei.attacks.lightPunch.startupFrames} frames");
+            // Debug.Log($"Kensei's Light Punch Startup: {moveDB.Gojo.attacks.lightPunch.startupFrames} frames");
         }
         else
         {
@@ -128,17 +129,29 @@ public class MovementDataManager : MonoBehaviour
     /// <returns>The move details for the selected move name.</returns>
     public MoveDetails GetMove(string characterName, string moveName)
     {
-        if (characterName == "Kensei")
+        if (characterName == "Gojo")
         {
             if (moveName == "lightPunch")
             {
-                return moveDB.Kensei.attacks.lightPunch;
+                return moveDB.Gojo.attacks.lightPunch;
+            }
+            if (moveName == "kick")
+            {
+                return moveDB.Gojo.attacks.kick;
+            }
+            if (moveName == "superMove")
+            {
+                return moveDB.Gojo.attacks.superMove;
             }
             if (moveName == "forwardDash")
             {
-                return moveDB.Kensei.movement.forwardDash;
+                return moveDB.Gojo.movement.forwardDash;
             }
             // ... you would add more "if" checks for each move ...
+            if (moveName == "backDash")
+            {
+                return moveDB.Gojo.movement.backDash;
+            }
         }
         
         Debug.LogWarning($"Move not found: {characterName} / {moveName}");

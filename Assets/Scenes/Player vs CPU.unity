@@ -1161,7 +1161,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!95 &1158256409
 Animator:
   serializedVersion: 7
@@ -1269,26 +1269,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfb46cef5a9c74e43897b6c7c725eb54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FighterAIController
-  walkSpeed: 5
-  jumpForce: 12
-  isGrounded: 1
-  isCrouching: 0
-  isBlocking: 0
-  facingRight: 1
-  rb: {fileID: 0}
-  animator: {fileID: 0}
-  opponent: {fileID: 0}
-  attackRange: 2.2
-  approachDistance: 3.5
-  retreatDistance: 1
-  attackCooldown: 1
-  blockChance: 0.35
-  jumpChance: 0.15
-  lightAttackTrigger: LightAttack
-  heavyAttackTrigger: HeavyAttack
-  thinkInterval: 0.15
-  lastThinkTime: 0
-  lastAttackTime: 0
 --- !u!114 &1158256413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1740,7 +1720,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &1638258136
 MonoBehaviour:
   m_ObjectHideFlags: 0

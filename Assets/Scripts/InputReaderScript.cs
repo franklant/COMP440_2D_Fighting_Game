@@ -30,10 +30,10 @@ public class InputReaderScript : MonoBehaviour
         frameCount += 1;
         ReadKey();
 
-        if (FindInput("wj"))
-        {
-            Debug.Log("It's <color=orange>PUNCHING TIME</color>");
-        }
+        // if (FindInput("wj"))
+        // {
+        //     Debug.Log("It's <color=orange>PUNCHING TIME</color>");
+        // }
         // Debug.Log(Input.inputString);
     }
 
@@ -59,7 +59,7 @@ public class InputReaderScript : MonoBehaviour
                 inputBuffer += "d";
             } else if (isDown)
             {
-                inputBuffer += "d";
+                inputBuffer += "s";
             } else if (isUp)
             {
                 inputBuffer += "w";
@@ -75,7 +75,7 @@ public class InputReaderScript : MonoBehaviour
             }
         } else
         {
-            if (frameCount > 30)
+            if (frameCount > 25)
             {
                 inputBuffer = "";
             }

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System;
 using UnityEngine.InputSystem.LowLevel;
+using UnityEditor.Experimental.GraphView;
 
 public class CharacterScript : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class CharacterScript : MonoBehaviour
     public GameObject myGroundCheck;
     public Animator myAnimator; 
     public FighterStatsManager myStats; 
+
+    [Header("--- Character ---")]
+    public string characterName = "Gojo";
 
     [Header("--- Combat References ---")]
     public GameObject midJabHitBox;      // The red box for punching
@@ -32,6 +36,10 @@ public class CharacterScript : MonoBehaviour
     public int currentState;
     public float attackCoolDownDuration = 0.4f; // Tweak this to match animation length
     public float attackTimer = 0;
+    public float dashDuration = 0f;
+    public float dashTimer = 0f;
+    private bool isDash = false;
+    private bool isBackDash = false;
     
     private float hDirection = 0;
 
@@ -40,6 +48,21 @@ public class CharacterScript : MonoBehaviour
     public bool isJumping;
     public bool isAttacking;
     public bool isBlocking; 
+
+    [Header("--- Input Buffer ---")]
+    public GameObject inputBuffer;
+    private InputReaderScript inputReaderScript;
+
+    [Header("--- Move Database ---")]
+    public GameObject moveDatabase;
+    private MovementDataManager moveDatabaseManagerScript;
+
+    // Movement Database Details
+    public MoveDetails lightPunch;
+    public MoveDetails kick;
+    public MoveDetails superMove;
+    public MoveDetails forwardDash;
+    public MoveDetails backDash;
 
     // State Machine Enum
     private enum STATE {
@@ -50,7 +73,9 @@ public class CharacterScript : MonoBehaviour
         ATTACKING = 4,
         DIZZIED = 5, 
         DEAD = 6,
-        BLOCKING = 7 
+        BLOCKING = 7,
+        FDASHING = 8,
+        BDASHING = 9
     };
 
     void SetState(STATE state)
@@ -70,10 +95,26 @@ public class CharacterScript : MonoBehaviour
         myRigidBody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>(); 
         myStats = GetComponent<FighterStatsManager>();
+        inputBuffer = GameObject.FindGameObjectWithTag("InputReader");
+        moveDatabase = GameObject.FindGameObjectWithTag("MoveDB");
         
         // Find objects by tag if not assigned
         if (myGroundCheck == null) myGroundCheck = GameObject.FindGameObjectWithTag("GroundCheck");
         if (midJabHitBox == null) midJabHitBox = GameObject.FindGameObjectWithTag("MidJabHitBox");
+
+        // Get the Input Buffer
+        if (inputBuffer == null) Debug.LogError("Cannot find Input Buffer");
+
+        inputReaderScript = inputBuffer.GetComponent<InputReaderScript>();
+        
+        if (inputReaderScript == null) Debug.LogError("Cannot find inputReaderScript");
+
+        // Get the Move Database Manager
+        if (moveDatabase == null) Debug.LogError("Cannot find Move Database");
+
+        moveDatabaseManagerScript = moveDatabase.GetComponent<MovementDataManager>();
+        
+        if (moveDatabaseManagerScript == null) Debug.LogError("Cannot find moveDatabaseManagerScript");
 
         // Subscribe to Stats Events
         if (myStats != null)
@@ -87,8 +128,34 @@ public class CharacterScript : MonoBehaviour
             Debug.LogError("FighterStatsManager is missing! Please attach it to Gojo.");
         }
 
+        // Movement Database Details
+        lightPunch = LoadCharacterMove(characterName, "lightPunch");
+        kick = LoadCharacterMove(characterName, "kick");
+        superMove = LoadCharacterMove(characterName, "superMove");
+        forwardDash = LoadCharacterMove(characterName, "forwardDash");
+        backDash = LoadCharacterMove(characterName, "backDash");
+
         SetState(STATE.IDLE);
         isGrounded = false;
+    }
+    
+    /// <summary>
+    /// Loads a character move from the move database by character and movename.
+    /// </summary>
+    /// <param name="characterName">The name of the character performing the move.</param>
+    /// <param name="moveName">The name of the move the character is performing.</param>
+    /// <returns>The move details for that specific move.</returns>
+    public MoveDetails LoadCharacterMove(string characterName, string moveName)
+    {
+        return moveDatabaseManagerScript.GetMove(characterName, moveName);
+    }
+
+    void HandleDash(float duration)
+    {
+        Debug.Log("Entered dash");
+        velocity.x = maxSpeed;
+
+        dashTimer += Time.deltaTime;
     }
 
     void Update()
@@ -107,33 +174,79 @@ public class CharacterScript : MonoBehaviour
         isJumping = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W);
         isBlocking = Input.GetKey(KeyCode.S); 
 
-        // --- FIXED ATTACK LOGIC (J Key) ---
-        // We use an 'if' statement so we can set specific timers/triggers immediately
-        if (Input.GetKeyDown(KeyCode.J)) 
+
+        if (inputReaderScript.FindInput(backDash.input))
         {
+            Debug.Log("Perform <color=yellow>BACK DASH</color>.");
+
+            dashTimer = 0;
+
+            Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
+
+            SetState(STATE.BDASHING);
+            inputReaderScript.inputBuffer = "";
+        }
+        else if (inputReaderScript.FindInput(forwardDash.input))
+        {
+            Debug.Log("Perform <color=yellow>FORWARD DASH</color>.");
+
+            dashTimer = 0;
+
+            Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
+
+            SetState(STATE.FDASHING);
+            inputReaderScript.inputBuffer = "";
+        }
+        else if (inputReaderScript.FindInput(superMove.input))
+        {
+            Debug.Log("Perform <color=yellow>SUPER MOVE</color>.");
+
+            if (myStats.TrySpendMeter(100f)) 
+            {
+                PerformSuperMove();
+            }
+            else
+            {
+                Debug.Log("Not enough Meter!");
+            }
+
+            Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
+            inputReaderScript.inputBuffer = "";
+        }
+        else if (inputReaderScript.FindInput(lightPunch.input))
+        {
+            Debug.Log("Perform <color=purple>LIGHT PUNCH</color>.");
+
             isAttacking = true;
             
-            // A. Fire the specific animation trigger HERE
+            //A. Fire the specific animation trigger HERE
             myAnimator.SetTrigger("Attack"); 
             
             // B. Set the duration for a normal punch (Short)
-            attackCoolDownDuration = 0.4f; 
+            attackCoolDownDuration = lightPunch.totalFrames / 60f; 
+
+            Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
+            inputReaderScript.inputBuffer = "";
+
             attackTimer = 0;
             
             // C. Lock the state
             SetState(STATE.ATTACKING);
         }
-
-        // --- KICK INPUT (K Key) ---
-        if (Input.GetKeyDown(KeyCode.K)) 
+        else if (inputReaderScript.FindInput(kick.input))
         {
-            isAttacking = true;
-            
+            Debug.Log("Perform <color=purple>KICK</color>.");
+
             // 1. Fire the Kick Trigger
             myAnimator.SetTrigger("Kick"); 
             
             // 2. Set Duration (Kicks are usually slightly slower than jabs, e.g., 0.5s)
-            attackCoolDownDuration = 0.5f; 
+            attackCoolDownDuration = kick.totalFrames / 60f; 
+            //Debug.Log(attackCoolDownDuration + "<- COOL DOWN");
+
+            Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
+            inputReaderScript.inputBuffer = "";
+            
             attackTimer = 0;
             
             // 3. Lock State
@@ -171,17 +284,17 @@ public class CharacterScript : MonoBehaviour
         myRigidBody.linearVelocity = velocity;
 
         // --- SUPER INPUT (I Key) ---
-        if (Input.GetKeyDown(KeyCode.I)) 
-        {
-            if (myStats.TrySpendMeter(100f)) 
-            {
-                PerformSuperMove();
-            }
-            else
-            {
-                Debug.Log("Not enough Meter!");
-            }
-        }
+        // if (Input.GetKeyDown(KeyCode.I)) 
+        // {
+        //     if (myStats.TrySpendMeter(100f)) 
+        //     {
+        //         PerformSuperMove();
+        //     }
+        //     else
+        //     {
+        //         Debug.Log("Not enough Meter!");
+        //     }
+        // }
     }
 
     // --- ANIMATION HANDLING ---
@@ -198,6 +311,8 @@ public class CharacterScript : MonoBehaviour
             myAnimator.SetFloat("Speed", Mathf.Abs(velocity.x));     // For transitioning to Walk
             myAnimator.SetFloat("WalkDirection", directionalSpeed);  // For reversing the animation
             myAnimator.SetBool("IsBlocking", currentState == GetState(STATE.BLOCKING));
+            myAnimator.SetBool("isDash", currentState == GetState(STATE.FDASHING));
+            myAnimator.SetBool("isBackDash", currentState == GetState(STATE.BDASHING));
         }
     }
 
@@ -268,6 +383,8 @@ public class CharacterScript : MonoBehaviour
             case (int) STATE.DIZZIED:   DizziedState(); break;
             case (int) STATE.DEAD:      DeadState(); break;
             case (int) STATE.BLOCKING:  BlockingState(); break;
+            case (int) STATE.FDASHING:  FDashingState(); break;
+            case (int) STATE.BDASHING:  BDashingState(); break;
         }
 
         
@@ -317,18 +434,26 @@ public class CharacterScript : MonoBehaviour
 
         if (attackTimer > attackCoolDownDuration) 
         {
-            SetState(STATE.IDLE);
-            attackTimer = 0; 
-
             // isAttacking was never set back to false
             isAttacking = false;
+            SetState(STATE.IDLE);
+            attackTimer = 0; 
         }
+    }
+
+    void HandleAirControl()
+    {
+        velocity.x += hDirection * (movementSpeed / 2) * acceleration * Time.deltaTime;
+        float absVelocity = Math.Abs(velocity.x);
+        velocity.x = Math.Clamp(absVelocity, 0, maxSpeed / 2) * hDirection;
     }
 
     bool applyGravity = false;
     void JumpingState()
     {
         isGrounded = false;
+
+        HandleAirControl();
 
         // the actions in the jumping state take control of the properties of the character when called
         // which means we need to apply gravity manually when in this state 
@@ -342,7 +467,7 @@ public class CharacterScript : MonoBehaviour
             velocity.y -= GRAVITY;
         }
 
-        if (velocity.y <= 2) 
+        if (velocity.y <= jumpHeight - 2) 
         {
             SetState(STATE.FALLING);
             applyGravity = false;
@@ -356,7 +481,12 @@ public class CharacterScript : MonoBehaviour
         {
             // Debug.Log("HELLOOO");
             velocity.y -= GRAVITY * 5;  // add 1 half more gravity
+        } else
+        {
+            velocity.y -= GRAVITY;
         }
+
+        HandleAirControl();
 
         // gravity should always be affecting the player, restricting it to a state causes issue
         if (isGrounded)
@@ -378,6 +508,36 @@ public class CharacterScript : MonoBehaviour
         velocity.x = 0;
         myRigidBody.simulated = false; 
         mySpriteRenderer.color = Color.red; 
+    }
+
+    void FDashingState()
+    {
+        //myAnimator.SetBool("isDash", true);
+        dashDuration = forwardDash.totalFrames / 60f;
+        dashTimer += Time.deltaTime;
+        velocity.x = maxSpeed + 2;
+
+        if (dashTimer >= dashDuration)
+        {
+            //myAnimator.SetBool("isDash", false);
+            SetState(STATE.IDLE);
+            dashTimer = 0;
+        }
+    }
+
+    void BDashingState()
+    {
+        //myAnimator.SetBool("isBackDash", true);
+        dashDuration = backDash.totalFrames / 60f;
+        dashTimer += Time.deltaTime;
+        velocity.x = -maxSpeed - 2;
+
+        if (dashTimer >= dashDuration)
+        {
+            //myAnimator.SetBool("isBackDash", false);
+            SetState(STATE.IDLE);
+            dashTimer = 0;
+        }
     }
 
     // --- COLLISION ---

@@ -1,20 +1,20 @@
 {
   "_comment": "This is the central database for all character moves. The game engine loads this file at startup.",
-  "Kensei": {
+  "Gojo": {
     "_comment": "Kensei is our balanced 'Ryu' archetype.",
     "movement": {
       "_comment": "This is the database for this characters movement options",
       "walkForward": {
-        "input": "6",
+        "input": "d",
         "speed": 1.5,
         "_comment": "Speed in units per second"
       },
       "walkBack": {
-        "input": "4",
+        "input": "a",
         "speed": 1.0
       },
       "forwardDash": {
-        "input": "66",
+        "input": "dd",
         "startupFrames": 2,
         "activeFrames": 14,
         "recoveryFrames": 4,
@@ -27,7 +27,7 @@
         ]
       },
       "backDash": {
-        "input": "44",
+        "input": "aa",
         "startupFrames": 1,
         "activeFrames": 12,
         "recoveryFrames": 8,
@@ -39,7 +39,7 @@
         ]
       },
       "jumpNeutral": {
-        "input": "8",
+        "input": "w",
         "startupFrames": 4,
         "activeFrames": 32,
         "recoveryFrames": 4,
@@ -55,11 +55,11 @@
     "attacks": {
       "_comment": "This is the database for this characters attack options.",
       "lightPunch": {
-        "input": "5LP",
-        "startupFrames": 4,
+        "input": "j",
+        "startupFrames": 3,
         "activeFrames": 2,
-        "recoveryFrames": 6,
-        "totalFrames": 12,
+        "recoveryFrames": 1,
+        "totalFrames": 6,
         "damage": 30,
         "onHitAdvantage": 4,
         "onBlockAdvantage": -1,
@@ -69,12 +69,28 @@
           "canCancelIntoSpecial_OnHitOrBlock"
         ]
       },
-      "heavySlash": {
-        "input": "5HP",
-        "startupFrames": 12,
-        "activeFrames": 4,
-        "recoveryFrames": 20,
-        "totalFrames": 36,
+      "kick": {
+        "input": "k",
+        "startupFrames": 2,
+        "activeFrames": 2,
+        "recoveryFrames": 1,
+        "totalFrames": 5,
+        "damage": 30,
+        "onHitAdvantage": 4,
+        "onBlockAdvantage": -1,
+        "_comment": "OnHit/OnBlock advantage is how many frames you recover before the opponent. Positive is good, negative is bad.",
+        "specialEffects": [
+          "hitbox_High_Frames_4-5",
+          "canCancelIntoSpecial_OnHitOrBlock"
+        ]
+      },
+      "superMove": {
+        "input": "i",
+        "_comment": "input can be switched back to sk later",
+        "startupFrames": 3,
+        "activeFrames": 2,
+        "recoveryFrames": 0,
+        "totalFrames": 5,
         "damage": 100,
         "onHitAdvantage": -2,
         "onBlockAdvantage": -8,
