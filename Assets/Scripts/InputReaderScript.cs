@@ -1,14 +1,17 @@
-using System;
-using System.Data;
-using NUnit.Framework;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class InputReaderScript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [Header("Input Reader Attributes")]
     public string inputBuffer = "";
+    [Tooltip("The previous sequence found and cannot be used again when checking input.")]
+    public List<string> previousSequences;
+    public List<int> previousStartIndexes;
+    public List<int> previousCounts;
+
     [Tooltip("Count the number of frame since last input")]
     public int frameCount = 0;
     private bool isLeft = false;
@@ -21,7 +24,9 @@ public class InputReaderScript : MonoBehaviour
 
     void Start()
     {
-        
+        previousSequences = new List<string> {};
+        previousStartIndexes = new List<int> {};
+        previousCounts = new List<int> {}; 
     }
 
     // Update is called once per frame
@@ -75,9 +80,13 @@ public class InputReaderScript : MonoBehaviour
             }
         } else
         {
+            // clear all input fields, for their isn't any new input.
             if (frameCount > 25)
             {
                 inputBuffer = "";
+                previousSequences.Clear();
+                previousStartIndexes.Clear();
+                previousCounts.Clear();
             }
         }
 
@@ -97,10 +106,62 @@ public class InputReaderScript : MonoBehaviour
     /// <returns>True, if the sequence was found. False, if not.</returns>
     public bool FindInput(string input)
     {
-        if (inputBuffer.Contains(input))
+        // has this sequence been previosly used?
+        if (inputBuffer.Contains(input) && !isPreviousSequence(input))
         {
+            SetPreviousSequence(input);
             return true;
         }
+        return false;
+    }
+
+
+    /// <summary>
+    /// Removes the given input sequence from the input buffer once it has been registered as a successful input
+    /// </summary>
+    /// <param name="input">The given input sequence to be removed.</param>
+    public void RemoveInputSequence(string input)
+    {
+        int startIndex = inputBuffer.IndexOf(input);
+        int count = input.Length;
+
+        Debug.Log("Sequence to remove located at <color=orange>" + startIndex + "</color>.");
+
+        string modifiedBuffer = inputBuffer.Remove(startIndex, count);
+        inputBuffer = modifiedBuffer;
+    }
+
+    /// <summary>
+    /// Sets the input given sequence as previously used (Added the sequence string, sequence index, and the sequence length into
+    /// a list).
+    /// </summary>
+    /// <param name="input">The given sequence set as previously used.</param>
+    public void SetPreviousSequence(string input)
+    {
+
+        previousSequences.Add(input);
+        previousStartIndexes.Add(inputBuffer.IndexOf(input));
+        previousCounts.Add(input.Length);
+        
+    }
+
+
+    /// <summary>
+    /// Checks if the given input sequence has already been registered as succesful. Using a list of all the prevous inputs in the
+    /// chain.
+    /// </summary>
+    /// <param name="input">The input sequence given find.</param>
+    /// <returns>True, if the sequence has been registered. False, if not.</returns>
+    public bool isPreviousSequence(string input)
+    {
+        if (
+            previousSequences.Contains(input) 
+            && previousStartIndexes.Contains(inputBuffer.IndexOf(input))
+            && previousCounts.Contains(input.Length)
+        )
+        {
+            return true;
+        } 
         return false;
     }
 }
