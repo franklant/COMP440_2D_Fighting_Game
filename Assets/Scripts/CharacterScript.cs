@@ -148,31 +148,19 @@ public class CharacterScript : MonoBehaviour
         return moveDatabaseManagerScript.GetMove(characterName, moveName);
     }
 
-    void HandleDash(float duration)
+    // void HandleDash(float duration)
+    // {
+    //     Debug.Log("Entered dash");
+    //     velocity.x = maxSpeed;
+
+    //     dashTimer += Time.deltaTime;
+    // }
+
+    /// <summary>
+    /// Handles the input given a certain input sequence from the player
+    /// </summary>
+    void HandleInput()
     {
-        Debug.Log("Entered dash");
-        velocity.x = maxSpeed;
-
-        dashTimer += Time.deltaTime;
-    }
-
-    void Update()
-    {
-        // 1. Dead/Dizzy Check (Input disabled)
-        // (int)STATE -> GetState(STATE)
-        if (currentState == GetState(STATE.DIZZIED) || currentState == GetState(STATE.DEAD))
-        {
-            HandleStates(); 
-            myRigidBody.linearVelocity = velocity;
-            return; 
-        }
-
-        // 2. Input Processing
-        hDirection = Input.GetAxisRaw("Horizontal");
-        isJumping = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W);
-        isBlocking = Input.GetKey(KeyCode.S); 
-
-
         if (inputReaderScript.FindInput(backDash.input))
         {
             Debug.Log("Perform <color=yellow>BACK DASH</color>.");
@@ -250,6 +238,26 @@ public class CharacterScript : MonoBehaviour
             // 3. Lock State
             SetState(STATE.ATTACKING);
         }
+    }
+
+    void Update()
+    {
+        // 1. Dead/Dizzy Check (Input disabled)
+        // (int)STATE -> GetState(STATE)
+        if (currentState == GetState(STATE.DIZZIED) || currentState == GetState(STATE.DEAD))
+        {
+            HandleStates(); 
+            myRigidBody.linearVelocity = velocity;
+            return; 
+        }
+
+        // 2. Input Processing
+        hDirection = Input.GetAxisRaw("Horizontal");
+        isJumping = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W);
+        isBlocking = Input.GetKey(KeyCode.S); 
+
+
+        HandleInput();
 
         // 3. Facing Logic (Always Face Enemy)
         if (enemyTarget != null)
