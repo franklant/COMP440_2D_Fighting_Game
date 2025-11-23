@@ -5,45 +5,62 @@ public class Hitbox : MonoBehaviour
     [Header("Attack Data")]
     public float damage = 50f;
     public float stun = 15f;
-    public float meterGainOnHit = 10f; // How much meter YOU get for landing this
+    public float meterGainOnHit = 10f;
 
     [Header("Targeting")]
     public string enemyTag = "Player2";
 
     [Header("References")]
-    // We need a reference to OURSELVES to give ourselves meter
-    public FighterStatsManager myStats; 
+    public FighterStatsManager myStats; // Reference to YOUR stats (to gain meter)
+
+    // --- ONE HIT LOGIC ---
+    // Prevents the hitbox from registering multiple hits in a single swing
+    private bool hasHit = false; 
+
+    void OnEnable()
+    {
+        // Reset the flag every time the Animation turns this object ON
+        hasHit = false;
+    }
 
     void Start()
     {
-        // Automatically find the stats manager on the parent (Gojo)
+        // Attempt to find the stats manager on the parent (Gojo)
         myStats = GetComponentInParent<FighterStatsManager>();
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        // Check if we hit the correct enemy Hurtbox
+        // 1. If we already hit someone this swing, stop.
+        if (hasHit) return; 
+
+        // 2. Check if we hit the correct enemy
         if (collision.CompareTag(enemyTag) || collision.gameObject.name == enemyTag)
         {
-            // 1. Get the Enemy's Script
             CharacterScript enemyScript = collision.GetComponentInParent<CharacterScript>();
 
             if (enemyScript != null)
             {
-                Debug.Log("Hit Confirmed on " + enemyScript.name);
+                // 3. Mark as hit immediately
+                hasHit = true; 
 
-                // 2. Deal Damage to Enemy
-                // We pass the damage and stun values to the enemy's script
+                Debug.Log("HIT CONFIRMED: " + collision.name);
+
+                // 4. Deal Damage & Stun
                 enemyScript.GetHit(damage, stun);
 
-                // 3. Reward Ourselves (Meter Gain)
+                // 5. Reward Meter to Attacker
                 if (myStats != null)
                 {
-                    myStats.OnOffensiveHit(meterGainOnHit);
+                    myStats.AddHyperMeter(meterGainOnHit);
                 }
 
-                // 4. Disable Hitbox so it doesn't hit 60 times per second
-                gameObject.SetActive(false);
+                // 6. Trigger Hitstop (Game Feel)
+                // 0.08f is snappy for melee hits
+                if (GameFeelManager.instance != null)
+                {
+                    GameFeelManager.instance.HitStop(0.08f); 
+                }
             }
         }
     }
