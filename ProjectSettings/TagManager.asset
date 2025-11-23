@@ -8,6 +8,10 @@ TagManager:
   - GroundCheck
   - MidJabHitBox
   - opponent
+  - CharacterSlot
+  - CharacterSlotContainer
+  - InputReader
+  - MoveDB
   layers:
   - Default
   - TransparentFX
