@@ -125,7 +125,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1638258133}
     m_Modifications:
     - target: {fileID: 6593678746721848940, guid: 1f14e30783098d049a939de73efd18e4, type: 3}
       propertyPath: m_Name
@@ -133,11 +133,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7359409243435192029, guid: 1f14e30783098d049a939de73efd18e4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.99224
+      value: -2.36783
       objectReference: {fileID: 0}
     - target: {fileID: 7359409243435192029, guid: 1f14e30783098d049a939de73efd18e4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.21819
+      value: 1.1975499
       objectReference: {fileID: 0}
     - target: {fileID: 7359409243435192029, guid: 1f14e30783098d049a939de73efd18e4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -149,15 +149,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7359409243435192029, guid: 1f14e30783098d049a939de73efd18e4, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7359409243435192029, guid: 1f14e30783098d049a939de73efd18e4, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7359409243435192029, guid: 1f14e30783098d049a939de73efd18e4, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7359409243435192029, guid: 1f14e30783098d049a939de73efd18e4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -595,6 +595,11 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!4 &894491297 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7359409243435192029, guid: 1f14e30783098d049a939de73efd18e4, type: 3}
+  m_PrefabInstance: {fileID: 106091410}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &969611541
 GameObject:
   m_ObjectHideFlags: 0
@@ -1203,6 +1208,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1248478578}
+  - {fileID: 894491297}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1638258135
@@ -1231,7 +1237,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &1638258136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1267,12 +1273,12 @@ MonoBehaviour:
   meter1Damage: 200
   meter2Damage: 400
   meter3Damage: 600
-  GRAVITY: 0.098
+  GRAVITY: 0.196
   velocity: {x: 0, y: 0, z: 0}
   movementSpeed: 4
-  maxSpeed: 8
+  maxSpeed: 5
   acceleration: 3
-  jumpHeight: 7
+  jumpHeight: 13
   currentState: 0
   attackCoolDownDuration: 0.5
   attackTimer: 0
@@ -2462,5 +2468,4 @@ SceneRoots:
   - {fileID: 1638258133}
   - {fileID: 969611544}
   - {fileID: 1858969727}
-  - {fileID: 106091410}
   - {fileID: 1915583327}
