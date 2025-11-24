@@ -1,6 +1,7 @@
 using Mono.Cecil;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 
 // TODO: Save the coordinates of the slots original position so that we can refer to it when adding hover effects.
@@ -81,12 +82,12 @@ public class CharacterSlotContainterScript : MonoBehaviour
             float relativeX = ((currentNumberOfSlots - 1) * scale.x) / 2;  
 
             float offsetX = slotIndex * scale.x;
-            Vector3 finalPosition = new Vector3(relativeX - offsetX, 0, 0);
+            Vector3 finalPosition = new Vector3(relativeX - offsetX, transform.position.y, 0);
             slotScript.SetPosition(finalPosition);
 
             // set the slot color as well
-            int colorIndex = Random.Range(0, colors.Length);
-            slotScript.SetBackgroundColor(colors[colorIndex]);
+            // int colorIndex = Random.Range(0, colors.Length);
+            // slotScript.SetBackgroundColor(colors[colorIndex]);
 
             // update the slot index
             slotIndex += 1; 
@@ -107,9 +108,34 @@ public class CharacterSlotContainterScript : MonoBehaviour
             Debug.LogWarning("Number of slots is currently ZERO!");
     }
 
+    /// <summary>
+    /// Returns an array of character slots.
+    /// </summary>
+    /// <returns>Returns the character slots within the container as an array of game objects.</returns>
+    public GameObject[] GetCharacterSlots()
+    {
+        return characterSlots;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        
+        // foreach (GameObject characterSlot in characterSlots)
+        // {
+        //     CharacterSlotScript slotScript = characterSlot.GetComponent<CharacterSlotScript>();
+        //     if (slotScript == null) { Debug.LogError("Could not fetch character slot's script"); }
+
+        //     if (slotScript.isHovering && Input.GetMouseButton(0))
+        //     {
+        //         slotScript.isSelected = true;
+        //         break;
+        //     }
+
+        //     if (slotScript.isSelected && !slotScript.isHovering && Input.GetMouseButton(0))
+        //     {
+        //         slotScript.isSelected = false;
+        //         break;
+        //     }
+        // }
     }
 }

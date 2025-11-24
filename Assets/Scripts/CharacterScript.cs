@@ -1,237 +1,480 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System;
-using UnityEngine.InputSystem.LowLevel;
+
+
+// TODO: FIX STATES, FIX USER INPUT, FIX JUMPING (THERE IS NO STATE)
 
 public class CharacterScript : MonoBehaviour
 {
+    [Header("--- Control Settings ---")]
+    public bool isPlayer = true; // CHECK THIS FOR GOJO, UNCHECK FOR DUMMY
+
+    [Header("--- Character ---")]
+    public string characterName = "Gojo";
+
     [Header("--- Components ---")]
     public SpriteRenderer mySpriteRenderer;
     public Rigidbody2D myRigidBody;
-    public GameObject myGroundCheck;
     public Animator myAnimator; 
     public FighterStatsManager myStats; 
+    public GameObject myGroundCheck;
+
+    [Header("--- VFX References ---")]
+    public ScreenFlashEffect redScreenFlash; 
+    public CameraShake camShake; 
+    public ScreenDimmer screenDimmer;
 
     [Header("--- Combat References ---")]
-    public GameObject midJabHitBox;      // The red box for punching
-    public Transform enemyTarget;        // DRAG PLAYER 2 HERE! (To face them)
-    
-    [Header("--- Projectile Settings (Red) ---")]
-    public GameObject redProjectilePrefab; // Drag your 'Red_Projectile' prefab here
-    public Transform firePoint;            // Drag the 'FirePoint' child object here
+    public GameObject midJabHitBox;      
+    public GameObject kickHitBox;        
+    public Transform enemyTarget;        
+    public Transform firePoint;          
 
-    [Header("--- Attributes ---")]
-    public float GRAVITY = 0.098f;
-    public Vector3 velocity = Vector3.zero;
+    [Header("--- Projectile Settings ---")]
+    public GameObject blueProjectilePrefab;   // Meter 1
+    public GameObject redProjectilePrefab;    // Meter 2
+    public GameObject purpleProjectilePrefab; // Meter 3
+    
+    [Tooltip("How far in front of the enemy Red should spawn")]
+    public float redSpawnOffset = 1.5f; 
+
+    [Header("--- Combat Balance ---")]
+    public float jabDamage = 50f;
+    public float kickDamage = 80f;
+    public float meter1Damage = 200f; 
+    public float meter2Damage = 400f; 
+    public float meter3Damage = 600f; 
+
+    [Header("--- Physics Attributes ---")]
+    public float GRAVITY = 0.098f;          
+    public Vector3 velocity = Vector3.zero; 
     public float movementSpeed = 4f;
     public float maxSpeed = 8f;
     public float acceleration = 3f;
-    public float jumpHeight = 7f;
+    public float jumpHeight = 22f; 
     
     [Header("--- State Tracking ---")]
     public int currentState;
-    public float attackCoolDownDuration = 0.4f; // Tweak this to match animation length
+    public float attackCoolDownDuration = 0.4f; 
     public float attackTimer = 0;
-    
+    public int attackLevel = 0; // 0=None, 1=Light, 2=Heavy, 3=Special
+    public float dashDuration = 0f;
+    public float dashTimer = 0f;
+
+    [Header("--- Input Buffer ---")]
+    public GameObject inputBuffer;
+    private InputReaderScript inputReaderScript;
+
+    [Header("--- Move Database ---")]
+    public GameObject moveDatabase;
+    private MovementDataManager moveDatabaseManagerScript;
+
+    // Movement Database Details
+    public MoveDetails lightPunch;
+    public MoveDetails kick;
+    public MoveDetails superMove;
+    public MoveDetails forwardDash;
+    public MoveDetails backDash;
+    public MoveDetails meter1;
+    public MoveDetails meter2;
+    public MoveDetails meter3;
     private float hDirection = 0;
 
-    [Header("--- Status Flags ---")]
+    // Status Flags
     public bool isGrounded;
     public bool isJumping;
     public bool isAttacking;
     public bool isBlocking; 
 
-    // State Machine Enum
     private enum STATE {
-        IDLE = 0,
-        WALKING = 1,
-        JUMPING = 2,
-        FALLING = 3,
-        ATTACKING = 4,
-        DIZZIED = 5, 
-        DEAD = 6,
-        BLOCKING = 7 
+        IDLE = 0, WALKING = 1, JUMPING = 2, FALLING = 3,
+        ATTACKING = 4, DIZZIED = 5, DEAD = 6, BLOCKING = 7,
+        FDASHING = 8,
+        BDASHING = 9
     };
 
-    void SetState(STATE state)
-    {
-        currentState = (int) state;
-    }
+    void SetState(STATE state) { currentState = (int) state; }
 
-    int GetState(STATE state)
-    {
-        return (int) state;
-    }
+    int GetState(STATE state) { return (int) state; }
 
     void Start()
     {
-        // Get Components automatically
         mySpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         myRigidBody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>(); 
         myStats = GetComponent<FighterStatsManager>();
+        inputBuffer = GameObject.FindGameObjectWithTag("InputReader");
+        moveDatabase = GameObject.FindGameObjectWithTag("MoveDB");
         
-        // Find objects by tag if not assigned
         if (myGroundCheck == null) myGroundCheck = GameObject.FindGameObjectWithTag("GroundCheck");
         if (midJabHitBox == null) midJabHitBox = GameObject.FindGameObjectWithTag("MidJabHitBox");
 
-        // Subscribe to Stats Events
+        // Get the Input Buffer
+        if (inputBuffer == null) Debug.LogError("Cannot find Input Buffer");
+
+        inputReaderScript = inputBuffer.GetComponent<InputReaderScript>();
+        
+        if (inputReaderScript == null) Debug.LogError("Cannot find inputReaderScript");
+
+        // Get the Move Database Manager
+        if (moveDatabase == null) Debug.LogError("Cannot find Move Database");
+
+        moveDatabaseManagerScript = moveDatabase.GetComponent<MovementDataManager>();
+        
+        if (moveDatabaseManagerScript == null) Debug.LogError("Cannot find moveDatabaseManagerScript");
+
         if (myStats != null)
         {
-            myStats.OnDizzyStart.AddListener(EnableDizzyState);
-            myStats.OnDeath.AddListener(EnableDeadState);
+            myStats.OnDizzyStart.AddListener(() => SetState(STATE.DIZZIED));
+            myStats.OnDeath.AddListener(() => SetState(STATE.DEAD));
             myStats.OnDizzyEnd.AddListener(() => SetState(STATE.IDLE));
         }
-        else
-        {
-            Debug.LogError("FighterStatsManager is missing! Please attach it to Gojo.");
-        }
+
+        // Movement Database Details
+        lightPunch = LoadCharacterMove(characterName, "lightPunch");
+        kick = LoadCharacterMove(characterName, "kick");
+        superMove = LoadCharacterMove(characterName, "superMove");
+        forwardDash = LoadCharacterMove(characterName, "forwardDash");
+        backDash = LoadCharacterMove(characterName, "backDash");
+        meter1 = LoadCharacterMove(characterName, "meter1");
+        meter2 = LoadCharacterMove(characterName, "meter2");
+        meter3 = LoadCharacterMove(characterName, "meter3");
 
         SetState(STATE.IDLE);
         isGrounded = false;
     }
 
+    /// <summary>
+    /// Loads a character move from the move database by character and movename.
+    /// </summary>
+    /// <param name="characterName">The name of the character performing the move.</param>
+    /// <param name="moveName">The name of the move the character is performing.</param>
+    /// <returns>The move details for that specific move.</returns>
+    public MoveDetails LoadCharacterMove(string characterName, string moveName)
+    {
+        return moveDatabaseManagerScript.GetMove(characterName, moveName);
+    }
+
+    /// <summary>
+    /// Handles the input given a certain input sequence from the player.
+    /// -TODO- Edit to use the perform move function
+    /// </summary>
+    void HandleInput()
+    {
+        //string inputToRemove = "";
+        if (Input.anyKey)
+        {
+            // if (inputReaderScript.FindInput("jjj"))
+            // {
+            //     Debug.Log("Perform <color=yellow>placeholder CHAIN ATTACK FINAL</color>.");
+
+
+            //     Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>"); 
+                
+            //     //inputToRemove = "jjj";
+            //     //Debug.Log("Index of Input Sequence: " + inputReaderScript.inputBuffer.IndexOf("jjj"));
+            // } else if (inputReaderScript.FindInput("jj"))
+            // {
+            //     Debug.Log("Perform <color=yellow>placeholder CHAIN ATTACK SECOND</color>.");
+
+
+            //     Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>"); 
+            // }
+            // else 
+            if (inputReaderScript.FindInput(backDash.input))
+            {
+                Debug.Log("Perform <color=yellow>BACK DASH</color>.");
+
+                dashTimer = 0;
+
+                Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
+
+                SetState(STATE.BDASHING);
+                // inputReaderScript.inputBuffer = "";
+            }
+            else if (inputReaderScript.FindInput(forwardDash.input))
+            {
+                Debug.Log("Perform <color=yellow>FORWARD DASH</color>.");
+
+                dashTimer = 0;
+
+                Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
+
+                SetState(STATE.FDASHING);
+                // inputReaderScript.inputBuffer = "";
+            }
+            else if (inputReaderScript.FindInput(meter1.input))
+            {
+                Debug.Log("Perform <color=yellow>METER 1</color>.");
+
+                if (myStats.TrySpendMeter(100f)) 
+                {
+                    PerformSuperMove("Meter1");
+                }
+                else
+                {
+                    Debug.Log("Not enough Meter!");
+                }
+
+                Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
+                // inputReaderScript.inputBuffer = "";
+            }
+
+            else if (inputReaderScript.FindInput(meter2.input))
+            {
+                Debug.Log("Perform <color=yellow>METER 2</color>.");
+
+                if (myStats.TrySpendMeter(200f)) 
+                {
+                    PerformSuperMove("Meter2");
+                }
+                else
+                {
+                    Debug.Log("Not enough Meter!");
+                }
+
+                Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
+                // inputReaderScript.inputBuffer = "";
+            }
+
+            else if (inputReaderScript.FindInput(meter3.input))
+            {
+                Debug.Log("Perform <color=yellow>METER 3</color>.");
+
+                if (myStats.TrySpendMeter(300f)) 
+                {
+                    PerformSuperMove("Meter3");
+                }
+                else
+                {
+                    Debug.Log("Not enough Meter!");
+                }
+
+                Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
+                // inputReaderScript.inputBuffer = "";
+            }
+            
+            else if (inputReaderScript.FindInput(lightPunch.input))
+            {
+                Debug.Log("Perform <color=purple>LIGHT PUNCH</color>.");
+
+                PerformAttack("Attack", jabDamage, 1);
+
+                Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
+                
+                // C. Lock the state
+                //SetState(STATE.ATTACKING);
+            }
+            else if (inputReaderScript.FindInput(kick.input))
+            {
+                Debug.Log("Perform <color=purple>KICK</color>.");
+
+                PerformAttack("Kick", kickDamage, 2);
+
+                Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
+                // inputReaderScript.inputBuffer = "";
+                
+                // 3. Lock State
+                //SetState(STATE.ATTACKING);
+            }
+        }
+
+        //inputReaderScript.RemoveInputSequence(inputToRemove);
+    }
+
+    // TODO: Edit this to read from database
     void Update()
     {
-        // 1. Dead/Dizzy Check (Input disabled)
-        // (int)STATE -> GetState(STATE)
-        if (currentState == GetState(STATE.DIZZIED) || currentState == GetState(STATE.DEAD))
+        // 1. Disable inputs if Dead/Dizzied
+        if (currentState == (int)STATE.DIZZIED || currentState == (int)STATE.DEAD)
         {
             HandleStates(); 
             myRigidBody.linearVelocity = velocity;
             return; 
         }
 
-        // 2. Input Processing
-        hDirection = Input.GetAxisRaw("Horizontal");
-        isJumping = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W);
-        isBlocking = Input.GetKey(KeyCode.S); 
-
-        // --- FIXED ATTACK LOGIC (J Key) ---
-        // We use an 'if' statement so we can set specific timers/triggers immediately
-        if (Input.GetKeyDown(KeyCode.J)) 
+        // --- INPUT LOGIC (ONLY IF PLAYER) ---
+        if (isPlayer)
         {
-            isAttacking = true;
-            
-            // A. Fire the specific animation trigger HERE
-            myAnimator.SetTrigger("Attack"); 
-            
-            // B. Set the duration for a normal punch (Short)
-            attackCoolDownDuration = 0.4f; 
-            attackTimer = 0;
-            
-            // C. Lock the state
-            SetState(STATE.ATTACKING);
-        }
+            // Basic Movement
+            hDirection = Input.GetAxisRaw("Horizontal");
+            isJumping = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W);
+            isBlocking = Input.GetKey(KeyCode.S); 
 
-        // --- KICK INPUT (K Key) ---
-        if (Input.GetKeyDown(KeyCode.K)) 
-        {
-            isAttacking = true;
-            
-            // 1. Fire the Kick Trigger
-            myAnimator.SetTrigger("Kick"); 
-            
-            // 2. Set Duration (Kicks are usually slightly slower than jabs, e.g., 0.5s)
-            attackCoolDownDuration = 0.5f; 
-            attackTimer = 0;
-            
-            // 3. Lock State
-            SetState(STATE.ATTACKING);
-        }
+            // Variable Jump Gravity (Short Hop)
+            // if (myRigidBody.linearVelocity.y > 0 && !Input.GetKey(KeyCode.W))
+            // {
+            //     myRigidBody.linearVelocity += Vector2.up * Physics2D.gravity.y * 2.5f * Time.deltaTime;
+            // }
 
-        // 3. Facing Logic (Always Face Enemy)
-        if (enemyTarget != null)
-        {
-            if (transform.position.x > enemyTarget.position.x)
-                mySpriteRenderer.flipX = true;  
-            else
-                mySpriteRenderer.flipX = false; 
-        }
-
-        // 4. Gravity Check
-        // if (!isGrounded)
-        // {
-        //     SetState(STATE.FALLING);
-        // } 
-
-        // 5. Execute Logic
-        HandleStates();
-        UpdateAnimator();
-
-        // 6. hangle gravity (test)
-        if (isGrounded)
-        {
-            velocity.y = 0;
-        } else
-        {
-            velocity.y -= GRAVITY;
-        }
-
-        myRigidBody.linearVelocity = velocity;
-
-        // --- SUPER INPUT (I Key) ---
-        if (Input.GetKeyDown(KeyCode.I)) 
-        {
-            if (myStats.TrySpendMeter(100f)) 
-            {
-                PerformSuperMove();
-            }
-            else
-            {
-                Debug.Log("Not enough Meter!");
-            }
-        }
-    }
-
-    // --- ANIMATION HANDLING ---
-    void UpdateAnimator()
-    {
-        if (myAnimator != null)
-        {
-            // Calculate if we are walking Forward or Backward (Moonwalk)
-            // If facing Right (FlipX false) and moving Right (+), speed is Positive.
-            // If facing Right (FlipX false) and moving Left (-), speed is Negative.
-            float facingMult = mySpriteRenderer.flipX ? -1 : 1;
-            float directionalSpeed = velocity.x * facingMult;
-
-            myAnimator.SetFloat("Speed", Mathf.Abs(velocity.x));     // For transitioning to Walk
-            myAnimator.SetFloat("WalkDirection", directionalSpeed);  // For reversing the animation
-            myAnimator.SetBool("IsBlocking", currentState == GetState(STATE.BLOCKING));
-        }
-    }
-
-    // --- COMBAT EVENTS ---
-    
-    // This is called by the Animation Event for "Cursed Technique Red"
-    public void CastRed()
-    {
-        if (redProjectilePrefab != null && firePoint != null)
-        {
-            Instantiate(redProjectilePrefab, firePoint.position, firePoint.rotation);
-        }
-    }
-
-    // This is called when we get hit by an enemy Hitbox
-    public void GetHit(float damage, float stunDamage)
-    {
-        // (int)STATE.DEAD -> GetState(STATE.DEAD)
-        if (currentState == GetState(STATE.DEAD)) return;
-        
-        // Check Blocking
-        if (currentState == GetState(STATE.BLOCKING))
-        {
-            // Block Logic: Reduced damage, no stun, gain meter
-            float chipDamage = damage * 0.1f; 
-            if(myStats != null) myStats.BlockAttack(chipDamage, 5f);
-            Debug.Log("Blocked!");
+            // update input logic, previous code within the method
+            HandleInput();
         }
         else
         {
-            // Hit Logic: Full damage, full stun, gain catch-up meter
-            if(myStats != null) myStats.TakeDamage(damage, 10f, stunDamage);
+            // --- DUMMY LOGIC (Force Stop) ---
+            hDirection = 0;
+            isJumping = false;
+            isBlocking = false;
+            isAttacking = false;
+        }
+
+        // --- SHARED LOGIC (Gravity, Physics, Facing) ---
+
+        // Facing Logic
+        if (enemyTarget != null)
+        {
+            if (transform.position.x > enemyTarget.position.x) mySpriteRenderer.flipX = true;  
+            else mySpriteRenderer.flipX = false; 
+        }
+
+        // Gravity State Check (FLOATING)
+        // if (!isGrounded)
+        // {
+        //     if (velocity.y > 0) SetState(STATE.JUMPING);
+        //     else SetState(STATE.FALLING);
+        // } 
+
+        HandleStates();
+        UpdateAnimator();
+
+         if (isGrounded)
+        {
+            velocity.y = 0;
+        }
+        else
+        {
+            velocity.y -= GRAVITY;
+        }
+        
+        myRigidBody.linearVelocity = velocity;
+    }
+
+    // --- ATTACK HELPERS ---
+
+    void PerformAttack(string triggerName, float dmg, int level)
+    {
+        Debug.Log($"ACTION: {triggerName} | Level {level} | Previous Level: {attackLevel}");
+        velocity.x = 0;
+        isAttacking = true;
+        attackLevel = level; 
+        attackTimer = 0;     
+        //attackCoolDownDuration = duration;
+
+        myAnimator.SetTrigger(triggerName);
+        SetState(STATE.ATTACKING);
+
+        // EDIT to use the total frames from the move database
+        if (triggerName == "Attack" && midJabHitBox != null) 
+            attackCoolDownDuration = lightPunch.totalFrames;
+            midJabHitBox.GetComponent<Hitbox>().damage = dmg;
+        
+        if (triggerName == "Kick" && kickHitBox != null) 
+            attackCoolDownDuration = kick.totalFrames;
+            kickHitBox.GetComponent<Hitbox>().damage = dmg;
+
+        // myAnimator.SetTrigger(triggerName);
+        // SetState(STATE.ATTACKING);
+    }
+
+    void PerformSuperMove(string triggerName)
+    {
+        velocity.x = 0;
+        isAttacking = true;
+        attackLevel = 3; // Max Level
+        attackTimer = 0;
+        // attackCoolDownDuration = duration;
+
+        switch (triggerName)
+        {
+            case "Meter1":
+                attackCoolDownDuration = meter1.totalFrames;
+                break;
+            case "Meter2":
+                attackCoolDownDuration = meter2.totalFrames;
+                break;
+            case "Meter3":
+                attackCoolDownDuration = meter3.totalFrames;
+                break;
+        }
+        
+        myAnimator.SetTrigger(triggerName);
+        SetState(STATE.ATTACKING);
+    }
+
+    // --- ANIMATION EVENTS ---
+
+    public void CastBlue() 
+    {
+        SpawnProjectileAtLocation(blueProjectilePrefab, meter1Damage, firePoint.position);
+    }
+
+    public void CastPurple() 
+    {
+        if (camShake != null) StartCoroutine(camShake.Shake(0.5f, 0.3f));
+        if (screenDimmer != null) screenDimmer.TriggerDim(0.5f);
+        SpawnProjectileAtLocation(purpleProjectilePrefab, meter3Damage, firePoint.position);
+    }
+
+    public void CastRedAtEnemy() 
+    {
+        if (redScreenFlash != null) redScreenFlash.TriggerFlash();
+
+        Vector3 spawnPosition;
+        float facingDir = mySpriteRenderer.flipX ? -1f : 1f;
+
+        if (enemyTarget != null)
+        {
+            spawnPosition = enemyTarget.position + new Vector3(redSpawnOffset * facingDir, 0, 0);
+            spawnPosition.y = firePoint.position.y; 
+        }
+        else
+        {
+            spawnPosition = firePoint.position; 
+        }
+
+        SpawnProjectileAtLocation(redProjectilePrefab, meter2Damage, spawnPosition);
+    }
+
+    public void TeleportToEnemy()
+    {
+        if (enemyTarget != null)
+        {
+            float directionToEnemy = Mathf.Sign(enemyTarget.position.x - transform.position.x);
+            Vector3 targetPos = enemyTarget.position;
+            targetPos.x -= (directionToEnemy * redSpawnOffset); 
+            transform.position = targetPos;
+            mySpriteRenderer.flipX = (directionToEnemy < 0);
+        }
+    }
+
+    void SpawnProjectileAtLocation(GameObject prefab, float damageValue, Vector3 location)
+    {
+        if (prefab != null)
+        {
+            GameObject proj = Instantiate(prefab, location, Quaternion.identity);
+            ProjectileController pc = proj.GetComponent<ProjectileController>();
+            if (pc != null) pc.damage = damageValue;
             
-            // Visual Feedback
+            if (mySpriteRenderer.flipX) proj.transform.Rotate(0, 180, 0);
+        }
+    }
+
+    // --- DAMAGE & STATES ---
+
+    public void GetHit(float damage, float stunDamage)
+    {
+        if (currentState == (int)STATE.DEAD) return;
+        
+        if (currentState == (int)STATE.BLOCKING)
+        {
+            float chipDamage = damage * 0.1f; 
+            if(myStats != null) myStats.BlockAttack(chipDamage, 5f);
+        }
+        else
+        {
+            if(myStats != null) myStats.TakeDamage(damage, 10f, stunDamage);
             StartCoroutine(FlashRed());
         }
     }
@@ -243,18 +486,26 @@ public class CharacterScript : MonoBehaviour
         if (currentState != (int)STATE.DIZZIED) mySpriteRenderer.color = Color.white;
     }
 
+    void UpdateAnimator()
+    {
+        if (myAnimator != null)
+        {
+            float facingMult = mySpriteRenderer.flipX ? -1 : 1;
+            float directionalSpeed = velocity.x * facingMult;
+            float normalizedSpeed = 0;
+            if(Mathf.Abs(directionalSpeed) > 0.1f) normalizedSpeed = directionalSpeed / Mathf.Abs(directionalSpeed);
+
+            myAnimator.SetFloat("Speed", Mathf.Abs(velocity.x));
+            myAnimator.SetFloat("WalkDirection", normalizedSpeed);
+            myAnimator.SetBool("IsBlocking", currentState == (int)STATE.BLOCKING);
+            myAnimator.SetFloat("VerticalSpeed", velocity.y);
+            myAnimator.SetBool("IsGrounded", isGrounded);
+            myAnimator.SetBool("isDash", currentState == GetState(STATE.FDASHING));
+            myAnimator.SetBool("isBackDash", currentState == GetState(STATE.BDASHING));
+        }
+    }
+
     // --- STATE MACHINE ---
-
-    
-    void EnableDizzyState() 
-    { 
-        SetState(STATE.DIZZIED); 
-    }
-
-    void EnableDeadState() 
-    { 
-        SetState(STATE.DEAD); 
-    }
 
     void HandleStates()
     {
@@ -264,22 +515,20 @@ public class CharacterScript : MonoBehaviour
             case (int) STATE.WALKING:   WalkingState(); break;
             case (int) STATE.JUMPING:   JumpingState(); break;
             case (int) STATE.FALLING:   FallingState(); break;
-            case (int) STATE.ATTACKING: AttackingState(); break; // Updated
+            case (int) STATE.ATTACKING: AttackingState(); break;
             case (int) STATE.DIZZIED:   DizziedState(); break;
             case (int) STATE.DEAD:      DeadState(); break;
             case (int) STATE.BLOCKING:  BlockingState(); break;
+            case (int) STATE.FDASHING:  FDashingState(); break;
+            case (int) STATE.BDASHING:  BDashingState(); break;
         }
-
-        
     }
 
     void IdleState()
     {
         velocity.x = 0;
-
         if (hDirection != 0) SetState(STATE.WALKING);
         if (isJumping && isGrounded) SetState(STATE.JUMPING);
-        if (isAttacking) SetState(STATE.ATTACKING);
         if (isBlocking) SetState(STATE.BLOCKING);
     }
 
@@ -288,47 +537,72 @@ public class CharacterScript : MonoBehaviour
         velocity.x += hDirection * movementSpeed * acceleration * Time.deltaTime;
         float absVelocity = Math.Abs(velocity.x);
         velocity.x = Math.Clamp(absVelocity, 0, maxSpeed) * hDirection;
-
         if (hDirection == 0 && isGrounded) SetState(STATE.IDLE);
         if (isJumping && isGrounded) SetState(STATE.JUMPING);
-        if (isAttacking) SetState(STATE.ATTACKING);
         if (isBlocking) SetState(STATE.BLOCKING);
     }
 
-    void BlockingState()
-    {
-        velocity.x = 0; 
-        if (!isBlocking) SetState(STATE.IDLE);
-    }
+    void BlockingState() { velocity.x = 0; if (!isBlocking) SetState(STATE.IDLE); }
 
     void AttackingState()
     {
         velocity.x = 0; 
-
-        // --- DELETE THIS PART ---
-        // if (attackTimer == 0) 
-        // {
-        //    myAnimator.SetTrigger("Attack");
-        // }
-        // ------------------------
-
-        // Keep the timer logic!
         attackTimer += Time.deltaTime;
-
         if (attackTimer > attackCoolDownDuration) 
         {
-            SetState(STATE.IDLE);
             attackTimer = 0; 
-
-            // isAttacking was never set back to false
+            attackLevel = 0; // Reset Combo Level
             isAttacking = false;
+            SetState(STATE.IDLE);
         }
+    }
+
+    void FDashingState()
+    {
+        //myAnimator.SetBool("isDash", true);
+        dashDuration = forwardDash.totalFrames / 60f;
+        dashTimer += Time.deltaTime;
+        velocity.x = maxSpeed + 2;
+
+        if (dashTimer >= dashDuration)
+        {
+            //myAnimator.SetBool("isDash", false);
+            SetState(STATE.IDLE);
+            dashTimer = 0;
+        }
+    }
+
+    void BDashingState()
+    {
+        //myAnimator.SetBool("isBackDash", true);
+        dashDuration = backDash.totalFrames / 60f;
+        dashTimer += Time.deltaTime;
+        velocity.x = -maxSpeed - 2;
+
+        if (dashTimer >= dashDuration)
+        {
+            //myAnimator.SetBool("isBackDash", false);
+            SetState(STATE.IDLE);
+            dashTimer = 0;
+        }
+    }
+
+    // void JumpingState() { velocity.y = jumpHeight; isGrounded = false; }
+    // void FallingState() { velocity.y -= GRAVITY; if (isGrounded) SetState(STATE.IDLE); } 
+    // UPDATED
+    void HandleAirControl()
+    {
+        velocity.x += hDirection * (movementSpeed / 2) * acceleration * Time.deltaTime;
+        float absVelocity = Math.Abs(velocity.x);
+        velocity.x = Math.Clamp(absVelocity, 0, maxSpeed / 2) * hDirection;
     }
 
     bool applyGravity = false;
     void JumpingState()
     {
         isGrounded = false;
+
+        HandleAirControl();
 
         // the actions in the jumping state take control of the properties of the character when called
         // which means we need to apply gravity manually when in this state 
@@ -342,7 +616,7 @@ public class CharacterScript : MonoBehaviour
             velocity.y -= GRAVITY;
         }
 
-        if (velocity.y <= 2) 
+        if (velocity.y <= jumpHeight - 2) 
         {
             SetState(STATE.FALLING);
             applyGravity = false;
@@ -356,7 +630,12 @@ public class CharacterScript : MonoBehaviour
         {
             // Debug.Log("HELLOOO");
             velocity.y -= GRAVITY * 5;  // add 1 half more gravity
+        } else
+        {
+            velocity.y -= GRAVITY;
         }
+
+        HandleAirControl();
 
         // gravity should always be affecting the player, restricting it to a state causes issue
         if (isGrounded)
@@ -367,75 +646,43 @@ public class CharacterScript : MonoBehaviour
         }
     }
 
-    void DizziedState()
-    {
-        velocity.x = 0;
-        mySpriteRenderer.color = Color.gray; 
-    }
 
-    void DeadState()
-    {
-        velocity.x = 0;
-        myRigidBody.simulated = false; 
-        mySpriteRenderer.color = Color.red; 
-    }
+    void DizziedState() { velocity.x = 0; mySpriteRenderer.color = Color.gray; }
+    void DeadState() { velocity.x = 0; myRigidBody.simulated = false; mySpriteRenderer.color = Color.red; }
 
-    // --- COLLISION ---
-    void OnCollisionStay2D(Collision2D collision)
-    {
-        // let the player leave the ground if jumping
-         if (collision.collider.CompareTag("Ground")) isGrounded = true;
-    }
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("Ground")) isGrounded = false;
-    }
-
-    // --- DEBUGGER ---
+    // --- VISUAL DEBUGGER ---
     void OnGUI()
     {
-        // Create a style to make the text big and readable
+        // Only show debug text for the Player, not the Dummy
+        if (!isPlayer) return; 
+
         GUIStyle style = new GUIStyle();
-        style.fontSize = 24;
-        style.normal.textColor = Color.white; // Or Color.red if background is bright
+        style.fontSize = 30;
+        style.fontStyle = FontStyle.Bold;
+        style.normal.textColor = Color.yellow; 
 
-        // 1. Show the Raw Input (-1 for Left, 0 for None, 1 for Right)
-        float inputVal = Input.GetAxisRaw("Horizontal");
-        GUI.Label(new Rect(20, 20, 400, 40), "Input Axis: " + inputVal, style);
+        // 1. Show State & Physics
+        GUI.Label(new Rect(20, 20, 500, 40), "STATE: " + (STATE)currentState, style);
+        GUI.Label(new Rect(20, 60, 500, 40), "Grounded: " + isGrounded, style);
 
-        // 2. Show the actual key presses (Did Unity detect the button?)
-        string keysPressed = "";
-        if (Input.GetKey(KeyCode.A)) keysPressed += "[A] ";
-        if (Input.GetKey(KeyCode.D)) keysPressed += "[D] ";
-        if (Input.GetKey(KeyCode.LeftArrow)) keysPressed += "[Left] ";
-        if (Input.GetKey(KeyCode.RightArrow)) keysPressed += "[Right] ";
-        GUI.Label(new Rect(20, 60, 400, 40), "Keys Held: " + keysPressed, style);
-
-        // 3. Show the Current State (Is the script locking you in Block?)
-        GUI.Label(new Rect(20, 100, 400, 40), "Current State: " + (STATE)currentState, style);
+        // 2. Show Combo Logic
+        string comboStatus = "Level " + attackLevel;
+        if (attackLevel == 0) comboStatus += " (Ready)";
+        if (attackLevel == 1) comboStatus += " (Light -> Cancel into Kick/Special)";
+        if (attackLevel == 2) comboStatus += " (Heavy -> Cancel into Special)";
+        if (attackLevel == 3) comboStatus += " (MAX - Finish Move)";
         
-        // 4. Show Velocity (Is physics trying to move you?)
-        GUI.Label(new Rect(20, 140, 400, 40), "Velocity X: " + velocity.x, style);
-        
-        // 5. Show Blocking status
-        GUI.Label(new Rect(20, 180, 400, 40), "Is Blocking: " + isBlocking, style);
+        GUI.Label(new Rect(20, 120, 800, 40), "COMBO CHAIN: " + comboStatus, style);
+
+        // 3. Show Timer (How much time left to cancel?)
+        if (isAttacking)
+        {
+            float timeLeft = attackCoolDownDuration - attackTimer;
+            string timerText = "Window Left: " + timeLeft.ToString("F2") + "s";
+            GUI.Label(new Rect(20, 160, 500, 40), timerText, style);
+        }
     }
 
-    void PerformSuperMove()
-    {
-        // 1. Stop moving
-        velocity.x = 0;
-
-        // 2. Set State to ATTACKING (locks movement)
-        SetState(STATE.ATTACKING);
-
-        // 3. Trigger the specific animation
-        myAnimator.SetTrigger("Meter1");
-
-        // 4. IMPORTANT: Update the cooldown!
-        // Basic punch is fast (0.4s), but Super is long (e.g., 1.5s).
-        // We need to extend the timer so Gojo doesn't go back to Idle halfway through.
-        attackCoolDownDuration = 1.5f; // Change this to match your Super's length in seconds!
-        attackTimer = 0;
-    }
+    void OnCollisionStay2D(Collision2D collision) { if (collision.collider.CompareTag("Ground")) isGrounded = true; }
+    void OnCollisionExit2D(Collision2D collision) { if (collision.collider.CompareTag("Ground")) isGrounded = false; }
 }

@@ -7921,6 +7921,50 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: satoru_clearSprites_313
+      rect:
+        serializedVersion: 2
+        x: 462
+        y: 371
+        width: 50
+        height: 52
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 3, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b90f146aab88b423e85442ee119ea974
+      internalID: -993129358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HollowPurple
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 181
+        width: 63
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73437712b7a7f4ed7a99c98f8d658ae8
+      internalID: 1325941683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -7937,6 +7981,7 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
+      HollowPurple: 1325941683
       satoru_clearSprites_0: -2315853112242130075
       satoru_clearSprites_1: 3122518694586630571
       satoru_clearSprites_10: 964082195073358553
@@ -8176,6 +8221,7 @@ TextureImporter:
       satoru_clearSprites_310: -1154630098709137442
       satoru_clearSprites_311: -1216877786484730461
       satoru_clearSprites_312: -3919347640855489897
+      satoru_clearSprites_313: -993129358
       satoru_clearSprites_32: 7127026423326297807
       satoru_clearSprites_33: 3388725412711160201
       satoru_clearSprites_34: 7353838168208294623

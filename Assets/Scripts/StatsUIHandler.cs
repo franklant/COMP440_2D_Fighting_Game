@@ -109,6 +109,8 @@ public class StatsUIHandler : MonoBehaviour
     // --- Combo Logic ---
     void UpdateCombo(int count)
     {
+        // DEBUG: Did the UI hear the shout?
+        Debug.Log("UI RECEIVED COMBO: " + count);
         if (count < 2) return; // Hide 1-hit combos
 
         if (comboGroup) comboGroup.SetActive(true);
