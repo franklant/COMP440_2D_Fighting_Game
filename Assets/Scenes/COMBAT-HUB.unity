@@ -2273,6 +2273,18 @@ PrefabInstance:
       propertyPath: myGroundCheck
       value: 
       objectReference: {fileID: 969611541}
+    - target: {fileID: 7917389614155853670, guid: e440a2a139c108447b645bf74ed6f863, type: 3}
+      propertyPath: redProjectilePrefab
+      value: 
+      objectReference: {fileID: 6573110301316325902, guid: 88fccb7043e98462bb3d85798e8d7003, type: 3}
+    - target: {fileID: 7917389614155853670, guid: e440a2a139c108447b645bf74ed6f863, type: 3}
+      propertyPath: blueProjectilePrefab
+      value: 
+      objectReference: {fileID: 6443437230904101948, guid: 0d37e0de175d847b0acc85567737f6ad, type: 3}
+    - target: {fileID: 7917389614155853670, guid: e440a2a139c108447b645bf74ed6f863, type: 3}
+      propertyPath: purpleProjectilePrefab
+      value: 
+      objectReference: {fileID: 3566979845838530738, guid: 21124ffa6d14c4dbd9c96086b4704956, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

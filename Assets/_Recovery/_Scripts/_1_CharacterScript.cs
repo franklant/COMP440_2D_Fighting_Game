@@ -5,7 +5,7 @@ using System;
 
 // TODO: FIX STATES, FIX USER INPUT, FIX JUMPING (THERE IS NO STATE)
 
-public class CharacterScript : MonoBehaviour
+public class _1_CharacterScript : MonoBehaviour
 {
     [Header("--- Control Settings ---")]
     public bool isPlayer = true; // CHECK THIS FOR GOJO, UNCHECK FOR DUMMY
