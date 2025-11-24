@@ -14,12 +14,15 @@ using UnityEngine.AI;
 public class CharacterSlotScript : MonoBehaviour
 {
     [Header("Slot Attributes")]
+    [Tooltip("The name of the character in this slot.")]
+    public string characterName;
     [Tooltip("The 'character slot container' assigns the ID to the slot at the start of execution.")]
     public int ID = -1;
     [Tooltip("The 'character slot container' assigns the position to the slot at the start of execution.")]
     public Vector3 position;
     [Tooltip("Assigned to true or false based on the mouse's position over the slot.")]
     public bool isHovering;
+    public bool isSelected;
     private GameObject characterSlotContainer;
     private CharacterSlotContainterScript containerScript;
     private GameObject myBorder;
@@ -188,6 +191,19 @@ public class CharacterSlotScript : MonoBehaviour
         );  // smooth reset translation
     }
 
+    /// <summary>
+    /// Returns the character name of the slot. Used for selecting characters.
+    /// </summary>
+    /// <returns>If the name of the slot is not empty, returns the name of the character as a string. If it is, returns "NoName".</returns>
+    public string GetCharacterName()
+    {
+        if (name != null || name != "")
+        {
+            return characterName;
+        }
+        return "NoName";
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -217,6 +233,19 @@ public class CharacterSlotScript : MonoBehaviour
         {
             SetBorderColor(Color.black);
             ResetBorderBackgroundPosition();
+        }
+
+        if (isHovering && Input.GetMouseButton(0))
+        {
+            isSelected = true;
+        } else if (isSelected && !isHovering && Input.GetMouseButton(0))
+        {
+            isSelected = false;
+        }
+
+        if (isSelected)
+        {
+            SetBorderColor(Color.yellow);
         }
     }
 
