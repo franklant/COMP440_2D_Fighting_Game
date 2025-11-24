@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class ButtonControllerScript : MonoBehaviour
 {
@@ -75,6 +76,7 @@ public class ButtonControllerScript : MonoBehaviour
         if (isReady)
         {
             Debug.Log("Character <color=green>" + selectedCharacter + "</color> selected.");
+            SceneManager.LoadScene("Player vs CPU");
         } else
         {
             Debug.Log("<color=red>No character selected.</color>");
