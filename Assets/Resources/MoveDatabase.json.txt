@@ -85,11 +85,55 @@
         ]
       },
       "superMove": {
+        "input": "2",
+        "_comment": "input can be switched back to sk later",
+        "startupFrames": 3,
+        "activeFrames": 2,
+        "recoveryFrames": 0,
+        "totalFrames": 5,
+        "damage": 100,
+        "onHitAdvantage": -2,
+        "onBlockAdvantage": -8,
+        "specialEffects": [
+          "hitbox_Mid_Frames_12-15",
+          "causesKnockdown_OnHit"
+        ]
+      },
+      "meter1": {
         "input": "i",
         "_comment": "input can be switched back to sk later",
         "startupFrames": 3,
         "activeFrames": 2,
         "recoveryFrames": 0,
+        "totalFrames": 5,
+        "damage": 100,
+        "onHitAdvantage": -2,
+        "onBlockAdvantage": -8,
+        "specialEffects": [
+          "hitbox_Mid_Frames_12-15",
+          "causesKnockdown_OnHit"
+        ]
+      },
+      "meter2": {
+        "input": "o",
+        "_comment": "input can be switched back to sk later",
+        "startupFrames": 4,
+        "activeFrames": 2,
+        "recoveryFrames": 0,
+        "totalFrames": 5,
+        "damage": 100,
+        "onHitAdvantage": -2,
+        "onBlockAdvantage": -8,
+        "specialEffects": [
+          "hitbox_Mid_Frames_12-15",
+          "causesKnockdown_OnHit"
+        ]
+      },
+      "meter3": {
+        "input": "p",
+        "startupFrames": 4,
+        "activeFrames": 2,
+        "recoveryFrames": 1,
         "totalFrames": 5,
         "damage": 100,
         "onHitAdvantage": -2,

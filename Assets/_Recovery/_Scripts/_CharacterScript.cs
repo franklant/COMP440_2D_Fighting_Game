@@ -58,6 +58,10 @@ public class _CharacterScript : MonoBehaviour
     public MoveDetails superMove;
     public MoveDetails forwardDash;
     public MoveDetails backDash;
+    public MoveDetails meter1;
+    public MoveDetails meter2;
+    public MoveDetails meter3;
+
 
     // State Machine Enum
     private enum STATE {

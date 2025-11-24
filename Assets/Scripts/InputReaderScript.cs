@@ -20,7 +20,9 @@ public class InputReaderScript : MonoBehaviour
     private bool isUp = false;
     private bool isPunch = false;
     private bool isKick = false;
-    private bool isSpecial = false;
+    private bool isMeter1 = false;
+    private bool isMeter2 = false;
+    private bool isMeter3 = false;
 
     void Start()
     {
@@ -51,8 +53,10 @@ public class InputReaderScript : MonoBehaviour
         isUp = (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow));
         isKick = Input.GetKeyDown(KeyCode.K);
         isPunch = Input.GetKeyDown(KeyCode.J);
-        isSpecial = Input.GetKeyDown(KeyCode.I);
-        bool anyInput = isLeft || isRight || isDown || isUp || isKick || isPunch || isSpecial;
+        isMeter1 = Input.GetKeyDown(KeyCode.I);
+        isMeter2 = Input.GetKeyDown(KeyCode.O);
+        isMeter3 = Input.GetKeyDown(KeyCode.P);
+        bool anyInput = isLeft || isRight || isDown || isUp || isKick || isPunch || isMeter1 || isMeter2 || isMeter3;
 
         if(anyInput) {
             frameCount = 0;
@@ -74,9 +78,17 @@ public class InputReaderScript : MonoBehaviour
             } else if (isPunch)
             {
                 inputBuffer += "j";
-            } else if (isSpecial)
+            } else if (isMeter1)
             {
                 inputBuffer += "i";
+            }
+            else if (isMeter2)
+            {
+                inputBuffer += "o";
+            }
+            else if (isMeter3)
+            {
+                inputBuffer += "p";
             }
         } else
         {
