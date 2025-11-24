@@ -907,6 +907,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+--- !u!4 &963803225 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6814961399752165694, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+  m_PrefabInstance: {fileID: 963803224}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &969611541
 GameObject:
   m_ObjectHideFlags: 0
@@ -1443,7 +1448,7 @@ MonoBehaviour:
   myGroundCheck: {fileID: 969611541}
   myAnimator: {fileID: 1158256409}
   myStats: {fileID: 1158256406}
-  enemyTarget: {fileID: 0}
+  enemyTarget: {fileID: 963803225}
   midJabHitBox: {fileID: 0}
   redProjectilePrefab: {fileID: 0}
   firePoint: {fileID: 0}
