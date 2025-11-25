@@ -59,6 +59,9 @@ public class AttackContainer
     public MoveDetails lightPunch;
     public MoveDetails kick;
     public MoveDetails superMove;
+    public MoveDetails meter1;
+    public MoveDetails meter2;
+    public MoveDetails meter3;
 }
 
 /// <summary>
@@ -151,6 +154,19 @@ public class MovementDataManager : MonoBehaviour
             if (moveName == "backDash")
             {
                 return moveDB.Gojo.movement.backDash;
+            }
+
+            if (moveName == "meter1")
+            {
+                return moveDB.Gojo.attacks.meter1;
+            }
+            if (moveName == "meter2")
+            {
+                return moveDB.Gojo.attacks.meter2;
+            }
+            if (moveName == "meter3")
+            {
+                return moveDB.Gojo.attacks.meter3;
             }
         }
         
