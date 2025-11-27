@@ -68,7 +68,6 @@ public class CharacterAI : MonoBehaviour
     [Range(0f, 1f)] public float superChance = 0.3f;
 
     // --- Internal ---
-    private bool applyGravity = false;
     private float lastThinkTime;
     private float lastAttackTime;
     private float myCurrentHealth;
@@ -137,6 +136,8 @@ public class CharacterAI : MonoBehaviour
 
     void Update()
     {
+        if (!myRigidBody) return;
+
         // 1. Dead / Dizzy hard-lock
         if (currentState == GetState(STATE.DIZZIED) || currentState == GetState(STATE.DEAD))
         {
@@ -155,14 +156,10 @@ public class CharacterAI : MonoBehaviour
         HandleStates();
         UpdateAnimator();
 
-        // 5. Gravity
-        if (isGrounded)
+        // 5. Ground clamp (vertical velocity is handled in Jumping/Falling)
+        if (isGrounded && velocity.y < 0f)
         {
-            velocity.y = 0;
-        }
-        else
-        {
-            velocity.y -= GRAVITY;
+            velocity.y = 0f;
         }
 
         myRigidBody.linearVelocity = velocity;
@@ -180,7 +177,7 @@ public class CharacterAI : MonoBehaviour
         float distance = Mathf.Abs(enemyTarget.position.x - transform.position.x);
         float dirToEnemy = Mathf.Sign(enemyTarget.position.x - transform.position.x);
 
-        // Reset inputs
+        // Reset intents
         hDirection = 0f;
         isJumping = false;
         isBlocking = false;
@@ -188,7 +185,7 @@ public class CharacterAI : MonoBehaviour
         bool canAttack = Time.time >= lastAttackTime + attackCooldown;
 
         // Decide attack / super when in range
-        if (distance <= attackRange && canAttack)
+        if (distance <= attackRange && canAttack && !isAttacking)
         {
             TryAttackOrSuper();
         }
@@ -233,7 +230,7 @@ public class CharacterAI : MonoBehaviour
             }
         }
 
-        // Jump intent will be handled in state logic (Idle/Walking -> Jumping)
+        // If AI chooses to block, ensure we go into block state
         if (isBlocking)
         {
             SetState(STATE.BLOCKING);
@@ -297,6 +294,24 @@ public class CharacterAI : MonoBehaviour
     }
 
     // ======================
+    //   AIR CONTROL
+    // ======================
+    void HandleAirControl()
+    {
+        // Simple air drift toward/away
+        velocity.x += hDirection * (movementSpeed / 2f) * acceleration * Time.deltaTime;
+
+        float absVel = Mathf.Abs(velocity.x);
+        float clamped = Mathf.Clamp(absVel, 0f, maxSpeed / 2f);
+
+        float dir =
+            hDirection != 0f ? Mathf.Sign(hDirection) :
+            (velocity.x != 0f ? Mathf.Sign(velocity.x) : 0f);
+
+        velocity.x = clamped * dir;
+    }
+
+    // ======================
     //   STATE MACHINE
     // ======================
     void HandleStates()
@@ -316,42 +331,72 @@ public class CharacterAI : MonoBehaviour
 
     void IdleState()
     {
-        velocity.x = 0;
+        velocity.x = 0f;
 
-        if (hDirection != 0) SetState(STATE.WALKING);
-        if (isJumping && isGrounded) SetState(STATE.JUMPING);
+        // Start jump from idle
+        if (isJumping && isGrounded)
+        {
+            isGrounded = false;
+            velocity.y = jumpHeight;
+            SetState(STATE.JUMPING);
+            return;
+        }
+
+        if (hDirection != 0f) SetState(STATE.WALKING);
         if (isAttacking) SetState(STATE.ATTACKING);
         if (isBlocking) SetState(STATE.BLOCKING);
     }
 
     void WalkingState()
     {
+        // Ground movement
         velocity.x += hDirection * movementSpeed * acceleration * Time.deltaTime;
-        float absVelocity = Math.Abs(velocity.x);
-        velocity.x = Math.Clamp(absVelocity, 0, maxSpeed) * Math.Sign(hDirection == 0 ? velocity.x : hDirection);
+        float absVelocity = Mathf.Abs(velocity.x);
+        float clamped = Mathf.Clamp(absVelocity, 0f, maxSpeed);
 
-        if (hDirection == 0 && isGrounded) SetState(STATE.IDLE);
-        if (isJumping && isGrounded) SetState(STATE.JUMPING);
+        float dir =
+            hDirection != 0f ? Mathf.Sign(hDirection) :
+            (velocity.x != 0f ? Mathf.Sign(velocity.x) : 0f);
+
+        velocity.x = clamped * dir;
+
+        // Jump from walk
+        if (isJumping && isGrounded)
+        {
+            isGrounded = false;
+            velocity.y = jumpHeight;
+            SetState(STATE.JUMPING);
+            return;
+        }
+
+        if (hDirection == 0f && isGrounded) SetState(STATE.IDLE);
         if (isAttacking) SetState(STATE.ATTACKING);
         if (isBlocking) SetState(STATE.BLOCKING);
     }
 
     void BlockingState()
     {
-        velocity.x = 0;
+        // Ground block only; if we somehow block in air, drop back to falling
+        if (!isGrounded)
+        {
+            SetState(STATE.FALLING);
+            return;
+        }
+
+        velocity.x = 0f;
         if (!isBlocking) SetState(STATE.IDLE);
     }
 
     void AttackingState()
     {
-        velocity.x = 0;
+        velocity.x = 0f;
 
         attackTimer += Time.deltaTime;
 
         if (attackTimer > attackCoolDownDuration)
         {
             SetState(STATE.IDLE);
-            attackTimer = 0;
+            attackTimer = 0f;
             isAttacking = false;
         }
     }
@@ -360,46 +405,41 @@ public class CharacterAI : MonoBehaviour
     {
         isGrounded = false;
 
-        if (!applyGravity)
-        {
-            velocity.y = jumpHeight;
-            applyGravity = true;
-        }
-        else
-        {
-            velocity.y -= GRAVITY;
-        }
+        // Upward motion decays into fall
+        velocity.y -= GRAVITY;
+        HandleAirControl();
 
-        if (velocity.y <= 2)
+        if (velocity.y <= 0f)
         {
             SetState(STATE.FALLING);
-            applyGravity = false;
         }
     }
 
     void FallingState()
     {
-        if (isBlocking)
-        {
-            velocity.y -= GRAVITY * 5;
-        }
+        // Extra fast-fall if "blocking" intent in air
+        float gravityMultiplier = isBlocking ? 5f : 1f;
+        velocity.y -= GRAVITY * gravityMultiplier;
+
+        HandleAirControl();
 
         if (isGrounded)
         {
-            if (hDirection != 0) SetState(STATE.WALKING);
+            velocity.y = 0f;
+            if (hDirection != 0f) SetState(STATE.WALKING);
             else SetState(STATE.IDLE);
         }
     }
 
     void DizziedState()
     {
-        velocity.x = 0;
+        velocity.x = 0f;
         if (mySpriteRenderer) mySpriteRenderer.color = Color.gray;
     }
 
     void DeadState()
     {
-        velocity.x = 0;
+        velocity.x = 0f;
         if (myRigidBody) myRigidBody.simulated = false;
         if (mySpriteRenderer) mySpriteRenderer.color = Color.red;
     }
@@ -430,18 +470,29 @@ public class CharacterAI : MonoBehaviour
     {
         if (redProjectilePrefab != null && firePoint != null)
         {
-            Instantiate(redProjectilePrefab, firePoint.position, firePoint.rotation);
+            GameObject proj = Instantiate(redProjectilePrefab, firePoint.position, firePoint.rotation);
+
+            // Flip projectile with facing
+            if (mySpriteRenderer && mySpriteRenderer.flipX)
+            {
+                proj.transform.Rotate(0f, 180f, 0f);
+            }
         }
     }
 
     void PerformSuperMove()
     {
-        velocity.x = 0;
+        velocity.x = 0f;
         SetState(STATE.ATTACKING);
-        myAnimator.SetTrigger("Meter1");
+
+        if (myAnimator != null)
+        {
+            myAnimator.SetTrigger("Meter1");
+        }
 
         attackCoolDownDuration = 1.5f; // match super anim length
-        attackTimer = 0;
+        attackTimer = 0f;
+        isAttacking = true;
     }
 
     // ======================
@@ -466,7 +517,7 @@ public class CharacterAI : MonoBehaviour
     {
         if (!myAnimator || !mySpriteRenderer) return;
 
-        float facingMult = mySpriteRenderer.flipX ? -1 : 1;
+        float facingMult = mySpriteRenderer.flipX ? -1f : 1f;
         float directionalSpeed = velocity.x * facingMult;
 
         myAnimator.SetFloat("Speed", Mathf.Abs(velocity.x));
