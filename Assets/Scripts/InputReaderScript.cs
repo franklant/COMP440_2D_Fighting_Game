@@ -13,7 +13,7 @@ public class InputReaderScript : MonoBehaviour
     public List<int> previousCounts;
 
     [Tooltip("Count the number of frame since last input")]
-    public int frameCount = 0;
+    private int frameCount = 0;
     private bool isLeft = false;
     private bool isRight = false;
     private bool isDown = false;
