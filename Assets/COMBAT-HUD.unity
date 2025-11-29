@@ -437,8 +437,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hitbox
   damage: 50
-  stun: 15
-  meterGainOnHit: 10
   enemyTag: Player2
   myStats: {fileID: 0}
 --- !u!1 &507011875
@@ -1126,6 +1124,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -25}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1445915400 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1170817560038295939, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+  m_PrefabInstance: {fileID: 8378412504150866037}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1607315198
 GameObject:
   m_ObjectHideFlags: 0
@@ -1184,7 +1187,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4961772881205769181, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
   m_PrefabInstance: {fileID: 8378412504150866037}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1445915400}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b5d0e2d5b6a64350b0f67448895d120, type: 3}
@@ -1641,8 +1644,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hitbox
   damage: 50
-  stun: 15
-  meterGainOnHit: 10
   enemyTag: Player2
   myStats: {fileID: 0}
 --- !u!61 &1863280046
@@ -1699,6 +1700,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 940322049549967249, guid: 87f4a094c69fb4240840d06b9338ef3c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5114925760333753231, guid: 87f4a094c69fb4240840d06b9338ef3c, type: 3}
       propertyPath: m_Name
       value: MoveDatabaseManager
@@ -1753,6 +1758,33 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6814961399752165694, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
   m_PrefabInstance: {fileID: 8378412504150866037}
   m_PrefabAsset: {fileID: 0}
+--- !u!50 &1932163476
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445915400}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &1994778392
 GameObject:
   m_ObjectHideFlags: 0
@@ -2350,6 +2382,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1690277723}
     - target: {fileID: 236065959849726434, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+      propertyPath: myRigidBody
+      value: 
+      objectReference: {fileID: 1932163476}
+    - target: {fileID: 236065959849726434, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
       propertyPath: midJabHitBox
       value: 
       objectReference: {fileID: 451299598}
@@ -2405,7 +2441,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6968108233768445780, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 053f7a30994fe4abd874dfcdc9b044d2, type: 2}
+    m_RemovedComponents:
+    - {fileID: 2100150715879963525, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6814961399752165694, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
@@ -2414,7 +2455,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6814961399752165694, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 451299599}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1170817560038295939, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1932163476}
   m_SourcePrefab: {fileID: 100100000, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

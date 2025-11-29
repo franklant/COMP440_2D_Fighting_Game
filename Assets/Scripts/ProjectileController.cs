@@ -6,9 +6,12 @@ public class ProjectileController : MonoBehaviour
     public float speed = 15f;
     public float damage = 200f; // This gets overwritten by CharacterScript
     public Rigidbody2D rb;
+    
+    // FIX: Add this variable so CharacterScript can assign it
+    public string ownerTag; 
 
     [Header("On Hit VFX")]
-    public GameObject hitEffectPrefab; // Drag an Explosion Prefab here (Optional)
+    public GameObject hitEffectPrefab; 
 
     void Start()
     {
@@ -23,8 +26,8 @@ public class ProjectileController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D hitInfo)
     {
-        // 1. Ignore the Shooter (Player1)
-        if (hitInfo.CompareTag("Player") || hitInfo.CompareTag("Player1")) return;
+        // 1. Ignore the Shooter (Player1/Player2) based on ownerTag
+        if (hitInfo.CompareTag(ownerTag)) return;
 
         // 2. Check for Enemy
         CharacterScript enemy = hitInfo.GetComponent<CharacterScript>();
@@ -34,9 +37,10 @@ public class ProjectileController : MonoBehaviour
         if (enemy != null)
         {
             // 3. Deal Damage
-            enemy.GetHit(damage, 15f); // 15 Stun for projectiles
+            // FIX: Call GetHit with only 1 argument to match CharacterScript
+            enemy.GetHit(damage); 
 
-            // 4. Trigger Hitstop (Heavier feel for magic/projectiles)
+            // 4. Trigger Hitstop 
             if (GameFeelManager.instance != null)
             {
                 GameFeelManager.instance.HitStop(0.12f); 

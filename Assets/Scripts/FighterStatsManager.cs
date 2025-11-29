@@ -7,8 +7,8 @@ public class FighterStatsManager : MonoBehaviour
     [Header("--- Configuration ---")]
     public float maxHealth = 1000f;
     public float maxHyperMeter = 300f;
-    public float maxStun = 100f;
-    public float stunRecoveryRate = 15f;
+    public float maxStun = 100f; // NEW
+    public float stunRecoveryRate = 15f; // NEW
     public float comboResetTime = 2.5f;
 
     [Header("--- Damage Scaling ---")]
@@ -18,9 +18,9 @@ public class FighterStatsManager : MonoBehaviour
     [Header("--- Debug View ---")]
     [SerializeField] private float currentHealth;
     [SerializeField] private float currentHyper;
-    [SerializeField] private float currentStun;
+    [SerializeField] private float currentStun; // NEW
     [SerializeField] private int currentComboCount;
-    [SerializeField] private bool isDizzied;
+    [SerializeField] private bool isDizzied; // NEW
 
     // Public Accessors
     public float CurrentHealth => currentHealth;
@@ -32,14 +32,14 @@ public class FighterStatsManager : MonoBehaviour
     // Events
     public event Action<float, float> OnHealthChanged; 
     public event Action<float, float> OnHyperChanged;  
-    public event Action<float, float> OnStunChanged;   
+    public event Action<float, float> OnStunChanged; // NEW   
     public event Action<int> OnComboUpdated;
     public event Action OnComboEnded;
 
     [Header("--- Gameplay Events ---")]
     public UnityEvent OnDeath;
-    public UnityEvent OnDizzyStart;
-    public UnityEvent OnDizzyEnd;
+    public UnityEvent OnDizzyStart; // NEW
+    public UnityEvent OnDizzyEnd;   // NEW
 
     private void Start()
     {
@@ -47,6 +47,7 @@ public class FighterStatsManager : MonoBehaviour
         currentHyper = maxHyperMeter; 
         currentStun = 0f;
         currentComboCount = 0;
+        
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
         OnHyperChanged?.Invoke(currentHyper, maxHyperMeter);
     }
@@ -57,22 +58,18 @@ public class FighterStatsManager : MonoBehaviour
         HandleStunRecovery();
 
         // DEBUG KEYS
-        if (Input.GetKeyDown(KeyCode.Z)) TakeDamage(100f, 10f, 0f);
+        if (Input.GetKeyDown(KeyCode.Z)) TakeDamage(100f, 10f); 
         if (Input.GetKeyDown(KeyCode.X)) { currentHealth = maxHealth; OnHealthChanged?.Invoke(currentHealth, maxHealth); }
         if (Input.GetKeyDown(KeyCode.M)) AddHyperMeter(maxHyperMeter);
     }
 
-    
-    public void OnOffensiveHit(float meterGain)
-    {
-        AddHyperMeter(meterGain);
-    }
-
-    public void TakeDamage(float baseDamage, float meterGainOnHit, float stunDamage)
+    public void TakeDamage(float baseDamage, float meterGainOnHit)
     {
         if (currentHealth <= 0) return;
+
         UpdateComboState();
 
+        // Scale damage
         float currentScale = Mathf.Pow(scalingFactor, currentComboCount);
         currentScale = Mathf.Max(currentScale, minScalingCap);
         float finalDamage = baseDamage * currentScale;
@@ -81,17 +78,19 @@ public class FighterStatsManager : MonoBehaviour
         currentHealth = Mathf.Max(currentHealth, 0);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
 
-        AddStun(stunDamage);
         AddHyperMeter(meterGainOnHit);
 
         if (currentHealth <= 0) OnDeath.Invoke();
     }
 
+    // --- THIS FIXES THE 'NO OVERLOAD' ERROR ---
     public void BlockAttack(float chipDamage, float meterGainOnBlock)
     {
         if (currentHealth <= 0) return;
+
         currentHealth -= chipDamage; 
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        
         AddHyperMeter(meterGainOnBlock);
     }
 
@@ -117,9 +116,6 @@ public class FighterStatsManager : MonoBehaviour
     {
         lastHitTime = Time.time;
         currentComboCount++;
-        // DEBUG: Did the math update?
-        Debug.Log("COMBO COUNT IS NOW: " + currentComboCount);
-        
         OnComboUpdated?.Invoke(currentComboCount);
     }
 
@@ -135,15 +131,17 @@ public class FighterStatsManager : MonoBehaviour
     private void AddStun(float amount)
     {
         if (isDizzied) return; 
+
         currentStun += amount;
         lastHitTime = Time.time; 
+
         if (currentStun >= maxStun)
         {
             currentStun = maxStun;
             isDizzied = true;
             OnDizzyStart.Invoke();
-            Invoke(nameof(EndDizzy), 3.0f); 
         }
+        
         OnStunChanged?.Invoke(currentStun, maxStun);
     }
 
@@ -157,7 +155,8 @@ public class FighterStatsManager : MonoBehaviour
         }
     }
 
-    public void EndDizzy()
+    // --- THIS FIXES THE 'MISSING DEFINITION' ERROR ---
+    public void ResetStun()
     {
         isDizzied = false;
         currentStun = 0;
