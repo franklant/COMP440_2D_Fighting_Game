@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &29623175 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1170817560038295939, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+  m_PrefabInstance: {fileID: 947486559}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &174079348
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,12 +658,28 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 236065959849726434, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
       propertyPath: isPlayer
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 236065959849726434, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+      propertyPath: enableVFX
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 236065959849726434, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
       propertyPath: enemyTarget
       value: 
       objectReference: {fileID: 1932163470}
+    - target: {fileID: 236065959849726434, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+      propertyPath: myRigidBody
+      value: 
+      objectReference: {fileID: 1690277729}
+    - target: {fileID: 236065959849726434, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+      propertyPath: vfxDataAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 925dec601fb014a09a37581d8996abbc, type: 2}
+    - target: {fileID: 236065959849726434, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+      propertyPath: characterName
+      value: Sukuna
+      objectReference: {fileID: 0}
     - target: {fileID: 236065959849726434, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
       propertyPath: myGroundCheck
       value: 
@@ -671,6 +692,30 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player2
       objectReference: {fileID: 0}
+    - target: {fileID: 3216117180356912395, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 0.8125
+      objectReference: {fileID: 0}
+    - target: {fileID: 3216117180356912395, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 1.875
+      objectReference: {fileID: 0}
+    - target: {fileID: 3216117180356912395, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1.875
+      objectReference: {fileID: 0}
+    - target: {fileID: 4813210847372918600, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+      propertyPath: m_Size.x
+      value: 0.8125
+      objectReference: {fileID: 0}
+    - target: {fileID: 4813210847372918600, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+      propertyPath: m_Size.y
+      value: 1.875
+      objectReference: {fileID: 0}
+    - target: {fileID: 4813210847372918600, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1397583280910756813, guid: 0287e270af3bc4154847ffe12383eb1b, type: 3}
     - target: {fileID: 6814961399752165694, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.95
@@ -711,10 +756,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6968108233768445780, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 88045bca37037414eb9a95e286de6c49, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1170817560038295939, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1690277729}
   m_SourcePrefab: {fileID: 100100000, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
 --- !u!1 &969611541
 GameObject:
@@ -1231,7 +1283,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4961772881205769181, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
   m_PrefabInstance: {fileID: 947486559}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 29623175}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b5d0e2d5b6a64350b0f67448895d120, type: 3}
@@ -1242,6 +1294,33 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6814961399752165694, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
   m_PrefabInstance: {fileID: 947486559}
   m_PrefabAsset: {fileID: 0}
+--- !u!50 &1690277729
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 29623175}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!114 &1708175800 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7546445173906344469, guid: 606f9b45fa3e94c9091efa6631e31db0, type: 3}
@@ -2374,6 +2453,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 236065959849726434, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+      propertyPath: isPlayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 236065959849726434, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+      propertyPath: enableVFX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 236065959849726434, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
       propertyPath: kickHitBox
       value: 
       objectReference: {fileID: 1863280043}
@@ -2390,6 +2477,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 451299598}
     - target: {fileID: 236065959849726434, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+      propertyPath: vfxDataAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 925dec601fb014a09a37581d8996abbc, type: 2}
+    - target: {fileID: 236065959849726434, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
       propertyPath: myGroundCheck
       value: 
       objectReference: {fileID: 969611541}
@@ -2400,6 +2491,22 @@ PrefabInstance:
     - target: {fileID: 1170817560038295939, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
       propertyPath: m_TagString
       value: Player1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3216117180356912395, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 6.46875
+      objectReference: {fileID: 0}
+    - target: {fileID: 3216117180356912395, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 6.40625
+      objectReference: {fileID: 0}
+    - target: {fileID: 4813210847372918600, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+      propertyPath: m_Size.x
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4813210847372918600, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+      propertyPath: m_Size.y
+      value: 1.90625
       objectReference: {fileID: 0}
     - target: {fileID: 6814961399752165694, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2445,8 +2552,7 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 053f7a30994fe4abd874dfcdc9b044d2, type: 2}
-    m_RemovedComponents:
-    - {fileID: 2100150715879963525, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6814961399752165694, guid: d8c2ad4cd4c46c64d9e3ce285bf7dcd0, type: 3}

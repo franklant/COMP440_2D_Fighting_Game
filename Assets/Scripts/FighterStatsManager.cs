@@ -58,7 +58,6 @@ public class FighterStatsManager : MonoBehaviour
         HandleStunRecovery();
 
         // DEBUG KEYS
-        if (Input.GetKeyDown(KeyCode.Z)) TakeDamage(100f, 10f); 
         if (Input.GetKeyDown(KeyCode.X)) { currentHealth = maxHealth; OnHealthChanged?.Invoke(currentHealth, maxHealth); }
         if (Input.GetKeyDown(KeyCode.M)) AddHyperMeter(maxHyperMeter);
     }

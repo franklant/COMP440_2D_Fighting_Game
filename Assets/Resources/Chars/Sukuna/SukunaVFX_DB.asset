@@ -1,0 +1,3660 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fbf478ea5c564de59f3c186cd1873ef, type: 3}
+  m_Name: SukunaVFX_DB
+  m_EditorClassIdentifier: Assembly-CSharp::MugenVfxDatabase
+  profiles:
+  - id: 190
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: -1
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 190
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.26, y: 0.06, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: -5
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 200
+    scale: {x: 0.05, y: 0.08, z: 1}
+    offset: {x: 0.2, y: -0.37, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 200
+    scale: {x: 0.05, y: 0.08, z: 1}
+    offset: {x: 0.2, y: -0.37, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 800
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.05, y: -0.35, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 210
+    scale: {x: 0.08, y: 0.09, z: 1}
+    offset: {x: 0.32, y: -0.23, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 210
+    scale: {x: 0.08, y: 0.09, z: 1}
+    offset: {x: 0.32, y: -0.23, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 800
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.05, y: -0.25, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 220
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 3
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 220
+    scale: {x: 0.2, y: 0.2, z: 1}
+    offset: {x: 0.3, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 3
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 220
+    scale: {x: 0.2, y: 0.2, z: 1}
+    offset: {x: 0.07, y: -0.27, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 220
+    scale: {x: 0.22, y: 0.22, z: 1}
+    offset: {x: 0.07, y: -0.27, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 7025
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.25, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 230
+    scale: {x: 0.06, y: 0.05, z: 1}
+    offset: {x: -0.1, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: -1
+    isAdditive: 0
+  - id: 230
+    scale: {x: 0.06, y: 0.05, z: 1}
+    offset: {x: -0.1, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: -1
+    isAdditive: 0
+  - id: 800
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.05, y: -0.35, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 715
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 7025
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.25, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 245
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 240
+    scale: {x: 0.05, y: 0.08, z: 1}
+    offset: {x: 0.25, y: -0.37, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 240
+    scale: {x: 0.05, y: 0.08, z: 1}
+    offset: {x: 0.25, y: -0.37, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 800
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.05, y: -0.35, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 246
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 500
+    isAdditive: 0
+  - id: 245
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 270502
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 260
+    scale: {x: 0.05, y: 0.08, z: 1}
+    offset: {x: 0.2, y: -0.37, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 260
+    scale: {x: 0.05, y: 0.08, z: 1}
+    offset: {x: 0.2, y: -0.37, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 800
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.05, y: -0.35, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 270
+    scale: {x: 0.05, y: 0.08, z: 1}
+    offset: {x: 0.2, y: -0.2, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 270
+    scale: {x: 0.05, y: 0.08, z: 1}
+    offset: {x: 0.2, y: -0.2, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 800
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.05, y: -0.35, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 270
+    scale: {x: 0.1, y: 0.05, z: 1}
+    offset: {x: -0.1, y: 0.03, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 1
+    bindTime: 5
+    facing: 1
+    isAdditive: 0
+  - id: 280
+    scale: {x: 0.65, y: 0.45, z: 1}
+    offset: {x: 0.1, y: -0.5, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 555
+    facing: 1
+    isAdditive: 0
+  - id: 280
+    scale: {x: 0.2, y: 0.2, z: 1}
+    offset: {x: 0.45, y: 0.08, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 280
+    scale: {x: 0.2, y: 0.2, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 280
+    scale: {x: 1.5, y: 1.5, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 290
+    scale: {x: 0.25, y: 0.25, z: 1}
+    offset: {x: -0.12, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: 1
+    facing: -1
+    isAdditive: 0
+  - id: 290
+    scale: {x: 0.2, y: 0.2, z: 1}
+    offset: {x: -0.2, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 13010
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: -0.4, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 10220
+    scale: {x: 0.5, y: 0.5, z: 1}
+    offset: {x: -0.15, y: -0.35, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 10220
+    scale: {x: 0.25, y: 0.25, z: 1}
+    offset: {x: -0.05, y: -0.35, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 1
+    facing: -1
+    isAdditive: 0
+  - id: 11405
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.08, y: -0.14, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: -2
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 720
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.05, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 500
+    isAdditive: 0
+  - id: 725
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.05, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 500
+    isAdditive: 0
+  - id: 30500
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 30500
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0.02, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 5
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 30500
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0.02, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 4
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 30500
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.02, y: -0.04, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 4
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 30500
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.02, y: -0.04, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 30500
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.02, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 1
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 30500
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.02, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 30500
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.02, y: 0.02, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 1
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 30500
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.02, y: 0.02, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 30500
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: -0.04, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 4
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 30500
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: -0.04, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 30501
+    scale: {x: 0.25, y: 0.25, z: 1}
+    offset: {x: 0, y: 0.04, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 9
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 30501
+    scale: {x: 0.25, y: 0.25, z: 1}
+    offset: {x: 0, y: 0.04, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 8
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 270602
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 722000
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 722001
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 8010
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 1
+  - id: 8010
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 8010
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 1
+  - id: 8010
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 8010
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 8010
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 7025
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 13010
+    scale: {x: 0.5, y: 0.5, z: 1}
+    offset: {x: -0.12, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: 1
+    facing: -1
+    isAdditive: 0
+  - id: 13010
+    scale: {x: 0.4, y: 0.4, z: 1}
+    offset: {x: -0.12, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: 1
+    facing: -1
+    isAdditive: 0
+  - id: 13010
+    scale: {x: 0.25, y: 0.25, z: 1}
+    offset: {x: -0.05, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: 1
+    facing: -1
+    isAdditive: 0
+  - id: 800
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 5
+    bindTime: 0
+    facing: 1
+    isAdditive: 1
+  - id: 800
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 5
+    bindTime: 0
+    facing: 1
+    isAdditive: 1
+  - id: 800
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 5
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 800
+    scale: {x: 0.31, y: 0.31, z: 1}
+    offset: {x: 0.01, y: 0.01, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 5
+    bindTime: 0
+    facing: 1
+    isAdditive: 1
+  - id: 800
+    scale: {x: 0.31, y: 0.31, z: 1}
+    offset: {x: 0.01, y: 0.01, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 5
+    bindTime: 0
+    facing: 1
+    isAdditive: 1
+  - id: 800
+    scale: {x: 0.31, y: 0.31, z: 1}
+    offset: {x: 0.01, y: 0.01, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 5
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 800
+    scale: {x: 0.1, y: 0.1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 1
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 51
+    scale: {x: 0.3, y: 0.3, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 51
+    scale: {x: 0.3, y: 0.3, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 52
+    scale: {x: 0.3, y: 0.3, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 52
+    scale: {x: 0.3, y: 0.3, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 60
+    scale: {x: 0.15, y: 0.2, z: 1}
+    offset: {x: 0.1, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 5
+    facing: 1
+    isAdditive: 0
+  - id: 60
+    scale: {x: 0.15, y: 0.2, z: 1}
+    offset: {x: 0.1, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: 5
+    facing: 1
+    isAdditive: 0
+  - id: 60
+    scale: {x: 0.2, y: 0.1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: 1
+    facing: 1
+    isAdditive: 1
+  - id: 60
+    scale: {x: 0.2, y: 0.1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 60
+    scale: {x: 0.2, y: 0.1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 60
+    scale: {x: 0.2, y: 0.1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 60
+    scale: {x: 0.2, y: 0.25, z: 1}
+    offset: {x: 0.1, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 5
+    facing: 1
+    isAdditive: 0
+  - id: 60
+    scale: {x: 0.2, y: 0.25, z: 1}
+    offset: {x: 0.1, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: 5
+    facing: 1
+    isAdditive: 0
+  - id: 60
+    scale: {x: 0.15, y: 0.2, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 10
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 60
+    scale: {x: 0.15, y: 0.2, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 60
+    scale: {x: 0.3, y: 0.3, z: 1}
+    offset: {x: 0.3, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 5
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 60
+    scale: {x: 0.3, y: 0.3, z: 1}
+    offset: {x: 0.3, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 5
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 65
+    scale: {x: 0.3, y: 0.3, z: 1}
+    offset: {x: 0.3, y: 0.115, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 5
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 65
+    scale: {x: 0.3, y: 0.3, z: 1}
+    offset: {x: 0.3, y: 0.115, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 5
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 70
+    scale: {x: 0.35, y: 0.35, z: 1}
+    offset: {x: 0, y: -0.05, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: 1
+    facing: -1
+    isAdditive: 0
+  - id: 70
+    scale: {x: 0.35, y: 0.35, z: 1}
+    offset: {x: 0, y: -0.05, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 1
+    facing: -1
+    isAdditive: 0
+  - id: 70
+    scale: {x: 0.65, y: 0.1, z: 1}
+    offset: {x: 0.1, y: -0.2, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 1
+  - id: 70
+    scale: {x: 0.65, y: 0.1, z: 1}
+    offset: {x: 0.1, y: -0.4, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 1
+  - id: 70
+    scale: {x: 0.65, y: 0.1, z: 1}
+    offset: {x: 0.1, y: -0.2, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 70
+    scale: {x: 0.65, y: 0.1, z: 1}
+    offset: {x: 0.1, y: -0.4, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 99010
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 0
+    isAdditive: 0
+  - id: 700
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 9999.99, y: 9999.99, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 999999
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 99.99, y: 99.99, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1070
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 13007
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0.2, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 13009
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 3
+    scale: {x: 0.25, y: 0.25, z: 1}
+    offset: {x: -0.2, y: -0.15, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 3
+    scale: {x: 0.2, y: 0.2, z: 1}
+    offset: {x: -0.3, y: -0.15, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 3
+    scale: {x: 0.25, y: 0.25, z: 1}
+    offset: {x: -0.2, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: -2
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 3
+    scale: {x: 0.2, y: 0.2, z: 1}
+    offset: {x: -0.2, y: -0.25, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: -2
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 1000
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 1010
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.6, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1090
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.99, y: 0.99, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 101
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 800
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.4, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1060
+    scale: {x: 0.4, y: 0.4, z: 1}
+    offset: {x: -0.2, y: 0.01, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 4
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 1060
+    scale: {x: 0.4, y: 0.4, z: 1}
+    offset: {x: -0.2, y: 0.01, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 101
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 800
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.4, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1081
+    scale: {x: 0.9, y: 0.9, z: 1}
+    offset: {x: 0.2, y: -0.45, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 29100
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 27420
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 5
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 27410
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 5
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 29150
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 29160
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 990
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 590
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 9.99, y: 9.99, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 995
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 995
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 995
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 720
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.05, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 500
+    isAdditive: 0
+  - id: 725
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.05, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 500
+    isAdditive: 0
+  - id: 2100
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 2160
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.25, y: -0.34, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 2150
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 2150
+    scale: {x: 0.2, y: 0.2, z: 1}
+    offset: {x: 0, y: -0.35, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: 1
+    facing: -1
+    isAdditive: 0
+  - id: 2150
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: 1
+    facing: -1
+    isAdditive: 1
+  - id: 1200
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 1220
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.2, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1270
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.2, y: 0.8, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1220
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 9999
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1250
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.8, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 500
+    isAdditive: 0
+  - id: 1250
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 1.2, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 500
+    isAdditive: 0
+  - id: 1250
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.4, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 500
+    isAdditive: 0
+  - id: 1250
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.4, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 500
+    isAdditive: 0
+  - id: 1250
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.8, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 500
+    isAdditive: 0
+  - id: 1250
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -1.2, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 500
+    isAdditive: 0
+  - id: 1400
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 1490
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.99, y: 0.99, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1410
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.6, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1412
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.6, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1422
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 99.99, y: 99.99, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1420
+    scale: {x: 0.2, y: 0.1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: 1
+    facing: 1
+    isAdditive: 1
+  - id: 1420
+    scale: {x: 0.2, y: 0.1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 1420
+    scale: {x: 0.2, y: 0.1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 1420
+    scale: {x: 0.2, y: 0.1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 1420
+    scale: {x: 0.5, y: 0.5, z: 1}
+    offset: {x: 0.4, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 4
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 1420
+    scale: {x: 0.5, y: 0.5, z: 1}
+    offset: {x: 0.4, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 800
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.05, y: -0.25, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1421
+    scale: {x: 0.2, y: 0.1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: 1
+    facing: 1
+    isAdditive: 1
+  - id: 1421
+    scale: {x: 0.2, y: 0.1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 1421
+    scale: {x: 0.2, y: 0.1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 1421
+    scale: {x: 0.2, y: 0.1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 1421
+    scale: {x: 0.5, y: 0.5, z: 1}
+    offset: {x: -0.4, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 4
+    bindTime: -1
+    facing: -1
+    isAdditive: 0
+  - id: 1421
+    scale: {x: 0.5, y: 0.5, z: 1}
+    offset: {x: -0.4, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: -1
+    isAdditive: 0
+  - id: 800
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.05, y: -0.25, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1700
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 1701
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.6, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1701
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: 1
+    facing: -1
+    isAdditive: 0
+  - id: 1750
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1750
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 1702
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0.02, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: -10
+    bindTime: 1
+    facing: -1
+    isAdditive: 0
+  - id: 1702
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0.02, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: -10
+    bindTime: 1
+    facing: -1
+    isAdditive: 0
+  - id: 1750
+    scale: {x: 0.25, y: 0.25, z: 1}
+    offset: {x: 0, y: 0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1750
+    scale: {x: 0.75, y: 0.75, z: 1}
+    offset: {x: 0, y: -0.05, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: -9
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1100
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 1110
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1110
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: -0.4, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 4
+    bindTime: -1
+    facing: 1
+    isAdditive: 1
+  - id: 1110
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.03, y: -0.42, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 1110
+    scale: {x: 0.45, y: 0.25, z: 1}
+    offset: {x: -0.03, y: -0.2, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 1
+  - id: 1110
+    scale: {x: 0.35, y: 0.25, z: 1}
+    offset: {x: -0.03, y: -0.15, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: -1
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 1110
+    scale: {x: 0.2, y: 0.2, z: 1}
+    offset: {x: 0.1, y: -0.18, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 4
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1110
+    scale: {x: 0.2, y: 0.2, z: 1}
+    offset: {x: 0.05, y: 0.02, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 4
+    bindTime: 1
+    facing: 1
+    isAdditive: 1
+  - id: 1111
+    scale: {x: 0.2, y: 0.2, z: 1}
+    offset: {x: 0, y: -0.5, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 2
+    bindTime: 10
+    facing: 1
+    isAdditive: 0
+  - id: 1111
+    scale: {x: 0.2, y: 0.2, z: 1}
+    offset: {x: 0, y: -0.5, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 3
+    bindTime: 10
+    facing: 1
+    isAdditive: 1
+  - id: 1111
+    scale: {x: 0.15, y: 0.15, z: 1}
+    offset: {x: 0.3, y: -0.25, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 4
+    bindTime: 0
+    facing: -1
+    isAdditive: 1
+  - id: 1111
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.4, y: -0.25, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 3
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 1111
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.4, y: -0.25, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 2
+    bindTime: 1
+    facing: -1
+    isAdditive: 0
+  - id: 1112
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.04, y: -0.2, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 4
+    bindTime: 0
+    facing: 1
+    isAdditive: 1
+  - id: 1112
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.01, y: -0.17, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1600
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 1650
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1600
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 1660
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 9.99, y: 9.99, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 580
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 580
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -1.5, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 8090
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 999.99, y: 999.99, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 2200
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 2250
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0.66, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1050
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: -0.4, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: -2
+    bindTime: 555
+    facing: 1
+    isAdditive: 0
+  - id: 1050
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: -0.4, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: -2
+    bindTime: 555
+    facing: 1
+    isAdditive: 0
+  - id: 1051
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1050
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: -4
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 1051
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1051
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1051
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1051
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1300
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 1310
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1310
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: -0.4, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 4
+    bindTime: -1
+    facing: 1
+    isAdditive: 1
+  - id: 1310
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.03, y: -0.42, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 1311
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 3
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 1311
+    scale: {x: 0.3, y: 0.35, z: 1}
+    offset: {x: -0.2, y: -0.25, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 4
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 1311
+    scale: {x: 0.3, y: 0.35, z: 1}
+    offset: {x: -0.2, y: -0.25, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 1311
+    scale: {x: 0.9, y: 0.5, z: 1}
+    offset: {x: -0.1, y: -0.2, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 1
+  - id: 1311
+    scale: {x: 0.7, y: 0.5, z: 1}
+    offset: {x: -0.1, y: -0.2, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: -1
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 1311
+    scale: {x: 0.25, y: 0.25, z: 1}
+    offset: {x: 0.1, y: -0.25, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 4
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1311
+    scale: {x: 0.25, y: 0.25, z: 1}
+    offset: {x: 0.05, y: 0.02, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 4
+    bindTime: 1
+    facing: 1
+    isAdditive: 1
+  - id: 1311
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 3
+    bindTime: 0
+    facing: -1
+    isAdditive: 1
+  - id: 1311
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 2
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 1311
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 3
+    bindTime: 0
+    facing: -1
+    isAdditive: 1
+  - id: 1311
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 2
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 1311
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 1
+    bindTime: 0
+    facing: -1
+    isAdditive: 1
+  - id: 1311
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 4
+    bindTime: 0
+    facing: -1
+    isAdditive: 1
+  - id: 1311
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 4
+    bindTime: 0
+    facing: -1
+    isAdditive: 1
+  - id: 1311
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 2
+    bindTime: 1
+    facing: -1
+    isAdditive: 0
+  - id: 1312
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.05, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 4
+    bindTime: -1
+    facing: 1
+    isAdditive: 1
+  - id: 1312
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: -0.03, y: -0.27, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 1800
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: -0.4, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: -2
+    bindTime: 555
+    facing: 1
+    isAdditive: 0
+  - id: 1800
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: -0.4, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: -2
+    bindTime: 555
+    facing: 1
+    isAdditive: 0
+  - id: 1801
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1800
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: -4
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 1801
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1801
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1801
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1851
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1802
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1802
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1802
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1851
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 2000
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 2050
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.5, y: 0.05, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 2050
+    scale: {x: 0.2, y: 0.2, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 500
+    bindTime: 1
+    facing: 1
+    isAdditive: 1
+  - id: 2050
+    scale: {x: 0.5, y: 0.5, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 2050
+    scale: {x: 0.5, y: 0.5, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 990
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 995
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 725
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.05, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 500
+    isAdditive: 0
+  - id: 8090
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 9999.99, y: 9999.99, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1500
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 1501
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.32, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1570
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 99.99, y: 99.99, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 800
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: -0.22, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 800
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: -0.22, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 800
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: -0.22, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 800
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: -0.22, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 8090
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 9999.99, y: 9999.99, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1900
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 1901
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.32, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1970
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 99.99, y: 99.99, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 800
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: -0.22, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 800
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: -0.22, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 800
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: -0.22, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 800
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: -0.22, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 99010
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 0
+    isAdditive: 0
+  - id: 700
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 9999.99, y: 9999.99, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 999999
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 99.99, y: 99.99, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 1070
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 13007
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0.2, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 13009
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 3
+    scale: {x: 0.25, y: 0.25, z: 1}
+    offset: {x: -0.2, y: -0.15, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 3
+    scale: {x: 0.2, y: 0.2, z: 1}
+    offset: {x: -0.3, y: -0.15, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 3
+    scale: {x: 0.25, y: 0.25, z: 1}
+    offset: {x: -0.2, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: -2
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 3
+    scale: {x: 0.2, y: 0.2, z: 1}
+    offset: {x: -0.2, y: -0.25, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: -2
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 8051
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: -0.7, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 13001
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.3, y: -0.2, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 13003
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 13001
+    scale: {x: 0.8, y: 0.8, z: 1}
+    offset: {x: 0, y: -0.7, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 13003
+    scale: {x: 0.6, y: 0.6, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 4
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 13003
+    scale: {x: 0.6, y: 0.6, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 7505
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0.34, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 500
+    isAdditive: 0
+  - id: 7506
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0.34, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 500
+    isAdditive: 0
+  - id: 8051
+    scale: {x: 0.28, y: 0.28, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: -8
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 8051
+    scale: {x: 0.28, y: 0.28, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: -9
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 8051
+    scale: {x: 0.28, y: 0.28, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: -5
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 8051
+    scale: {x: 0.5, y: 0.5, z: 1}
+    offset: {x: 1.6, y: 0.9, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 128
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 8060
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 8060
+    scale: {x: 0.7, y: 0.5, z: 1}
+    offset: {x: 1.6, y: 1, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 20
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 8052
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: -0.7, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 15600
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 22100
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: -0.15, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 33000
+    scale: {x: 0.805, y: 0.4, z: 1}
+    offset: {x: 0, y: 0.07, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 33000
+    scale: {x: 0.42, y: 0.42, z: 1}
+    offset: {x: 0, y: 0.15, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 33000
+    scale: {x: 0.3, y: 0.3, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 33000
+    scale: {x: 0.2, y: 0.2, z: 1}
+    offset: {x: 0.44, y: 0.08, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 5
+    bindTime: 1
+    facing: -1
+    isAdditive: 0
+  - id: 33000
+    scale: {x: 0.2, y: 0.2, z: 1}
+    offset: {x: -0.44, y: 0.08, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 5
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 33000
+    scale: {x: 0.25, y: 0.25, z: 1}
+    offset: {x: -0.15, y: 0.08, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: -30
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 33000
+    scale: {x: 0.25, y: 0.25, z: 1}
+    offset: {x: -0.35, y: 0.08, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: -30
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 33000
+    scale: {x: 0.25, y: 0.25, z: 1}
+    offset: {x: -0.55, y: 0.08, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: -30
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 33000
+    scale: {x: 0.25, y: 0.25, z: 1}
+    offset: {x: -0.75, y: 0.08, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: -30
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 33000
+    scale: {x: 0.25, y: 0.25, z: 1}
+    offset: {x: 0.15, y: 0.08, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: -20
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 33000
+    scale: {x: 0.25, y: 0.25, z: 1}
+    offset: {x: 0.35, y: 0.08, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: -20
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 33000
+    scale: {x: 0.25, y: 0.25, z: 1}
+    offset: {x: 0.55, y: 0.08, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: -20
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 33000
+    scale: {x: 0.25, y: 0.25, z: 1}
+    offset: {x: 0.75, y: 0.08, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: -20
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 33001
+    scale: {x: 0.2, y: 0.12, z: 1}
+    offset: {x: 0, y: 0.03, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: -1
+    bindTime: 1
+    facing: -1
+    isAdditive: 0
+  - id: 905
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.05, y: -0.4, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 9600
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0.05, y: 0.05, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 33001
+    scale: {x: 0.4, y: 0.3, z: 1}
+    offset: {x: 0, y: -0.1, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: -4
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 33001
+    scale: {x: 0.3, y: 0.3, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 5
+    facing: 1
+    isAdditive: 0
+  - id: 33001
+    scale: {x: 0.3, y: 0.3, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 5
+    bindTime: 4
+    facing: 1
+    isAdditive: 0
+  - id: 33001
+    scale: {x: 0.38, y: 0.38, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 113040
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 113040
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 11132
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 22002
+    scale: {x: 0.3, y: 0.3, z: 1}
+    offset: {x: 0, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 2
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 22002
+    scale: {x: 0.38, y: 0.38, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 22002
+    scale: {x: 0.22, y: 0.18, z: 1}
+    offset: {x: 0.32, y: -0.45, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 7
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 22002
+    scale: {x: 0.19, y: 0.181, z: 1}
+    offset: {x: 0.21, y: -0.34, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 7
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 22002
+    scale: {x: 0.15, y: 0.15, z: 1}
+    offset: {x: 0, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 22002
+    scale: {x: 0.15, y: 0.15, z: 1}
+    offset: {x: 0, y: -0.3, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 22002
+    scale: {x: 0.62, y: 0.62, z: 1}
+    offset: {x: 0.37, y: -0.43, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 11131
+    scale: {x: 0.4, y: 0.1, z: 1}
+    offset: {x: 0.75, y: 0.8, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 11132
+    scale: {x: 0.3, y: 0.3, z: 1}
+    offset: {x: 0, y: 0.1, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 11999
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 11132
+    scale: {x: 0.4, y: 0.4, z: 1}
+    offset: {x: -0.3, y: 0.1, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 113040
+    scale: {x: 0.03, y: 0.02, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 113040
+    scale: {x: 0.03, y: 0.02, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 113040
+    scale: {x: 0.03, y: 0.02, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 113040
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 113040
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 113040
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 113040
+    scale: {x: 0.03, y: 0.02, z: 1}
+    offset: {x: 0, y: 0.05, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 113040
+    scale: {x: 0.03, y: 0.02, z: 1}
+    offset: {x: 0, y: 0.05, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 1
+    facing: -1
+    isAdditive: 0
+  - id: 113040
+    scale: {x: 0.5, y: 0.3, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 113040
+    scale: {x: 0.6, y: 0.6, z: 1}
+    offset: {x: 0, y: 0.2, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 113040
+    scale: {x: 0.4, y: 0.3, z: 1}
+    offset: {x: 0, y: 0.05, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 11999
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 11999
+    scale: {x: 0.155, y: 0.155, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 9
+    bindTime: -1
+    facing: -1
+    isAdditive: 0
+  - id: 11301
+    scale: {x: 0.3, y: 0.3, z: 1}
+    offset: {x: 0.2, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 5555555
+    facing: 1
+    isAdditive: 0
+  - id: 11301
+    scale: {x: 0.2, y: 0.05, z: 1}
+    offset: {x: -0.05, y: 0.1, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 5555555
+    facing: 1
+    isAdditive: 0
+  - id: 11301
+    scale: {x: 0.08, y: 0.08, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 11301
+    scale: {x: 0.14, y: 0.14, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 11303
+    scale: {x: 0.08, y: 0.08, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 11303
+    scale: {x: 0.01, y: 0.01, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 1
+    bindTime: 0
+    facing: 0
+    isAdditive: 1
+  - id: 11303
+    scale: {x: 0.2, y: 0.2, z: 1}
+    offset: {x: 0.3, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 5
+    bindTime: 0
+    facing: 1
+    isAdditive: 1
+  - id: 11303
+    scale: {x: 0.2, y: 0.2, z: 1}
+    offset: {x: 0.3, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 5
+    bindTime: 0
+    facing: 1
+    isAdditive: 1
+  - id: 11304
+    scale: {x: 0.03, y: 0.02, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 11304
+    scale: {x: 0.03, y: 0.02, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 11304
+    scale: {x: 0.03, y: 0.02, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: -1
+    facing: 1
+    isAdditive: 0
+  - id: 11304
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 11304
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 11304
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 11304
+    scale: {x: 0.03, y: 0.02, z: 1}
+    offset: {x: 0, y: 0.05, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 11304
+    scale: {x: 0.03, y: 0.02, z: 1}
+    offset: {x: 0, y: 0.05, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 1
+    facing: -1
+    isAdditive: 0
+  - id: 11304
+    scale: {x: 0.5, y: 0.3, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 11304
+    scale: {x: 0.6, y: 0.6, z: 1}
+    offset: {x: 0, y: 0.2, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: -1
+    isAdditive: 0
+  - id: 11304
+    scale: {x: 0.4, y: 0.3, z: 1}
+    offset: {x: 0, y: 0.05, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 11999
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 905
+    scale: {x: 100, y: 100, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 9600
+    scale: {x: 0.7, y: 0.8, z: 1}
+    offset: {x: -0.02, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 3
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 9600
+    scale: {x: 0.7, y: 0.8, z: 1}
+    offset: {x: 0.02, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 1
+    bindTime: 1
+    facing: -1
+    isAdditive: 0
+  - id: 7505
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0.34, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 500
+    isAdditive: 0
+  - id: 7506
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0.34, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 500
+    isAdditive: 0
+  - id: 8052
+    scale: {x: 0.28, y: 0.28, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: -8
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 8052
+    scale: {x: 0.28, y: 0.28, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: -9
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 8052
+    scale: {x: 0.28, y: 0.28, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: -5
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 8052
+    scale: {x: 0.5, y: 0.5, z: 1}
+    offset: {x: 1.6, y: 0.9, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 128
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  - id: 8060
+    scale: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 0
+    sprPriority: 0
+    bindTime: 0
+    facing: 1
+    isAdditive: 0
+  - id: 8060
+    scale: {x: 0.7, y: 0.5, z: 1}
+    offset: {x: 1.6, y: 1, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    posType: 3
+    sprPriority: 20
+    bindTime: 1
+    facing: 1
+    isAdditive: 0
+  stateMappings:
+  - stateID: 170
+    defaultAnimID: 170
+  - stateID: 181
+    defaultAnimID: 181
+  - stateID: 182
+    defaultAnimID: 182
+  - stateID: 190
+    defaultAnimID: 190
+  - stateID: 200
+    defaultAnimID: 200
+  - stateID: 210
+    defaultAnimID: 210
+  - stateID: 220
+    defaultAnimID: 220
+  - stateID: 230
+    defaultAnimID: 230
+  - stateID: 240
+    defaultAnimID: 240
+  - stateID: 245
+    defaultAnimID: 245
+  - stateID: 246
+    defaultAnimID: 246
+  - stateID: 250
+    defaultAnimID: 250
+  - stateID: 260
+    defaultAnimID: 260
+  - stateID: 270
+    defaultAnimID: 270
+  - stateID: 280
+    defaultAnimID: 280
+  - stateID: 290
+    defaultAnimID: 290
+  - stateID: 300
+    defaultAnimID: 300
+  - stateID: 10220
+    defaultAnimID: 10220
+  - stateID: 10221
+    defaultAnimID: 10221
+  - stateID: 10223
+    defaultAnimID: 10223
+  - stateID: 10224
+    defaultAnimID: 10224
+  - stateID: 11400
+    defaultAnimID: 11400
+  - stateID: 11405
+    defaultAnimID: 11405
+  - stateID: 11410
+    defaultAnimID: 11410
+  - stateID: 115
+    defaultAnimID: 115
+  - stateID: 501
+    defaultAnimID: 501
+  - stateID: 30500
+    defaultAnimID: 30500
+  - stateID: 30501
+    defaultAnimID: 30501
+  - stateID: 270502
+    defaultAnimID: 270502
+  - stateID: 270602
+    defaultAnimID: 270602
+  - stateID: 722000
+    defaultAnimID: 722000
+  - stateID: 722001
+    defaultAnimID: 722001
+  - stateID: 722002
+    defaultAnimID: 722002
+  - stateID: 8010
+    defaultAnimID: 8010
+  - stateID: 7025
+    defaultAnimID: 7025
+  - stateID: 13010
+    defaultAnimID: 13010
+  - stateID: 800
+    defaultAnimID: 800
+  - stateID: 999999
+    defaultAnimID: 999999
+  - stateID: 51
+    defaultAnimID: 51
+  - stateID: 60
+    defaultAnimID: 60
+  - stateID: 65
+    defaultAnimID: 65
+  - stateID: 70
+    defaultAnimID: 70
+  - stateID: 101
+    defaultAnimID: 101
+  - stateID: 99010
+    defaultAnimID: 99010
+  - stateID: 3
+    defaultAnimID: 3
+  - stateID: 1000
+    defaultAnimID: 1000
+  - stateID: 1010
+    defaultAnimID: 1010
+  - stateID: 1015
+    defaultAnimID: 1015
+  - stateID: 1020
+    defaultAnimID: 1020
+  - stateID: 1050
+    defaultAnimID: 1050
+  - stateID: 1060
+    defaultAnimID: 1060
+  - stateID: 1080
+    defaultAnimID: 1080
+  - stateID: 1081
+    defaultAnimID: 1081
+  - stateID: 1082
+    defaultAnimID: 1082
+  - stateID: 1090
+    defaultAnimID: 1090
+  - stateID: 29100
+    defaultAnimID: 29100
+  - stateID: 29150
+    defaultAnimID: 29150
+  - stateID: 29160
+    defaultAnimID: 29160
+  - stateID: 590
+    defaultAnimID: 590
+  - stateID: 2100
+    defaultAnimID: 2100
+  - stateID: 2150
+    defaultAnimID: 2150
+  - stateID: 2160
+    defaultAnimID: 2160
+  - stateID: 1200
+    defaultAnimID: 1200
+  - stateID: 1220
+    defaultAnimID: 1220
+  - stateID: 1230
+    defaultAnimID: 1230
+  - stateID: 1250
+    defaultAnimID: 1250
+  - stateID: 1260
+    defaultAnimID: 1260
+  - stateID: 1261
+    defaultAnimID: 1261
+  - stateID: 1270
+    defaultAnimID: 1270
+  - stateID: 1400
+    defaultAnimID: 1400
+  - stateID: 1410
+    defaultAnimID: 1410
+  - stateID: 1411
+    defaultAnimID: 1411
+  - stateID: 1412
+    defaultAnimID: 1412
+  - stateID: 1420
+    defaultAnimID: 1420
+  - stateID: 1421
+    defaultAnimID: 1421
+  - stateID: 1450
+    defaultAnimID: 1450
+  - stateID: 1490
+    defaultAnimID: 1490
+  - stateID: 1161
+    defaultAnimID: 1161
+  - stateID: 1700
+    defaultAnimID: 1700
+  - stateID: 1701
+    defaultAnimID: 1701
+  - stateID: 1702
+    defaultAnimID: 1702
+  - stateID: 1703
+    defaultAnimID: 1703
+  - stateID: 1750
+    defaultAnimID: 1750
+  - stateID: 1100
+    defaultAnimID: 1100
+  - stateID: 1110
+    defaultAnimID: 1110
+  - stateID: 1111
+    defaultAnimID: 1111
+  - stateID: 1112
+    defaultAnimID: 1112
+  - stateID: 1600
+    defaultAnimID: -1
+  - stateID: 1650
+    defaultAnimID: 1650
+  - stateID: 1651
+    defaultAnimID: 1651
+  - stateID: 1652
+    defaultAnimID: 1652
+  - stateID: 1660
+    defaultAnimID: 1660
+  - stateID: 580
+    defaultAnimID: 580
+  - stateID: 2200
+    defaultAnimID: 2200
+  - stateID: 2250
+    defaultAnimID: 2250
+  - stateID: 2251
+    defaultAnimID: 2251
+  - stateID: 480
+    defaultAnimID: 480
+  - stateID: 481
+    defaultAnimID: 481
+  - stateID: 1051
+    defaultAnimID: 1051
+  - stateID: 1300
+    defaultAnimID: 1300
+  - stateID: 1310
+    defaultAnimID: 1310
+  - stateID: 1311
+    defaultAnimID: 1311
+  - stateID: 1312
+    defaultAnimID: 1312
+  - stateID: 1800
+    defaultAnimID: 1800
+  - stateID: 1801
+    defaultAnimID: 1801
+  - stateID: 1802
+    defaultAnimID: 1802
+  - stateID: 2000
+    defaultAnimID: 2000
+  - stateID: 2050
+    defaultAnimID: 2050
+  - stateID: 1500
+    defaultAnimID: 1500
+  - stateID: 1501
+    defaultAnimID: 1501
+  - stateID: 1510
+    defaultAnimID: 1510
+  - stateID: 1520
+    defaultAnimID: 1520
+  - stateID: 1530
+    defaultAnimID: 1530
+  - stateID: 1540
+    defaultAnimID: 1540
+  - stateID: 1541
+    defaultAnimID: 1541
+  - stateID: 1542
+    defaultAnimID: 1542
+  - stateID: 1543
+    defaultAnimID: 1543
+  - stateID: 1550
+    defaultAnimID: 1550
+  - stateID: 1560
+    defaultAnimID: 1560
+  - stateID: 1570
+    defaultAnimID: 1570
+  - stateID: 1900
+    defaultAnimID: 1900
+  - stateID: 1901
+    defaultAnimID: 1901
+  - stateID: 1910
+    defaultAnimID: 1910
+  - stateID: 1920
+    defaultAnimID: 1920
+  - stateID: 1930
+    defaultAnimID: 1930
+  - stateID: 1940
+    defaultAnimID: 1940
+  - stateID: 1941
+    defaultAnimID: 1941
+  - stateID: 1942
+    defaultAnimID: 1942
+  - stateID: 1943
+    defaultAnimID: 1943
+  - stateID: 1950
+    defaultAnimID: 1950
+  - stateID: 1960
+    defaultAnimID: 1960
+  - stateID: 1970
+    defaultAnimID: 1970
+  - stateID: 13000
+    defaultAnimID: 13000
+  - stateID: 13001
+    defaultAnimID: 13001
+  - stateID: 13002
+    defaultAnimID: 13002
+  - stateID: 13003
+    defaultAnimID: 13003
+  - stateID: 1056
+    defaultAnimID: 1056
+  - stateID: 8051
+    defaultAnimID: 8051
+  - stateID: 8060
+    defaultAnimID: 8060
+  - stateID: 7505
+    defaultAnimID: 7505
+  - stateID: 7506
+    defaultAnimID: 7506
+  - stateID: 33000
+    defaultAnimID: 33000
+  - stateID: 33001
+    defaultAnimID: 33001
+  - stateID: 15600
+    defaultAnimID: 15600
+  - stateID: 22100
+    defaultAnimID: 22100
+  - stateID: 22002
+    defaultAnimID: 22002
+  - stateID: 11131
+    defaultAnimID: 11131
+  - stateID: 11132
+    defaultAnimID: 11132
+  - stateID: 113040
+    defaultAnimID: 113040
+  - stateID: 11999
+    defaultAnimID: 11999
+  - stateID: 11302
+    defaultAnimID: 11302
+  - stateID: 11301
+    defaultAnimID: 11301
+  - stateID: 11303
+    defaultAnimID: 11303
+  - stateID: 11304
+    defaultAnimID: 11304
+  - stateID: 905
+    defaultAnimID: 905
+  - stateID: 9600
+    defaultAnimID: 9600
+  - stateID: 8052
+    defaultAnimID: 8052
