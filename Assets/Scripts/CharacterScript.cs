@@ -167,7 +167,15 @@ public class CharacterScript : MonoBehaviour
         }
 
         //enemyTarget = GameObject.FindGameObjectWithTag("Player2").transform;
-        StartCoroutine(FindEnemyTarget());
+        if (CompareTag("Player1"))
+        {
+            StartCoroutine(SearchForEnemy());
+        }
+        if (CompareTag("Player2"))
+        {
+            StartCoroutine(SearchForPlayer());
+        }
+        
 
         // Movement Database Details
         lightPunch = LoadCharacterMove(characterName, "lightPunch");
@@ -189,25 +197,37 @@ public class CharacterScript : MonoBehaviour
     /// <returns>
     /// Ends the coroutine once the enemyTarget has been found.
     /// </returns>
-    IEnumerator FindEnemyTarget()
+    IEnumerator FindEnemy()
     {
-        //fDebug.LogWarning("Entered FINDTARGET()");
 
-        if (CompareTag("Player1"))
-        {
-            //Debug.LogWarning("Entered PLAYERSTATE()");
-            GameObject enemy = GameObject.FindGameObjectWithTag("Player2");
-            enemyTarget = enemy.transform;
-            yield return new WaitUntil(() => enemyTarget.gameObject.activeInHierarchy);
-        } else
-        {
-            //Debug.LogWarning("Entered ENEMYSTATE()");
-            GameObject enemy = GameObject.FindGameObjectWithTag("Player1");
-            enemyTarget = enemy.transform;
-            yield return new WaitUntil(() => enemyTarget.gameObject.activeInHierarchy);
-        }
-        //Debug.LogWarning("ENEMY NOT NULL");
+        GameObject enemy = GameObject.FindGameObjectWithTag("Player2");
+        // yield return new WaitUntil(() => enemy != null);
+        yield return new WaitForSeconds(0.1f);
     }
+
+    IEnumerator FindPlayer()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player1");
+        // yield return new WaitUntil(() => player != null);
+        yield return new WaitForSeconds(0.1f);
+    }
+
+    IEnumerator SearchForPlayer()
+    {
+        Debug.LogWarning("Start Player Search");
+        yield return StartCoroutine(FindPlayer());
+        Debug.LogWarning("Player Search Ended");
+        enemyTarget = GameObject.FindGameObjectWithTag("Player1").transform;
+    }
+
+    IEnumerator SearchForEnemy()
+    {
+        Debug.LogWarning("Start Enemy Search");
+        yield return StartCoroutine(FindEnemy());
+        Debug.LogWarning("Enemy Search Ended");
+        enemyTarget = GameObject.FindGameObjectWithTag("Player2").transform;
+    }
+
 
     /// <summary>
     /// Loads a character move from the move database by character and movename.
