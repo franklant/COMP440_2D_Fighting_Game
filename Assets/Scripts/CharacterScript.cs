@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System;
+using System.Collections;
 
 
 // TODO: FIX STATES, FIX USER INPUT, FIX JUMPING (THERE IS NO STATE)
@@ -64,7 +65,7 @@ public class CharacterScript : MonoBehaviour
 
     [Header("--- Input Buffer ---")]
     public GameObject inputBuffer;
-    private InputReaderScript inputReaderScript;
+    private NewInputReaderScript inputReaderScript;
 
     [Header("--- Move Database ---")]
     public GameObject moveDatabase;
@@ -91,7 +92,8 @@ public class CharacterScript : MonoBehaviour
         IDLE = 0, WALKING = 1, JUMPING = 2, FALLING = 3,
         ATTACKING = 4, DIZZIED = 5, DEAD = 6, BLOCKING = 7,
         FDASHING = 8,
-        BDASHING = 9
+        BDASHING = 9, 
+        KNOCKBACK = 10
     };
 
     void SetState(STATE state) { currentState = (int) state; }
@@ -104,16 +106,18 @@ public class CharacterScript : MonoBehaviour
         myRigidBody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>(); 
         myStats = GetComponent<FighterStatsManager>();
-        inputBuffer = GameObject.FindGameObjectWithTag("InputReader");
+        //inputBuffer = GameObject.FindGameObjectWithTag("InputReader");
         moveDatabase = GameObject.FindGameObjectWithTag("MoveDB");
         
         if (myGroundCheck == null) myGroundCheck = GameObject.FindGameObjectWithTag("GroundCheck");
         if (midJabHitBox == null) midJabHitBox = GameObject.FindGameObjectWithTag("MidJabHitBox");
 
+        //inputBuffer = GameObject.FindGameObjectWithTag("InputReader");
         // Get the Input Buffer
-        if (inputBuffer == null) Debug.LogError("Cannot find Input Buffer");
+        // if (inputBuffer == null) Debug.LogError("Cannot find Input Buffer");
 
-        inputReaderScript = inputBuffer.GetComponent<InputReaderScript>();
+        // inputReaderScript = inputBuffer.GetComponent<InputReaderScript>();
+        inputReaderScript = GetComponent<NewInputReaderScript>();
         
         if (inputReaderScript == null) Debug.LogError("Cannot find inputReaderScript");
 
@@ -124,12 +128,16 @@ public class CharacterScript : MonoBehaviour
         
         if (moveDatabaseManagerScript == null) Debug.LogError("Cannot find moveDatabaseManagerScript");
 
+        // Error with this function
         if (myStats != null)
         {
             myStats.OnDizzyStart.AddListener(() => SetState(STATE.DIZZIED));
             myStats.OnDeath.AddListener(() => SetState(STATE.DEAD));
             myStats.OnDizzyEnd.AddListener(() => SetState(STATE.IDLE));
         }
+
+        //enemyTarget = GameObject.FindGameObjectWithTag("Player2").transform;
+        StartCoroutine(FindEnemyTarget());
 
         // Movement Database Details
         lightPunch = LoadCharacterMove(characterName, "lightPunch");
@@ -143,6 +151,32 @@ public class CharacterScript : MonoBehaviour
 
         SetState(STATE.IDLE);
         isGrounded = false;
+    }
+
+    /// <summary>
+    /// A coroutine that finds the enemy target based on whether the current instance is player 1 or 2.
+    /// </summary>
+    /// <returns>
+    /// Ends the coroutine once the enemyTarget has been found.
+    /// </returns>
+    IEnumerator FindEnemyTarget()
+    {
+        //fDebug.LogWarning("Entered FINDTARGET()");
+
+        if (isPlayer)
+        {
+            //Debug.LogWarning("Entered PLAYERSTATE()");
+            GameObject enemy = GameObject.FindGameObjectWithTag("Player2");
+            enemyTarget = enemy.transform;
+            yield return new WaitUntil(() => enemyTarget.gameObject.activeSelf);
+        } else
+        {
+            //Debug.LogWarning("Entered ENEMYSTATE()");
+            GameObject enemy = GameObject.FindGameObjectWithTag("Player1");
+            enemyTarget = enemy.transform;
+            yield return new WaitUntil(() => enemyTarget.gameObject.activeSelf);
+        }
+        //Debug.LogWarning("ENEMY NOT NULL");
     }
 
     /// <summary>
@@ -162,52 +196,32 @@ public class CharacterScript : MonoBehaviour
     /// </summary>
     void HandleInput()
     {
-        //string inputToRemove = "";
-        if (Input.anyKey)
+        if (inputReaderScript.controlKeyPressed)
         {
-            // if (inputReaderScript.FindInput("jjj"))
-            // {
-            //     Debug.Log("Perform <color=yellow>placeholder CHAIN ATTACK FINAL</color>.");
-
-
-            //     Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>"); 
-                
-            //     //inputToRemove = "jjj";
-            //     //Debug.Log("Index of Input Sequence: " + inputReaderScript.inputBuffer.IndexOf("jjj"));
-            // } else if (inputReaderScript.FindInput("jj"))
-            // {
-            //     Debug.Log("Perform <color=yellow>placeholder CHAIN ATTACK SECOND</color>.");
-
-
-            //     Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>"); 
-            // }
-            // else 
             if (inputReaderScript.FindInput(backDash.input))
             {
-                Debug.Log("Perform <color=yellow>BACK DASH</color>.");
+                //Debug.Log("Perform <color=yellow>BACK DASH</color>.");
 
                 dashTimer = 0;
 
-                Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
+                //Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
 
                 SetState(STATE.BDASHING);
                 // inputReaderScript.inputBuffer = "";
             }
             else if (inputReaderScript.FindInput(forwardDash.input))
             {
-                Debug.Log("Perform <color=yellow>FORWARD DASH</color>.");
+                //Debug.Log("Perform <color=yellow>FORWARD DASH</color>.");
 
                 dashTimer = 0;
 
-                Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
+                //Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
 
                 SetState(STATE.FDASHING);
                 // inputReaderScript.inputBuffer = "";
             }
-            else if (inputReaderScript.FindInput(meter1.input))
+            if (inputReaderScript.FindInput(meter1.input))
             {
-                Debug.Log("Perform <color=yellow>METER 1</color>.");
-
                 if (myStats.TrySpendMeter(100f)) 
                 {
                     PerformSuperMove("Meter1");
@@ -216,15 +230,9 @@ public class CharacterScript : MonoBehaviour
                 {
                     Debug.Log("Not enough Meter!");
                 }
-
-                Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
-                // inputReaderScript.inputBuffer = "";
             }
-
             else if (inputReaderScript.FindInput(meter2.input))
             {
-                Debug.Log("Perform <color=yellow>METER 2</color>.");
-
                 if (myStats.TrySpendMeter(200f)) 
                 {
                     PerformSuperMove("Meter2");
@@ -233,15 +241,9 @@ public class CharacterScript : MonoBehaviour
                 {
                     Debug.Log("Not enough Meter!");
                 }
-
-                Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
-                // inputReaderScript.inputBuffer = "";
             }
-
             else if (inputReaderScript.FindInput(meter3.input))
             {
-                Debug.Log("Perform <color=yellow>METER 3</color>.");
-
                 if (myStats.TrySpendMeter(300f)) 
                 {
                     PerformSuperMove("Meter3");
@@ -250,33 +252,16 @@ public class CharacterScript : MonoBehaviour
                 {
                     Debug.Log("Not enough Meter!");
                 }
-
-                Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
-                // inputReaderScript.inputBuffer = "";
             }
             
             else if (inputReaderScript.FindInput(lightPunch.input))
             {
-                Debug.Log("Perform <color=purple>LIGHT PUNCH</color>.");
-
+                Debug.Log("HELLOOO?");
                 PerformAttack("Attack", jabDamage, 1);
-
-                Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
-                
-                // C. Lock the state
-                //SetState(STATE.ATTACKING);
             }
             else if (inputReaderScript.FindInput(kick.input))
             {
-                Debug.Log("Perform <color=purple>KICK</color>.");
-
                 PerformAttack("Kick", kickDamage, 2);
-
-                Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
-                // inputReaderScript.inputBuffer = "";
-                
-                // 3. Lock State
-                //SetState(STATE.ATTACKING);
             }
         }
 
@@ -286,6 +271,11 @@ public class CharacterScript : MonoBehaviour
     // TODO: Edit this to read from database
     void Update()
     {
+        if (myStats.CurrentHealth == 0)
+        {
+            SetState(STATE.DEAD);
+        }
+
         // 1. Disable inputs if Dead/Dizzied
         if (currentState == (int)STATE.DIZZIED || currentState == (int)STATE.DEAD)
         {
@@ -345,7 +335,7 @@ public class CharacterScript : MonoBehaviour
         }
         else
         {
-            velocity.y -= GRAVITY;
+            velocity.y -= GRAVITY * Time.deltaTime;
         }
         
         myRigidBody.linearVelocity = velocity;
@@ -355,27 +345,27 @@ public class CharacterScript : MonoBehaviour
 
     void PerformAttack(string triggerName, float dmg, int level)
     {
-        Debug.Log($"ACTION: {triggerName} | Level {level} | Previous Level: {attackLevel}");
+        //Debug.Log($"ACTION: {triggerName} | Level {level} | Previous Level: {attackLevel}");
         velocity.x = 0;
         isAttacking = true;
         attackLevel = level; 
         attackTimer = 0;     
         //attackCoolDownDuration = duration;
 
-        myAnimator.SetTrigger(triggerName);
-        SetState(STATE.ATTACKING);
+        // myAnimator.SetTrigger(triggerName);
+        // SetState(STATE.ATTACKING);
 
         // EDIT to use the total frames from the move database
         if (triggerName == "Attack" && midJabHitBox != null) 
-            attackCoolDownDuration = lightPunch.totalFrames;
+            attackCoolDownDuration = lightPunch.totalFrames / 60;
             midJabHitBox.GetComponent<Hitbox>().damage = dmg;
         
         if (triggerName == "Kick" && kickHitBox != null) 
-            attackCoolDownDuration = kick.totalFrames;
+            attackCoolDownDuration = kick.totalFrames / 60;
             kickHitBox.GetComponent<Hitbox>().damage = dmg;
 
-        // myAnimator.SetTrigger(triggerName);
-        // SetState(STATE.ATTACKING);
+        myAnimator.SetTrigger(triggerName);
+        SetState(STATE.ATTACKING);
     }
 
     void PerformSuperMove(string triggerName)
@@ -389,13 +379,13 @@ public class CharacterScript : MonoBehaviour
         switch (triggerName)
         {
             case "Meter1":
-                attackCoolDownDuration = meter1.totalFrames;
+                attackCoolDownDuration = meter1.totalFrames / 60;
                 break;
             case "Meter2":
-                attackCoolDownDuration = meter2.totalFrames;
+                attackCoolDownDuration = meter2.totalFrames / 60;
                 break;
             case "Meter3":
-                attackCoolDownDuration = meter3.totalFrames;
+                attackCoolDownDuration = meter3.totalFrames / 60;
                 break;
         }
         
@@ -474,8 +464,11 @@ public class CharacterScript : MonoBehaviour
         }
         else
         {
+            //apply velocity
+            Debug.Log("I'm hit.");
             if(myStats != null) myStats.TakeDamage(damage, 10f, stunDamage);
             StartCoroutine(FlashRed());
+            SetState(STATE.KNOCKBACK);
         }
     }
 
@@ -521,6 +514,24 @@ public class CharacterScript : MonoBehaviour
             case (int) STATE.BLOCKING:  BlockingState(); break;
             case (int) STATE.FDASHING:  FDashingState(); break;
             case (int) STATE.BDASHING:  BDashingState(); break;
+            case (int) STATE.KNOCKBACK:  KnockBackState(); break;
+        }
+    }
+
+    // knockback state
+    float knockTimer = 0;
+    float knockDuration = 0.1f;
+    void KnockBackState()
+    {
+        if (knockTimer < knockDuration)
+        {
+            velocity.x = 1;
+            knockTimer += Time.deltaTime;
+        } else
+        {
+            velocity.x = 0;
+            knockTimer = 0;
+            SetState(STATE.IDLE);
         }
     }
 
@@ -613,7 +624,7 @@ public class CharacterScript : MonoBehaviour
         }
         else
         {
-            velocity.y -= GRAVITY;
+            velocity.y -= GRAVITY * Time.deltaTime;
         }
 
         if (velocity.y <= jumpHeight - 2) 
@@ -629,10 +640,10 @@ public class CharacterScript : MonoBehaviour
         if (isBlocking)
         {
             // Debug.Log("HELLOOO");
-            velocity.y -= GRAVITY * 5;  // add 1 half more gravity
+            velocity.y -= GRAVITY * 5 * Time.deltaTime;  // add 1 half more gravity
         } else
         {
-            velocity.y -= GRAVITY;
+            velocity.y -= GRAVITY * Time.deltaTime;
         }
 
         HandleAirControl();

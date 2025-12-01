@@ -6,6 +6,8 @@ public class Hitbox : MonoBehaviour
     public float damage = 50f;
     public float stun = 15f;
     public float meterGainOnHit = 10f;
+    public float hitStop = 0.2f;
+    private GameFeelManager gameFeel;
 
     [Header("Targeting")]
     public string enemyTag = "Player2";
@@ -27,6 +29,8 @@ public class Hitbox : MonoBehaviour
     {
         // Attempt to find the stats manager on the parent (Gojo)
         myStats = GetComponentInParent<FighterStatsManager>();
+
+        gameFeel = GameObject.FindGameObjectWithTag("GameFeel").GetComponent<GameFeelManager>();
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -38,6 +42,8 @@ public class Hitbox : MonoBehaviour
         if (collision.CompareTag(enemyTag) || collision.gameObject.name == enemyTag)
         {
             CharacterScript enemyScript = collision.GetComponentInParent<CharacterScript>();
+            // Fallback: Check parent if we hit a child hurtbox
+            if (enemyScript == null) enemyScript = collision.GetComponent<CharacterScript>();
 
             if (enemyScript != null)
             {
@@ -57,10 +63,12 @@ public class Hitbox : MonoBehaviour
 
                 // 6. Trigger Hitstop (Game Feel)
                 // 0.08f is snappy for melee hits
-                if (GameFeelManager.instance != null)
-                {
-                    GameFeelManager.instance.HitStop(0.08f); 
-                }
+                gameFeel.HitStop(hitStop); 
+                //else
+                // {
+                //     Debug.LogWarning("And a little bit of.. SPICE");
+                //     gameFeel.HitStop(0.08f);
+                // }
             }
         }
     }

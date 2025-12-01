@@ -1,19 +1,22 @@
 using System.Linq;
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class InputReaderScript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [Header("Input Reader Attributes")]
     public string inputBuffer = "";
+    public string TESTSubBuffer = "";
+
     [Tooltip("The previous sequence found and cannot be used again when checking input.")]
     public List<string> previousSequences;
     public List<int> previousStartIndexes;
     public List<int> previousCounts;
 
     [Tooltip("Count the number of frame since last input")]
-    private int frameCount = 0;
+    public float frameCount = 0;
     private bool isLeft = false;
     private bool isRight = false;
     private bool isDown = false;
@@ -34,7 +37,8 @@ public class InputReaderScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        frameCount += 1;
+        frameCount += Time.deltaTime;
+        // frameCount += 1;
         ReadKey();
 
         // if (FindInput("wj"))
@@ -93,13 +97,21 @@ public class InputReaderScript : MonoBehaviour
         } else
         {
             // clear all input fields, for their isn't any new input.
-            if (frameCount > 25)
+            if (frameCount > (1))
             {
                 inputBuffer = "";
                 previousSequences.Clear();
                 previousStartIndexes.Clear();
                 previousCounts.Clear();
             }
+            // clear all input fields, for their isn't any new input.
+            // if (frameCount > 25)
+            // {
+            //     inputBuffer = "";
+            //     previousSequences.Clear();
+            //     previousStartIndexes.Clear();
+            //     previousCounts.Clear();
+            // }
         }
 
     }
@@ -119,9 +131,20 @@ public class InputReaderScript : MonoBehaviour
     public bool FindInput(string input)
     {
         // has this sequence been previosly used?
+        // int bufferStartIndex = 0;
+
+        // if (previousStartIndexes.Count > 0 && previousCounts.Count > 0)
+        // {
+        //     bufferStartIndex = previousStartIndexes.Last() + previousCounts.Last();
+        // }
+
+        // string subBuffer = inputBuffer.Substring(bufferStartIndex);
+        // TESTSubBuffer = subBuffer;
         if (inputBuffer.Contains(input) && !isPreviousSequence(input))
         {
             SetPreviousSequence(input);
+            //RemoveInputSequence(input);
+            //PrintPreviousSequence();
             return true;
         }
         return false;
@@ -155,6 +178,16 @@ public class InputReaderScript : MonoBehaviour
         previousStartIndexes.Add(inputBuffer.IndexOf(input));
         previousCounts.Add(input.Length);
         
+    }
+
+    public void PrintPreviousSequence()
+    {
+        Debug.Log("Sequence Begin: ");
+        foreach (string i in previousSequences)
+        {
+            Debug.Log(i);
+        }
+        Debug.Log("Sequence End");
     }
 
 

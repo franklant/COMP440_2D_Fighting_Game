@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8939691520108891593
 Transform:
@@ -47,7 +47,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!4 &747930185695414642
 Transform:
@@ -98,7 +98,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.2842698}
+  m_Offset: {x: -0.28916007, y: 0.13452649}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -108,7 +108,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 0.43146038}
+  m_Size: {x: 0.8760747, y: 0.5140773}
   m_EdgeRadius: 0
 --- !u!114 &6999109291040698590
 MonoBehaviour:
@@ -125,6 +125,7 @@ MonoBehaviour:
   damage: 50
   stun: 15
   meterGainOnHit: 10
+  hitStop: 0.09
   enemyTag: Player2
   myStats: {fileID: 0}
 --- !u!1 &6460727995111898062
@@ -142,12 +143,13 @@ GameObject:
   - component: {fileID: 1246594623167018045}
   - component: {fileID: 65954834211545543}
   - component: {fileID: 8612095885768193157}
+  - component: {fileID: 1811064244031297694}
   m_Layer: 0
   m_Name: Naruto
   m_TagString: Player1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7159843630758305163
 Transform:
@@ -283,7 +285,7 @@ MonoBehaviour:
   meter1Damage: 200
   meter2Damage: 400
   meter3Damage: 600
-  GRAVITY: 0.196
+  GRAVITY: 19.6
   velocity: {x: 0, y: 0, z: 0}
   movementSpeed: 4
   maxSpeed: 5
@@ -421,7 +423,7 @@ Rigidbody2D:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!114 &65954834211545543
@@ -503,6 +505,28 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.29550374, y: 0.6728957}
   m_EdgeRadius: 0
+--- !u!114 &1811064244031297694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6460727995111898062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c450c8efb9ea30c468a4d17062a39dbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NewInputReaderScript
+  inputBuffer: 
+  searchBuffer: 
+  frameSinceAnyInput: 0
+  frameSinceLastInput: 0
+  controlKeyPressed: 0
+  countFrameSinceLastInput: 0
+  keyLifeTime: 0.41666666
+  keys: 
+  usedKeyStatus: 
+  lifetimes: []
 --- !u!1 &7809668687351389727
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,7 +543,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!4 &6663854034471011233
 Transform:
@@ -551,6 +575,7 @@ MonoBehaviour:
   damage: 50
   stun: 15
   meterGainOnHit: 10
+  hitStop: 0.09
   enemyTag: Player2
   myStats: {fileID: 0}
 --- !u!61 &5097911923216291679
@@ -587,7 +612,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.33818308}
+  m_Offset: {x: -0.21945184, y: 0.046441525}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -597,7 +622,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 0.32363385}
+  m_Size: {x: 0.5610963, y: 0.27716157}
   m_EdgeRadius: 0
 --- !u!1001 &4184756871618057142
 PrefabInstance:
@@ -610,6 +635,14 @@ PrefabInstance:
     - target: {fileID: 6593678746721848940, guid: 1f14e30783098d049a939de73efd18e4, type: 3}
       propertyPath: m_Name
       value: InputReader
+      objectReference: {fileID: 0}
+    - target: {fileID: 6593678746721848940, guid: 1f14e30783098d049a939de73efd18e4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6593678746721848940, guid: 1f14e30783098d049a939de73efd18e4, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 7359409243435192029, guid: 1f14e30783098d049a939de73efd18e4, type: 3}
       propertyPath: m_LocalPosition.x
