@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System;
 using System.Collections;
+using NUnit.Framework;
 
 
 // TODO: FIX STATES, FIX USER INPUT, FIX JUMPING (THERE IS NO STATE)
@@ -23,8 +24,10 @@ public class CharacterScript : MonoBehaviour
 
     [Header("--- VFX References ---")]
     public ScreenFlashEffect redScreenFlash; 
+    private GameObject flashObject;
     public CameraShake camShake; 
     public ScreenDimmer screenDimmer;
+    private GameObject dimmerObject;
 
     [Header("--- Combat References ---")]
     public GameObject midJabHitBox;      
@@ -112,11 +115,6 @@ public class CharacterScript : MonoBehaviour
         if (myGroundCheck == null) myGroundCheck = GameObject.FindGameObjectWithTag("GroundCheck");
         if (midJabHitBox == null) midJabHitBox = GameObject.FindGameObjectWithTag("MidJabHitBox");
 
-        //inputBuffer = GameObject.FindGameObjectWithTag("InputReader");
-        // Get the Input Buffer
-        // if (inputBuffer == null) Debug.LogError("Cannot find Input Buffer");
-
-        // inputReaderScript = inputBuffer.GetComponent<InputReaderScript>();
         inputReaderScript = GetComponent<NewInputReaderScript>();
         
         if (inputReaderScript == null) Debug.LogError("Cannot find inputReaderScript");
@@ -127,6 +125,39 @@ public class CharacterScript : MonoBehaviour
         moveDatabaseManagerScript = moveDatabase.GetComponent<MovementDataManager>();
         
         if (moveDatabaseManagerScript == null) Debug.LogError("Cannot find moveDatabaseManagerScript");
+
+        dimmerObject = GameObject.FindGameObjectWithTag("ScreenDimmer");
+
+        if (dimmerObject == null)
+        {
+            Debug.LogError("Could not find dimmer object.");
+        }
+
+        screenDimmer = dimmerObject.GetComponent<ScreenDimmer>();
+
+        if (screenDimmer == null)
+        {
+            Debug.LogError("Cannot find screen dimmer");
+        }
+
+        if (isPlayer)
+        {
+            flashObject = GameObject.FindGameObjectWithTag("ScreenFlash");
+        } else
+        {
+            flashObject = GameObject.FindGameObjectWithTag("ScreenFlash");
+        }
+
+        if (flashObject == null)
+        {
+            Debug.Log("Could not find flash object");
+        }
+
+        redScreenFlash = flashObject.GetComponent<ScreenFlashEffect>();
+        if (redScreenFlash == null)
+        {
+            Debug.LogError("Could not find screen flash effect.");
+        }
 
         // Error with this function
         if (myStats != null)
@@ -397,6 +428,7 @@ public class CharacterScript : MonoBehaviour
 
     public void CastBlue() 
     {
+        if (screenDimmer != null) screenDimmer.TriggerDim(0.5f);
         SpawnProjectileAtLocation(blueProjectilePrefab, meter1Damage, firePoint.position);
     }
 

@@ -126,7 +126,9 @@ MonoBehaviour:
   stun: 15
   meterGainOnHit: 10
   hitStop: 0.09
+  maxOffset: 0.5
   enemyTag: Player2
+  testHitEffect: {fileID: 3560096165090776704, guid: 4bf1bbf49963269498581c65182ceb62, type: 3}
   myStats: {fileID: 0}
 --- !u!1 &6460727995111898062
 GameObject:
@@ -576,7 +578,9 @@ MonoBehaviour:
   stun: 15
   meterGainOnHit: 10
   hitStop: 0.09
+  maxOffset: 0.5
   enemyTag: Player2
+  testHitEffect: {fileID: 3560096165090776704, guid: 4bf1bbf49963269498581c65182ceb62, type: 3}
   myStats: {fileID: 0}
 --- !u!61 &5097911923216291679
 BoxCollider2D:
