@@ -155,7 +155,7 @@ MonoBehaviour:
   meter1Damage: 200
   meter2Damage: 400
   meter3Damage: 600
-  GRAVITY: 0.196
+  GRAVITY: 19.6
   velocity: {x: 0, y: 0, z: 0}
   movementSpeed: 4
   maxSpeed: 5
@@ -269,6 +269,7 @@ MonoBehaviour:
   isJumping: 0
   isAttacking: 0
   isBlocking: 0
+  lastInput: 
 --- !u!50 &2100150715879963525
 Rigidbody2D:
   serializedVersion: 5

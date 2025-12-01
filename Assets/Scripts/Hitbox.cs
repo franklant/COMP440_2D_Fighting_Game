@@ -22,6 +22,8 @@ public class Hitbox : MonoBehaviour
     [Header("References")]
     public FighterStatsManager myStats; // Reference to YOUR stats (to gain meter)
 
+    public bool isAerial = false;
+
     // --- ONE HIT LOGIC ---
     // Prevents the hitbox from registering multiple hits in a single swing
     private bool hasHit = false; 
@@ -90,7 +92,7 @@ public class Hitbox : MonoBehaviour
                 Debug.Log("HIT CONFIRMED: " + collision.name);
 
                 // 4. Deal Damage & Stun
-                enemyScript.GetHit(damage, stun);
+                enemyScript.GetHit(damage, stun, isAerial);
 
                 // 5. Reward Meter to Attacker
                 if (myStats != null)

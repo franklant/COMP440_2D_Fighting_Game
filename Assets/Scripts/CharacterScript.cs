@@ -4,16 +4,13 @@ using System;
 using System.Collections;
 using NUnit.Framework;
 
-
-// TODO: FIX STATES, FIX USER INPUT, FIX JUMPING (THERE IS NO STATE)
-
 public class CharacterScript : MonoBehaviour
 {
     [Header("--- Control Settings ---")]
     public bool isPlayer = true; // CHECK THIS FOR GOJO, UNCHECK FOR DUMMY
 
     [Header("--- Character ---")]
-    public string characterName = "Gojo";
+    public string characterName;
 
     [Header("--- Components ---")]
     public SpriteRenderer mySpriteRenderer;
@@ -96,7 +93,8 @@ public class CharacterScript : MonoBehaviour
         ATTACKING = 4, DIZZIED = 5, DEAD = 6, BLOCKING = 7,
         FDASHING = 8,
         BDASHING = 9, 
-        KNOCKBACK = 10
+        KNOCKBACK = 10,
+        AERIALKNOCKBACK = 11
     };
 
     void SetState(STATE state) { currentState = (int) state; }
@@ -105,6 +103,7 @@ public class CharacterScript : MonoBehaviour
 
     void Start()
     {
+        characterName = PlayerPrefs.GetString("selectedCharacter");
         mySpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         myRigidBody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>(); 
@@ -225,6 +224,7 @@ public class CharacterScript : MonoBehaviour
     /// Handles the input given a certain input sequence from the player.
     /// -TODO- Edit to use the perform move function
     /// </summary>
+    public string lastInput;
     void HandleInput()
     {
         if (inputReaderScript.controlKeyPressed)
@@ -253,6 +253,7 @@ public class CharacterScript : MonoBehaviour
             }
             if (inputReaderScript.FindInput(meter1.input))
             {
+                lastInput = meter1.input;
                 if (myStats.TrySpendMeter(100f)) 
                 {
                     PerformSuperMove("Meter1");
@@ -264,6 +265,7 @@ public class CharacterScript : MonoBehaviour
             }
             else if (inputReaderScript.FindInput(meter2.input))
             {
+                lastInput = meter2.input;
                 if (myStats.TrySpendMeter(200f)) 
                 {
                     PerformSuperMove("Meter2");
@@ -275,6 +277,7 @@ public class CharacterScript : MonoBehaviour
             }
             else if (inputReaderScript.FindInput(meter3.input))
             {
+                lastInput = meter3.input;
                 if (myStats.TrySpendMeter(300f)) 
                 {
                     PerformSuperMove("Meter3");
@@ -287,12 +290,13 @@ public class CharacterScript : MonoBehaviour
             
             else if (inputReaderScript.FindInput(lightPunch.input))
             {
-                Debug.Log("HELLOOO?");
-                PerformAttack("Attack", jabDamage, 1);
+                lastInput = lightPunch.input;
+                PerformAttack("Attack", lightPunch.damage, 1);
             }
             else if (inputReaderScript.FindInput(kick.input))
             {
-                PerformAttack("Kick", kickDamage, 2);
+                lastInput = kick.input;
+                PerformAttack("Kick", kick.damage, 2);
             }
         }
 
@@ -390,10 +394,12 @@ public class CharacterScript : MonoBehaviour
         if (triggerName == "Attack" && midJabHitBox != null) 
             attackCoolDownDuration = lightPunch.totalFrames / 60;
             midJabHitBox.GetComponent<Hitbox>().damage = dmg;
+            midJabHitBox.GetComponent<Hitbox>().isAerial = false;
         
         if (triggerName == "Kick" && kickHitBox != null) 
             attackCoolDownDuration = kick.totalFrames / 60;
             kickHitBox.GetComponent<Hitbox>().damage = dmg;
+            kickHitBox.GetComponent<Hitbox>().isAerial = true;
 
         myAnimator.SetTrigger(triggerName);
         SetState(STATE.ATTACKING);
@@ -429,14 +435,14 @@ public class CharacterScript : MonoBehaviour
     public void CastBlue() 
     {
         if (screenDimmer != null) screenDimmer.TriggerDim(0.5f);
-        SpawnProjectileAtLocation(blueProjectilePrefab, meter1Damage, firePoint.position);
+        SpawnProjectileAtLocation(blueProjectilePrefab, meter1.damage, firePoint.position);
     }
 
     public void CastPurple() 
     {
         if (camShake != null) StartCoroutine(camShake.Shake(0.5f, 0.3f));
         if (screenDimmer != null) screenDimmer.TriggerDim(0.5f);
-        SpawnProjectileAtLocation(purpleProjectilePrefab, meter3Damage, firePoint.position);
+        SpawnProjectileAtLocation(purpleProjectilePrefab, meter3.damage, firePoint.position);
     }
 
     public void CastRedAtEnemy() 
@@ -456,7 +462,7 @@ public class CharacterScript : MonoBehaviour
             spawnPosition = firePoint.position; 
         }
 
-        SpawnProjectileAtLocation(redProjectilePrefab, meter2Damage, spawnPosition);
+        SpawnProjectileAtLocation(redProjectilePrefab, meter2.damage, spawnPosition);
     }
 
     public void TeleportToEnemy()
@@ -485,7 +491,7 @@ public class CharacterScript : MonoBehaviour
 
     // --- DAMAGE & STATES ---
 
-    public void GetHit(float damage, float stunDamage)
+    public void GetHit(float damage, float stunDamage, bool isAerial)
     {
         if (currentState == (int)STATE.DEAD) return;
         
@@ -497,10 +503,17 @@ public class CharacterScript : MonoBehaviour
         else
         {
             //apply velocity
-            Debug.Log("I'm hit.");
+            //Debug.Log("I'm hit.");
             if(myStats != null) myStats.TakeDamage(damage, 10f, stunDamage);
+            
+            if (isAerial)
+            {
+                SetState(STATE.AERIALKNOCKBACK);
+            } else
+            {
+                SetState(STATE.KNOCKBACK);
+            }
             StartCoroutine(FlashRed());
-            SetState(STATE.KNOCKBACK);
         }
     }
 
@@ -547,12 +560,13 @@ public class CharacterScript : MonoBehaviour
             case (int) STATE.FDASHING:  FDashingState(); break;
             case (int) STATE.BDASHING:  BDashingState(); break;
             case (int) STATE.KNOCKBACK:  KnockBackState(); break;
+            case (int) STATE.AERIALKNOCKBACK: AerialKnockBackState(); break;
         }
     }
 
     // knockback state
     float knockTimer = 0;
-    float knockDuration = 0.1f;
+    float knockDuration = 0.2f;
     void KnockBackState()
     {
         if (knockTimer < knockDuration)
@@ -564,6 +578,28 @@ public class CharacterScript : MonoBehaviour
             velocity.x = 0;
             knockTimer = 0;
             SetState(STATE.IDLE);
+        }
+    }
+
+
+    float aerialKnockTimer = 0;
+    float aerialKnockDuration = 0.5f;
+    void AerialKnockBackState()
+    {
+        isGrounded = false;
+        if (aerialKnockTimer < aerialKnockDuration)
+        {
+            velocity.x = 1f;
+            velocity.y = 5f;
+            aerialKnockTimer += Time.deltaTime;
+        } else
+        {
+
+            velocity.x = 0;
+            velocity.y = 0;
+            aerialKnockTimer = 0;
+            //isGrounded = true;
+            SetState(STATE.FALLING);
         }
     }
 
