@@ -4,7 +4,7 @@ public class FighterMovement : MonoBehaviour
 {
     [Header("Movement")]
     public float walkSpeed = 5f;
-    public float jumpForce = 12f;
+    public float jumpForce = 8f;
 
     [Header("State")]
     public bool isGrounded = true;
