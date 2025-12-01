@@ -193,18 +193,18 @@ public class CharacterScript : MonoBehaviour
     {
         //fDebug.LogWarning("Entered FINDTARGET()");
 
-        if (isPlayer)
+        if (CompareTag("Player1"))
         {
             //Debug.LogWarning("Entered PLAYERSTATE()");
             GameObject enemy = GameObject.FindGameObjectWithTag("Player2");
             enemyTarget = enemy.transform;
-            yield return new WaitUntil(() => enemyTarget.gameObject.activeSelf);
+            yield return new WaitUntil(() => enemyTarget.gameObject.activeInHierarchy);
         } else
         {
             //Debug.LogWarning("Entered ENEMYSTATE()");
             GameObject enemy = GameObject.FindGameObjectWithTag("Player1");
             enemyTarget = enemy.transform;
-            yield return new WaitUntil(() => enemyTarget.gameObject.activeSelf);
+            yield return new WaitUntil(() => enemyTarget.gameObject.activeInHierarchy);
         }
         //Debug.LogWarning("ENEMY NOT NULL");
     }
