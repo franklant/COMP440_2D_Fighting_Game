@@ -53,29 +53,39 @@ public class FighterInput : MonoBehaviour
 
     void LowPunch()   { 
         Debug.Log("LP");
-        animator.SetTrigger("Light Punch");
+        //animator.SetTrigger("Light Punch");
+        AudioManager.Instance.PlayPunch();
         }
     void MediumPunch(){ 
         Debug.Log("MP");
-        animator.SetTrigger("Medium Punch");
+        //animator.SetTrigger("Medium Punch");
+        AudioManager.Instance.PlayKick();
     }
     void HighPunch()  { 
         Debug.Log("HP");
-        animator.SetTrigger("Heavy Punch");
+        //animator.SetTrigger("Heavy Punch");
+        AudioManager.Instance.PlayHit();
     }
 
     void LowKick()    { 
         Debug.Log("LK");
-        animator.SetTrigger("Light Kick");
+        //animator.SetTrigger("Light Kick");
+        AudioManager.Instance.PlayBlock();
     }
     void MediumKick() { 
         Debug.Log("MK");
-        animator.SetTrigger("Medium Kick");
+        //animator.SetTrigger("Medium Kick");
+        AudioManager.Instance.PlayWhoosh();
     }
     void HighKick() { 
         Debug.Log("HK");
-        animator.SetTrigger("Heavy Kick");
+        //animator.SetTrigger("Heavy Kick");
     }
+
+
+
+
+
 
     
 }
