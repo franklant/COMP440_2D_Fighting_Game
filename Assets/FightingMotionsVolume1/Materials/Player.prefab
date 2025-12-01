@@ -398,7 +398,7 @@ GameObject:
   - component: {fileID: 3096237821923523200}
   - component: {fileID: 4546883076165029524}
   m_Layer: 0
-  m_Name: RedGuy
+  m_Name: Player
   m_TagString: opponent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -413,7 +413,7 @@ Transform:
   m_GameObject: {fileID: 4673756601730372449}
   serializedVersion: 2
   m_LocalRotation: {x: -0.005069475, y: 0.0016332597, z: -0.0048784614, w: 0.99997395}
-  m_LocalPosition: {x: 3.32, y: -0.66, z: 0}
+  m_LocalPosition: {x: 0, y: -0.56, z: 0}
   m_LocalScale: {x: 4.6, y: 4.76, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
