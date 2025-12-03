@@ -5,10 +5,7 @@ using UnityEngine;
 public class FallingFireBall : MonoBehaviour
 {
     [Header("Initial Drop Stagger")]
-    [Tooltip("Min random delay before object begins falling when play starts")]
     public float minStartDelay = 0f;
-
-    [Tooltip("Max random delay before object begins falling when play starts")]
     public float maxStartDelay = 2f;
 
     [Header("Respawn settings")]
@@ -36,7 +33,7 @@ public class FallingFireBall : MonoBehaviour
         initialGravity = rb.gravityScale;
         initialSpawnPosition = transform.position;
 
-        // Freeze gravity at start so we can stagger falling
+        // Stop falling at start for stagger
         rb.gravityScale = 0f;
         rb.linearVelocity = Vector2.zero;
     }
@@ -61,9 +58,10 @@ public class FallingFireBall : MonoBehaviour
         initialSpawnPosition = pos;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    // ✅ FIX: Collision instead of Trigger
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.CompareTag("Ground"))
+        if (collision.collider.CompareTag("Ground"))
         {
             rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;
@@ -81,19 +79,15 @@ public class FallingFireBall : MonoBehaviour
         if (sprite) sprite.enabled = false;
         if (col) col.enabled = false;
 
-        rb.linearVelocity = Vector2.zero;
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
 
         yield return new WaitForSeconds(respawnDelay);
 
         Vector3 respawnPos = initialSpawnPosition;
+
         if (respawnHeightOffset != 0f)
         {
-            respawnPos = new Vector3(
-                initialSpawnPosition.x,
-                initialSpawnPosition.y + Mathf.Abs(respawnHeightOffset),
-                initialSpawnPosition.z
-            );
+            respawnPos.y += Mathf.Abs(respawnHeightOffset);
         }
 
         transform.position = respawnPos;

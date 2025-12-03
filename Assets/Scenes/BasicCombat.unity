@@ -662,7 +662,7 @@ MonoBehaviour:
   disappearDelay: 2
   respawnDelay: 3
   respawnHeightOffset: 6
-  resetRotationOnRespawn: 1
+  resetRotationOnRespawn: 0
 --- !u!61 &311262444
 BoxCollider2D:
   m_ObjectHideFlags: 0
