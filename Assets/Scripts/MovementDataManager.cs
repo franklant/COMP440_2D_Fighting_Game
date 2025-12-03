@@ -85,6 +85,8 @@ public class MoveDatabase
 {
     // This top-level variable MUST match the "Gojo" key in your JSON
     public CharacterData Gojo;
+    public CharacterData Sukuna;
+    public CharacterData Naruto;
     // If you add a new character "Monk" to your JSON,
     // you would add: public CharacterData Monk;
 }
@@ -169,6 +171,80 @@ public class MovementDataManager : MonoBehaviour
                 return moveDB.Gojo.attacks.meter3;
             }
         }
+        else if (characterName == "Sukuna")
+        {
+            if (moveName == "lightPunch")
+            {
+                return moveDB.Sukuna.attacks.lightPunch;
+            }
+            if (moveName == "kick")
+            {
+                return moveDB.Sukuna.attacks.kick;
+            }
+            if (moveName == "superMove")
+            {
+                return moveDB.Sukuna.attacks.superMove;
+            }
+            if (moveName == "forwardDash")
+            {
+                return moveDB.Sukuna.movement.forwardDash;
+            }
+            // ... you would add more "if" checks for each move ...
+            if (moveName == "backDash")
+            {
+                return moveDB.Sukuna.movement.backDash;
+            }
+
+            if (moveName == "meter1")
+            {
+                return moveDB.Sukuna.attacks.meter1;
+            }
+            if (moveName == "meter2")
+            {
+                return moveDB.Sukuna.attacks.meter2;
+            }
+            if (moveName == "meter3")
+            {
+                return moveDB.Sukuna.attacks.meter3;
+            }
+        }
+        else if (characterName == "Naruto")
+        {
+            if (moveName == "lightPunch")
+            {
+                return moveDB.Naruto.attacks.lightPunch;
+            }
+            if (moveName == "kick")
+            {
+                return moveDB.Naruto.attacks.kick;
+            }
+            if (moveName == "superMove")
+            {
+                return moveDB.Naruto.attacks.superMove;
+            }
+            if (moveName == "forwardDash")
+            {
+                return moveDB.Naruto.movement.forwardDash;
+            }
+            // ... you would add more "if" checks for each move ...
+            if (moveName == "backDash")
+            {
+                return moveDB.Naruto.movement.backDash;
+            }
+
+            if (moveName == "meter1")
+            {
+                return moveDB.Naruto.attacks.meter1;
+            }
+            if (moveName == "meter2")
+            {
+                return moveDB.Naruto.attacks.meter2;
+            }
+            if (moveName == "meter3")
+            {
+                return moveDB.Naruto.attacks.meter3;
+            }
+        } 
         
         Debug.LogWarning($"Move not found: {characterName} / {moveName}");
         return null;

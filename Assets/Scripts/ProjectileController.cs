@@ -10,6 +10,8 @@ public class ProjectileController : MonoBehaviour
     [Header("On Hit VFX")]
     public GameObject hitEffectPrefab; // Drag an Explosion Prefab here (Optional)
 
+    public bool isAerial = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -34,7 +36,7 @@ public class ProjectileController : MonoBehaviour
         if (enemy != null)
         {
             // 3. Deal Damage
-            enemy.GetHit(damage, 15f); // 15 Stun for projectiles
+            enemy.GetHit(damage, 15f, isAerial); // 15 Stun for projectiles
 
             // 4. Trigger Hitstop (Heavier feel for magic/projectiles)
             if (GameFeelManager.instance != null)

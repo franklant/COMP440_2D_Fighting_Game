@@ -138,9 +138,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ded7eb3e288caa46a0f2658d8a4d887, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  characterName: 
   ID: -1
   position: {x: 0, y: 0, z: 0}
   isHovering: 0
+  isSelected: 0
 --- !u!61 &7273166012969584632
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -300,7 +302,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -3321848225798487377, guid: d787de93e74cf4d40b05a300a7b03eec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

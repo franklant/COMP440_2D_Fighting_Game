@@ -84,6 +84,10 @@ public class FighterStatsManager : MonoBehaviour
         AddStun(stunDamage);
         AddHyperMeter(meterGainOnHit);
 
+        if (currentHealth <= 0)
+        {
+            Debug.LogWarning("Health is low.");
+        }
         if (currentHealth <= 0) OnDeath.Invoke();
     }
 

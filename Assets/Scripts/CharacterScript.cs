@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System;
-
-
-// TODO: FIX STATES, FIX USER INPUT, FIX JUMPING (THERE IS NO STATE)
+using System.Collections;
+using NUnit.Framework;
+using UnityEngine.UIElements;
 
 public class CharacterScript : MonoBehaviour
 {
@@ -11,7 +11,7 @@ public class CharacterScript : MonoBehaviour
     public bool isPlayer = true; // CHECK THIS FOR GOJO, UNCHECK FOR DUMMY
 
     [Header("--- Character ---")]
-    public string characterName = "Gojo";
+    public string characterName;
 
     [Header("--- Components ---")]
     public SpriteRenderer mySpriteRenderer;
@@ -22,8 +22,10 @@ public class CharacterScript : MonoBehaviour
 
     [Header("--- VFX References ---")]
     public ScreenFlashEffect redScreenFlash; 
+    private GameObject flashObject;
     public CameraShake camShake; 
     public ScreenDimmer screenDimmer;
+    private GameObject dimmerObject;
 
     [Header("--- Combat References ---")]
     public GameObject midJabHitBox;      
@@ -64,7 +66,7 @@ public class CharacterScript : MonoBehaviour
 
     [Header("--- Input Buffer ---")]
     public GameObject inputBuffer;
-    private InputReaderScript inputReaderScript;
+    private NewInputReaderScript inputReaderScript;
 
     [Header("--- Move Database ---")]
     public GameObject moveDatabase;
@@ -91,29 +93,33 @@ public class CharacterScript : MonoBehaviour
         IDLE = 0, WALKING = 1, JUMPING = 2, FALLING = 3,
         ATTACKING = 4, DIZZIED = 5, DEAD = 6, BLOCKING = 7,
         FDASHING = 8,
-        BDASHING = 9
+        BDASHING = 9, 
+        KNOCKBACK = 10,
+        AERIALKNOCKBACK = 11
     };
 
     void SetState(STATE state) { currentState = (int) state; }
 
     int GetState(STATE state) { return (int) state; }
 
+    Vector3 originalMidBoxPosition;
+    Vector3 reflectedMidBoxPosition;
+    Vector3 originalKickBoxPosition;
+    Vector3 reflectedKickBoxPosition;
     void Start()
     {
+        characterName = PlayerPrefs.GetString("selectedCharacter");
         mySpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         myRigidBody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>(); 
         myStats = GetComponent<FighterStatsManager>();
-        inputBuffer = GameObject.FindGameObjectWithTag("InputReader");
+        //inputBuffer = GameObject.FindGameObjectWithTag("InputReader");
         moveDatabase = GameObject.FindGameObjectWithTag("MoveDB");
         
         if (myGroundCheck == null) myGroundCheck = GameObject.FindGameObjectWithTag("GroundCheck");
         if (midJabHitBox == null) midJabHitBox = GameObject.FindGameObjectWithTag("MidJabHitBox");
 
-        // Get the Input Buffer
-        if (inputBuffer == null) Debug.LogError("Cannot find Input Buffer");
-
-        inputReaderScript = inputBuffer.GetComponent<InputReaderScript>();
+        inputReaderScript = GetComponent<NewInputReaderScript>();
         
         if (inputReaderScript == null) Debug.LogError("Cannot find inputReaderScript");
 
@@ -124,12 +130,57 @@ public class CharacterScript : MonoBehaviour
         
         if (moveDatabaseManagerScript == null) Debug.LogError("Cannot find moveDatabaseManagerScript");
 
+        dimmerObject = GameObject.FindGameObjectWithTag("ScreenDimmer");
+
+        if (dimmerObject == null)
+        {
+            Debug.LogError("Could not find dimmer object.");
+        }
+
+        screenDimmer = dimmerObject.GetComponent<ScreenDimmer>();
+
+        if (screenDimmer == null)
+        {
+            Debug.LogError("Cannot find screen dimmer");
+        }
+
+        if (isPlayer)
+        {
+            flashObject = GameObject.FindGameObjectWithTag("ScreenFlash");
+        } else
+        {
+            flashObject = GameObject.FindGameObjectWithTag("ScreenFlash");
+        }
+
+        if (flashObject == null)
+        {
+            Debug.Log("Could not find flash object");
+        }
+
+        redScreenFlash = flashObject.GetComponent<ScreenFlashEffect>();
+        if (redScreenFlash == null)
+        {
+            Debug.LogError("Could not find screen flash effect.");
+        }
+
+        // Error with this function
         if (myStats != null)
         {
             myStats.OnDizzyStart.AddListener(() => SetState(STATE.DIZZIED));
             myStats.OnDeath.AddListener(() => SetState(STATE.DEAD));
             myStats.OnDizzyEnd.AddListener(() => SetState(STATE.IDLE));
         }
+
+        //enemyTarget = GameObject.FindGameObjectWithTag("Player2").transform;
+        if (CompareTag("Player1"))
+        {
+            StartCoroutine(SearchForEnemy());
+        }
+        if (CompareTag("Player2"))
+        {
+            StartCoroutine(SearchForPlayer());
+        }
+        
 
         // Movement Database Details
         lightPunch = LoadCharacterMove(characterName, "lightPunch");
@@ -141,9 +192,60 @@ public class CharacterScript : MonoBehaviour
         meter2 = LoadCharacterMove(characterName, "meter2");
         meter3 = LoadCharacterMove(characterName, "meter3");
 
+        // original and reflected positions of each hitbox.
+        originalMidBoxPosition = midJabHitBox.transform.localPosition;
+        reflectedMidBoxPosition = Vector3.Reflect(midJabHitBox.transform.localPosition, Vector3.right); // - (Vector3.left * 0.5f);
+        originalKickBoxPosition = kickHitBox.transform.localPosition;
+        reflectedKickBoxPosition = Vector3.Reflect(kickHitBox.transform.localPosition, Vector3.right); // - (Vector3.left * 0.5f);
+
+        // character requires more offsets
+        if (characterName == "Naruto")
+        {
+            reflectedMidBoxPosition -= (Vector3.left * 0.5f);
+            reflectedKickBoxPosition -= (Vector3.left * 0.5f);
+        }
+
         SetState(STATE.IDLE);
         isGrounded = false;
     }
+
+    /// <summary>
+    /// A coroutine that finds the enemy target based on whether the current instance is player 1 or 2.
+    /// </summary>
+    /// <returns>
+    /// Ends the coroutine once the enemyTarget has been found.
+    /// </returns>
+    IEnumerator FindEnemy()
+    {
+
+        GameObject enemy = GameObject.FindGameObjectWithTag("Player2");
+        // yield return new WaitUntil(() => enemy != null);
+        yield return new WaitForSeconds(0.1f);
+    }
+
+    IEnumerator FindPlayer()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player1");
+        // yield return new WaitUntil(() => player != null);
+        yield return new WaitForSeconds(0.1f);
+    }
+
+    IEnumerator SearchForPlayer()
+    {
+        Debug.LogWarning("Start Player Search");
+        yield return StartCoroutine(FindPlayer());
+        Debug.LogWarning("Player Search Ended");
+        enemyTarget = GameObject.FindGameObjectWithTag("Player1").transform;
+    }
+
+    IEnumerator SearchForEnemy()
+    {
+        Debug.LogWarning("Start Enemy Search");
+        yield return StartCoroutine(FindEnemy());
+        Debug.LogWarning("Enemy Search Ended");
+        enemyTarget = GameObject.FindGameObjectWithTag("Player2").transform;
+    }
+
 
     /// <summary>
     /// Loads a character move from the move database by character and movename.
@@ -160,54 +262,36 @@ public class CharacterScript : MonoBehaviour
     /// Handles the input given a certain input sequence from the player.
     /// -TODO- Edit to use the perform move function
     /// </summary>
+    public string lastInput;
     void HandleInput()
     {
-        //string inputToRemove = "";
-        if (Input.anyKey)
+        if (inputReaderScript.controlKeyPressed)
         {
-            // if (inputReaderScript.FindInput("jjj"))
-            // {
-            //     Debug.Log("Perform <color=yellow>placeholder CHAIN ATTACK FINAL</color>.");
-
-
-            //     Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>"); 
-                
-            //     //inputToRemove = "jjj";
-            //     //Debug.Log("Index of Input Sequence: " + inputReaderScript.inputBuffer.IndexOf("jjj"));
-            // } else if (inputReaderScript.FindInput("jj"))
-            // {
-            //     Debug.Log("Perform <color=yellow>placeholder CHAIN ATTACK SECOND</color>.");
-
-
-            //     Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>"); 
-            // }
-            // else 
             if (inputReaderScript.FindInput(backDash.input))
             {
-                Debug.Log("Perform <color=yellow>BACK DASH</color>.");
+                //Debug.Log("Perform <color=yellow>BACK DASH</color>.");
 
                 dashTimer = 0;
 
-                Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
+                //Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
 
                 SetState(STATE.BDASHING);
                 // inputReaderScript.inputBuffer = "";
             }
             else if (inputReaderScript.FindInput(forwardDash.input))
             {
-                Debug.Log("Perform <color=yellow>FORWARD DASH</color>.");
+                //Debug.Log("Perform <color=yellow>FORWARD DASH</color>.");
 
                 dashTimer = 0;
 
-                Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
+                //Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
 
                 SetState(STATE.FDASHING);
                 // inputReaderScript.inputBuffer = "";
             }
-            else if (inputReaderScript.FindInput(meter1.input))
+            if (inputReaderScript.FindInput(meter1.input))
             {
-                Debug.Log("Perform <color=yellow>METER 1</color>.");
-
+                lastInput = meter1.input;
                 if (myStats.TrySpendMeter(100f)) 
                 {
                     PerformSuperMove("Meter1");
@@ -216,15 +300,10 @@ public class CharacterScript : MonoBehaviour
                 {
                     Debug.Log("Not enough Meter!");
                 }
-
-                Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
-                // inputReaderScript.inputBuffer = "";
             }
-
             else if (inputReaderScript.FindInput(meter2.input))
             {
-                Debug.Log("Perform <color=yellow>METER 2</color>.");
-
+                lastInput = meter2.input;
                 if (myStats.TrySpendMeter(200f)) 
                 {
                     PerformSuperMove("Meter2");
@@ -233,15 +312,10 @@ public class CharacterScript : MonoBehaviour
                 {
                     Debug.Log("Not enough Meter!");
                 }
-
-                Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
-                // inputReaderScript.inputBuffer = "";
             }
-
             else if (inputReaderScript.FindInput(meter3.input))
             {
-                Debug.Log("Perform <color=yellow>METER 3</color>.");
-
+                lastInput = meter3.input;
                 if (myStats.TrySpendMeter(300f)) 
                 {
                     PerformSuperMove("Meter3");
@@ -250,33 +324,17 @@ public class CharacterScript : MonoBehaviour
                 {
                     Debug.Log("Not enough Meter!");
                 }
-
-                Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
-                // inputReaderScript.inputBuffer = "";
             }
             
             else if (inputReaderScript.FindInput(lightPunch.input))
             {
-                Debug.Log("Perform <color=purple>LIGHT PUNCH</color>.");
-
-                PerformAttack("Attack", jabDamage, 1);
-
-                Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
-                
-                // C. Lock the state
-                //SetState(STATE.ATTACKING);
+                lastInput = lightPunch.input;
+                PerformAttack("Attack", lightPunch.damage, 1);
             }
             else if (inputReaderScript.FindInput(kick.input))
             {
-                Debug.Log("Perform <color=purple>KICK</color>.");
-
-                PerformAttack("Kick", kickDamage, 2);
-
-                Debug.Log("Successful Input: <color=green>" + inputReaderScript.inputBuffer + "</color>");
-                // inputReaderScript.inputBuffer = "";
-                
-                // 3. Lock State
-                //SetState(STATE.ATTACKING);
+                lastInput = kick.input;
+                PerformAttack("Kick", kick.damage, 2);
             }
         }
 
@@ -286,6 +344,11 @@ public class CharacterScript : MonoBehaviour
     // TODO: Edit this to read from database
     void Update()
     {
+        if (myStats.CurrentHealth == 0)
+        {
+            SetState(STATE.DEAD);
+        }
+
         // 1. Disable inputs if Dead/Dizzied
         if (currentState == (int)STATE.DIZZIED || currentState == (int)STATE.DEAD)
         {
@@ -329,6 +392,26 @@ public class CharacterScript : MonoBehaviour
             else mySpriteRenderer.flipX = false; 
         }
 
+        Debug.Log("AM " + tag + " FACING LEFT? " + mySpriteRenderer.flipX);
+        if (CompareTag("Player1"))
+        {
+            if (mySpriteRenderer.flipX == true)
+            {
+                // midJabHitBox.transform.position = new Vector3(
+                //     -midJabHitBox.transform.position.x,
+                //      midJabHitBox.transform.position.y,
+                //      midJabHitBox.transform.position.z
+                // );
+
+                midJabHitBox.transform.localPosition = reflectedMidBoxPosition;
+                kickHitBox.transform.localPosition = reflectedKickBoxPosition;
+            } else
+            {
+                midJabHitBox.transform.localPosition = originalMidBoxPosition;
+                kickHitBox.transform.localPosition = originalKickBoxPosition;
+            }
+        }
+
         // Gravity State Check (FLOATING)
         // if (!isGrounded)
         // {
@@ -345,7 +428,7 @@ public class CharacterScript : MonoBehaviour
         }
         else
         {
-            velocity.y -= GRAVITY;
+            velocity.y -= GRAVITY * Time.deltaTime;
         }
         
         myRigidBody.linearVelocity = velocity;
@@ -355,27 +438,29 @@ public class CharacterScript : MonoBehaviour
 
     void PerformAttack(string triggerName, float dmg, int level)
     {
-        Debug.Log($"ACTION: {triggerName} | Level {level} | Previous Level: {attackLevel}");
+        //Debug.Log($"ACTION: {triggerName} | Level {level} | Previous Level: {attackLevel}");
         velocity.x = 0;
         isAttacking = true;
         attackLevel = level; 
         attackTimer = 0;     
         //attackCoolDownDuration = duration;
 
-        myAnimator.SetTrigger(triggerName);
-        SetState(STATE.ATTACKING);
+        // myAnimator.SetTrigger(triggerName);
+        // SetState(STATE.ATTACKING);
 
         // EDIT to use the total frames from the move database
         if (triggerName == "Attack" && midJabHitBox != null) 
-            attackCoolDownDuration = lightPunch.totalFrames;
+            attackCoolDownDuration = lightPunch.totalFrames / 60;
             midJabHitBox.GetComponent<Hitbox>().damage = dmg;
+            midJabHitBox.GetComponent<Hitbox>().isAerial = false;
         
         if (triggerName == "Kick" && kickHitBox != null) 
-            attackCoolDownDuration = kick.totalFrames;
+            attackCoolDownDuration = kick.totalFrames / 60;
             kickHitBox.GetComponent<Hitbox>().damage = dmg;
+            kickHitBox.GetComponent<Hitbox>().isAerial = true;
 
-        // myAnimator.SetTrigger(triggerName);
-        // SetState(STATE.ATTACKING);
+        myAnimator.SetTrigger(triggerName);
+        SetState(STATE.ATTACKING);
     }
 
     void PerformSuperMove(string triggerName)
@@ -389,13 +474,13 @@ public class CharacterScript : MonoBehaviour
         switch (triggerName)
         {
             case "Meter1":
-                attackCoolDownDuration = meter1.totalFrames;
+                attackCoolDownDuration = meter1.totalFrames / 60;
                 break;
             case "Meter2":
-                attackCoolDownDuration = meter2.totalFrames;
+                attackCoolDownDuration = meter2.totalFrames / 60;
                 break;
             case "Meter3":
-                attackCoolDownDuration = meter3.totalFrames;
+                attackCoolDownDuration = meter3.totalFrames / 60;
                 break;
         }
         
@@ -407,14 +492,15 @@ public class CharacterScript : MonoBehaviour
 
     public void CastBlue() 
     {
-        SpawnProjectileAtLocation(blueProjectilePrefab, meter1Damage, firePoint.position);
+        if (screenDimmer != null) screenDimmer.TriggerDim(0.5f);
+        SpawnProjectileAtLocation(blueProjectilePrefab, meter1.damage, firePoint.position);
     }
 
     public void CastPurple() 
     {
         if (camShake != null) StartCoroutine(camShake.Shake(0.5f, 0.3f));
         if (screenDimmer != null) screenDimmer.TriggerDim(0.5f);
-        SpawnProjectileAtLocation(purpleProjectilePrefab, meter3Damage, firePoint.position);
+        SpawnProjectileAtLocation(purpleProjectilePrefab, meter3.damage, firePoint.position);
     }
 
     public void CastRedAtEnemy() 
@@ -434,7 +520,7 @@ public class CharacterScript : MonoBehaviour
             spawnPosition = firePoint.position; 
         }
 
-        SpawnProjectileAtLocation(redProjectilePrefab, meter2Damage, spawnPosition);
+        SpawnProjectileAtLocation(redProjectilePrefab, meter2.damage, spawnPosition);
     }
 
     public void TeleportToEnemy()
@@ -463,7 +549,7 @@ public class CharacterScript : MonoBehaviour
 
     // --- DAMAGE & STATES ---
 
-    public void GetHit(float damage, float stunDamage)
+    public void GetHit(float damage, float stunDamage, bool isAerial)
     {
         if (currentState == (int)STATE.DEAD) return;
         
@@ -474,7 +560,17 @@ public class CharacterScript : MonoBehaviour
         }
         else
         {
+            //apply velocity
+            //Debug.Log("I'm hit.");
             if(myStats != null) myStats.TakeDamage(damage, 10f, stunDamage);
+            
+            if (isAerial)
+            {
+                SetState(STATE.AERIALKNOCKBACK);
+            } else
+            {
+                SetState(STATE.KNOCKBACK);
+            }
             StartCoroutine(FlashRed());
         }
     }
@@ -521,6 +617,67 @@ public class CharacterScript : MonoBehaviour
             case (int) STATE.BLOCKING:  BlockingState(); break;
             case (int) STATE.FDASHING:  FDashingState(); break;
             case (int) STATE.BDASHING:  BDashingState(); break;
+            case (int) STATE.KNOCKBACK:  KnockBackState(); break;
+            case (int) STATE.AERIALKNOCKBACK: AerialKnockBackState(); break;
+        }
+    }
+
+    // knockback state
+    float knockTimer = 0;
+    float knockDuration = 0.2f;
+    void KnockBackState()
+    {
+        float knockbackAmount;
+        if (mySpriteRenderer.flipX) // facing left
+        {
+            knockbackAmount = 1;
+        } else
+        {
+            knockbackAmount = -1;
+        }
+
+        if (knockTimer < knockDuration)
+        {
+            velocity.x = knockbackAmount;
+            knockTimer += Time.deltaTime;
+        } else
+        {
+            velocity.x = 0;
+            knockTimer = 0;
+            SetState(STATE.IDLE);
+        }
+    }
+
+
+    float aerialKnockTimer = 0;
+    float aerialKnockDuration = 0.5f;
+    void AerialKnockBackState()
+    {
+        isGrounded = false;
+        float knockbackAmountX;
+        float knockbackAmountY = 5f;
+
+        if (mySpriteRenderer.flipX) // facing left
+        {
+            knockbackAmountX = 1;
+        } else
+        {
+            knockbackAmountX = -1;
+        }
+        
+        if (aerialKnockTimer < aerialKnockDuration)
+        {
+            velocity.x = knockbackAmountX;
+            velocity.y = knockbackAmountY;
+            aerialKnockTimer += Time.deltaTime;
+        } else
+        {
+
+            velocity.x = 0;
+            velocity.y = 0;
+            aerialKnockTimer = 0;
+            //isGrounded = true;
+            SetState(STATE.FALLING);
         }
     }
 
@@ -613,7 +770,7 @@ public class CharacterScript : MonoBehaviour
         }
         else
         {
-            velocity.y -= GRAVITY;
+            velocity.y -= GRAVITY * Time.deltaTime;
         }
 
         if (velocity.y <= jumpHeight - 2) 
@@ -629,10 +786,10 @@ public class CharacterScript : MonoBehaviour
         if (isBlocking)
         {
             // Debug.Log("HELLOOO");
-            velocity.y -= GRAVITY * 5;  // add 1 half more gravity
+            velocity.y -= GRAVITY * 5 * Time.deltaTime;  // add 1 half more gravity
         } else
         {
-            velocity.y -= GRAVITY;
+            velocity.y -= GRAVITY * Time.deltaTime;
         }
 
         HandleAirControl();
@@ -683,6 +840,23 @@ public class CharacterScript : MonoBehaviour
         }
     }
 
-    void OnCollisionStay2D(Collision2D collision) { if (collision.collider.CompareTag("Ground")) isGrounded = true; }
+    void OnCollisionStay2D(Collision2D collision) { 
+        if (collision.collider.CompareTag("Ground")) isGrounded = true; 
+        if (collision.collider.CompareTag(enemyTarget.gameObject.tag) && !isGrounded && velocity.y <= 0)
+        {
+            float closestToPlayer = collision.collider.ClosestPoint(transform.position).x;
+            float closestToCollider = GetComponent<BoxCollider2D>().ClosestPoint(collision.collider.transform.position).x;
+            float pushX = closestToCollider - closestToPlayer;
+            Debug.Log(pushX);
+
+            if (pushX < 0)
+            {
+                transform.position += new Vector3(Math.Abs(pushX + 0.1f), 0, 0);
+            } else
+            {
+                transform.position -= new Vector3(Math.Abs(pushX + 0.1f), 0, 0);
+            }
+        }
+    }
     void OnCollisionExit2D(Collision2D collision) { if (collision.collider.CompareTag("Ground")) isGrounded = false; }
 }

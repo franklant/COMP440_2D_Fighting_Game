@@ -76,7 +76,8 @@ public class ButtonControllerScript : MonoBehaviour
         if (isReady)
         {
             Debug.Log("Character <color=green>" + selectedCharacter + "</color> selected.");
-            SceneManager.LoadScene("Player vs CPU");
+            PlayerPrefs.SetString("selectedCharacter", selectedCharacter);  // set the selected character, to be used in the final screen
+            SceneManager.LoadScene("TestSelectedCharacterScene");
         } else
         {
             Debug.Log("<color=red>No character selected.</color>");
