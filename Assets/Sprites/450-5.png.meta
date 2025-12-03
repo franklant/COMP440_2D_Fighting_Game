@@ -1,0 +1,533 @@
+fileFormatVersion: 2
+guid: b2d23ab2793d3467bb397da59d731191
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2692065720404410727
+    second: 450-5_0
+  - first:
+      213: 4223803859612671097
+    second: 450-5_1
+  - first:
+      213: -1948131825993056061
+    second: 450-5_2
+  - first:
+      213: 5085745128542735045
+    second: 450-5_3
+  - first:
+      213: 6768461959324158494
+    second: 450-5_4
+  - first:
+      213: 6821385621909359620
+    second: 450-5_5
+  - first:
+      213: -2707955333477843791
+    second: 450-5_6
+  - first:
+      213: -807702842094686738
+    second: 450-5_7
+  - first:
+      213: 7916005628791814652
+    second: 450-5_8
+  - first:
+      213: -4144585024739555538
+    second: 450-5_9
+  - first:
+      213: 1822244559287367357
+    second: 450-5_10
+  - first:
+      213: -6158581769570937283
+    second: 450-5_11
+  - first:
+      213: -5920801129674224024
+    second: 450-5_12
+  - first:
+      213: -2282981888342560656
+    second: 450-5_13
+  - first:
+      213: -3848401192182284524
+    second: 450-5_14
+  - first:
+      213: -8305357294612946786
+    second: 450-5_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: 450-5_0
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 525
+        width: 39
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99ef94f8d7cd3aad0800000000000000
+      internalID: -2692065720404410727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 450-5_1
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 87
+        width: 764
+        height: 505
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97c132d4b37fd9a30800000000000000
+      internalID: 4223803859612671097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 450-5_2
+      rect:
+        serializedVersion: 2
+        x: 563
+        y: 539
+        width: 26
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c00d080d68d6f4e0800000000000000
+      internalID: -1948131825993056061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 450-5_3
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 512
+        width: 28
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ca86fcbf32349640800000000000000
+      internalID: 5085745128542735045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 450-5_4
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 473
+        width: 95
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1ac2498a486eed50800000000000000
+      internalID: 6768461959324158494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 450-5_5
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 475
+        width: 81
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40c4dd5f41e6aae50800000000000000
+      internalID: 6821385621909359620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 450-5_6
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 446
+        width: 32
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1bcbd68b8f86b6ad0800000000000000
+      internalID: -2707955333477843791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 450-5_7
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 276
+        width: 135
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eed6fd46b867ac4f0800000000000000
+      internalID: -807702842094686738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 450-5_8
+      rect:
+        serializedVersion: 2
+        x: 251
+        y: 40
+        width: 101
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf9f028bd2d4bdd60800000000000000
+      internalID: 7916005628791814652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 450-5_9
+      rect:
+        serializedVersion: 2
+        x: 665
+        y: 83
+        width: 202
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e27cef201e97b76c0800000000000000
+      internalID: -4144585024739555538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 450-5_10
+      rect:
+        serializedVersion: 2
+        x: 679
+        y: 82
+        width: 32
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db63632a5c9e94910800000000000000
+      internalID: 1822244559287367357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 450-5_11
+      rect:
+        serializedVersion: 2
+        x: 842
+        y: 101
+        width: 119
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3617889282588aa0800000000000000
+      internalID: -6158581769570937283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 450-5_12
+      rect:
+        serializedVersion: 2
+        x: 976
+        y: 94
+        width: 79
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86e49080eb615dda0800000000000000
+      internalID: -5920801129674224024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 450-5_13
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 88
+        width: 12
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 070f0bc71183150e0800000000000000
+      internalID: -2282981888342560656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 450-5_14
+      rect:
+        serializedVersion: 2
+        x: 647
+        y: 5
+        width: 45
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41ff8c2618bb79ac0800000000000000
+      internalID: -3848401192182284524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 450-5_15
+      rect:
+        serializedVersion: 2
+        x: 1049
+        y: 63
+        width: 39
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9065e15b817dbc80800000000000000
+      internalID: -8305357294612946786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      450-5_0: -2692065720404410727
+      450-5_1: 4223803859612671097
+      450-5_10: 1822244559287367357
+      450-5_11: -6158581769570937283
+      450-5_12: -5920801129674224024
+      450-5_13: -2282981888342560656
+      450-5_14: -3848401192182284524
+      450-5_15: -8305357294612946786
+      450-5_2: -1948131825993056061
+      450-5_3: 5085745128542735045
+      450-5_4: 6768461959324158494
+      450-5_5: 6821385621909359620
+      450-5_6: -2707955333477843791
+      450-5_7: -807702842094686738
+      450-5_8: 7916005628791814652
+      450-5_9: -4144585024739555538
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
