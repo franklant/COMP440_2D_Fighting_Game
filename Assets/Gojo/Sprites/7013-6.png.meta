@@ -1,0 +1,533 @@
+fileFormatVersion: 2
+guid: c4f9aa3b6a68d4e3c8e7a2e944fdaaf2
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1249909765660273468
+    second: 7013-6_0
+  - first:
+      213: 1336278320654999798
+    second: 7013-6_1
+  - first:
+      213: -8560561144304715941
+    second: 7013-6_2
+  - first:
+      213: -7584467697919691247
+    second: 7013-6_3
+  - first:
+      213: -135482499622697712
+    second: 7013-6_4
+  - first:
+      213: -1855384274088522577
+    second: 7013-6_5
+  - first:
+      213: -3845846317818658881
+    second: 7013-6_6
+  - first:
+      213: 2805765219246334738
+    second: 7013-6_7
+  - first:
+      213: 8719029991113052913
+    second: 7013-6_8
+  - first:
+      213: 4410230348326098588
+    second: 7013-6_9
+  - first:
+      213: 3002229110568904610
+    second: 7013-6_10
+  - first:
+      213: -8502928126997377480
+    second: 7013-6_11
+  - first:
+      213: 1424415643509944167
+    second: 7013-6_12
+  - first:
+      213: -1688653954671767803
+    second: 7013-6_13
+  - first:
+      213: 7376202132250159786
+    second: 7013-6_14
+  - first:
+      213: 1917274605881828129
+    second: 7013-6_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: 7013-6_0
+      rect:
+        serializedVersion: 2
+        x: 1503
+        y: 1053
+        width: 98
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3be87f3f42985110800000000000000
+      internalID: 1249909765660273468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 7013-6_1
+      rect:
+        serializedVersion: 2
+        x: 1519
+        y: 1047
+        width: 34
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f062bf7d0a6b8210800000000000000
+      internalID: 1336278320654999798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 7013-6_2
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 399
+        width: 397
+        height: 543
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b57b4bbbef6c23980800000000000000
+      internalID: -8560561144304715941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 7013-6_3
+      rect:
+        serializedVersion: 2
+        x: 1455
+        y: 767
+        width: 42
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 116721f10de8eb690800000000000000
+      internalID: -7584467697919691247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 7013-6_4
+      rect:
+        serializedVersion: 2
+        x: 1575
+        y: 359
+        width: 345
+        height: 630
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01505b8626bae1ef0800000000000000
+      internalID: -135482499622697712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 7013-6_5
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 655
+        width: 73
+        height: 102
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fac8b1d35d95046e0800000000000000
+      internalID: -1855384274088522577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 7013-6_6
+      rect:
+        serializedVersion: 2
+        x: 679
+        y: 583
+        width: 44
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbfbcad662fc0aac0800000000000000
+      internalID: -3845846317818658881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 7013-6_7
+      rect:
+        serializedVersion: 2
+        x: 931
+        y: 231
+        width: 366
+        height: 458
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 213e250f99410f620800000000000000
+      internalID: 2805765219246334738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 7013-6_8
+      rect:
+        serializedVersion: 2
+        x: 631
+        y: 359
+        width: 106
+        height: 178
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f2554ed497300970800000000000000
+      internalID: 8719029991113052913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 7013-6_9
+      rect:
+        serializedVersion: 2
+        x: 831
+        y: 431
+        width: 98
+        height: 146
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c96df99a229443d30800000000000000
+      internalID: 4410230348326098588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 7013-6_10
+      rect:
+        serializedVersion: 2
+        x: 1359
+        y: 455
+        width: 7
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a7ebc5387f0aa920800000000000000
+      internalID: 3002229110568904610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 7013-6_11
+      rect:
+        serializedVersion: 2
+        x: 1365
+        y: 434
+        width: 36
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83ec4af3be78ff980800000000000000
+      internalID: -8502928126997377480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 7013-6_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 185
+        height: 385
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76f6beb1b7a84c310800000000000000
+      internalID: 1424415643509944167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 7013-6_13
+      rect:
+        serializedVersion: 2
+        x: 927
+        y: 327
+        width: 6
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50f0b33dc22b098e0800000000000000
+      internalID: -1688653954671767803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 7013-6_14
+      rect:
+        serializedVersion: 2
+        x: 1295
+        y: 0
+        width: 538
+        height: 327
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aaaef3c22c88d5660800000000000000
+      internalID: 7376202132250159786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 7013-6_15
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 0
+        width: 234
+        height: 153
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 123a67c88178b9a10800000000000000
+      internalID: 1917274605881828129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      7013-6_0: 1249909765660273468
+      7013-6_1: 1336278320654999798
+      7013-6_10: 3002229110568904610
+      7013-6_11: -8502928126997377480
+      7013-6_12: 1424415643509944167
+      7013-6_13: -1688653954671767803
+      7013-6_14: 7376202132250159786
+      7013-6_15: 1917274605881828129
+      7013-6_2: -8560561144304715941
+      7013-6_3: -7584467697919691247
+      7013-6_4: -135482499622697712
+      7013-6_5: -1855384274088522577
+      7013-6_6: -3845846317818658881
+      7013-6_7: 2805765219246334738
+      7013-6_8: 8719029991113052913
+      7013-6_9: 4410230348326098588
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
