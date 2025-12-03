@@ -93,7 +93,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MeleeDamage
   combatScript: {fileID: 1197015410035799546}
   damage: 10
+  stunDamage: 20
   knockback: {x: 2, y: 0}
+  hitEffectPrefab: {fileID: 3560096165090776704, guid: 4bf1bbf49963269498581c65182ceb62, type: 3}
   facingDirection: 1
 --- !u!1 &3963303734632901952
 GameObject:
@@ -126,6 +128,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5222146175530344417}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6600287352940032663
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3340316588765522475}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3340316588765522475
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6600287352940032663}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.615, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5222146175530344417}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6794450771046783715
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,6 +176,7 @@ GameObject:
   - component: {fileID: 3905339853144200277}
   - component: {fileID: 1197015410035799546}
   - component: {fileID: 4838503807229886750}
+  - component: {fileID: 5491646731732529582}
   m_Layer: 0
   m_Name: Satoru Gojo
   m_TagString: Untagged
@@ -165,6 +199,7 @@ Transform:
   m_Children:
   - {fileID: 7674447547441330653}
   - {fileID: 6232368563552636019}
+  - {fileID: 3340316588765522475}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5044128081720038818
@@ -247,7 +282,7 @@ MonoBehaviour:
   groundCheck: {fileID: 7674447547441330653}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8
 --- !u!95 &4863926934181326289
 Animator:
   serializedVersion: 7
@@ -364,9 +399,21 @@ MonoBehaviour:
   animator: {fileID: 4863926934181326289}
   movementScript: {fileID: 9104610592755991205}
   meleeScript: {fileID: 690495768710535467}
+  firePoint: {fileID: 3340316588765522475}
+  enemyTarget: {fileID: 0}
   comboWindow: 0.8
-  buttonA: 106
-  buttonB: 107
+  buttonAttack: 106
+  buttonKick: 107
+  buttonBlue: 105
+  buttonRed: 111
+  buttonPurple: 112
+  blueOrbPrefab: {fileID: 6443437230904101948, guid: 0d37e0de175d847b0acc85567737f6ad, type: 3}
+  redProjectilePrefab: {fileID: 6573110301316325902, guid: 88fccb7043e98462bb3d85798e8d7003, type: 3}
+  purpleBlastPrefab: {fileID: 3566979845838530738, guid: 21124ffa6d14c4dbd9c96086b4704956, type: 3}
+  redSpawnOffset: 1.5
+  dmgBlue: 200
+  dmgRed: 400
+  dmgPurple: 600
 --- !u!114 &4838503807229886750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,7 +421,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6794450771046783715}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d63e60a3f7a743f0bfb8ccd8a38d8a8, type: 3}
   m_Name: 
@@ -385,3 +432,36 @@ MonoBehaviour:
   movementScript: {fileID: 9104610592755991205}
   combatScript: {fileID: 1197015410035799546}
   rb: {fileID: 7762275774212062344}
+--- !u!114 &5491646731732529582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6794450771046783715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5d0e2d5b6a64350b0f67448895d120, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FighterStatsManager
+  maxHealth: 1000
+  maxHyperMeter: 300
+  maxStun: 100
+  stunRecoveryRate: 15
+  comboResetTime: 2.5
+  scalingFactor: 0.9
+  minScalingCap: 0.2
+  currentHealth: 0
+  currentHyper: 0
+  currentStun: 0
+  currentComboCount: 0
+  isDizzied: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDizzyStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDizzyEnd:
+    m_PersistentCalls:
+      m_Calls: []

@@ -39,39 +39,39 @@ public class SukunaController : MonoBehaviour
 
     void HandleSummonInputs()
     {
-        // 1. Divine Dogs (State 1400)
+        // 1. Divine Dogs (State 1400) - Key: U (Unchanged)
         if (Input.GetKeyDown(KeyCode.U)) 
         {
-            // Immediate spawn for now (or add casting anim if needed)
             Summon(divineDogsPrefab, new Vector2(1.5f, 0)); 
         }
 
-        // 2. Nue (State 1200)
-        if (Input.GetKeyDown(KeyCode.I)) 
+        // 2. Nue (State 1200) - Key: Y (Remapped from I to make room for Elephant)
+        // Feel free to change this if you prefer a different key for Nue
+        if (Input.GetKeyDown(KeyCode.Y)) 
         {
             Summon(nuePrefab, new Vector2(0.5f, 2.0f)); 
         }
 
-        // 3. Max Elephant (State 1700)
-        if (Input.GetKeyDown(KeyCode.O)) 
+        // 3. Max Elephant (State 1700) - Key: I (Remapped)
+        if (Input.GetKeyDown(KeyCode.I)) 
         {
             Summon(maxElephantPrefab, new Vector2(3.0f, 5.0f)); 
         }
 
-        // 4. Piercing Ox (State 1000)
-        if (Input.GetKeyDown(KeyCode.J)) 
+        // 4. Piercing Ox (State 1000) - Key: Q (Unchanged)
+        if (Input.GetKeyDown(KeyCode.Q)) 
         {
             Summon(bullPrefab, new Vector2(1.5f, 0)); 
         }
 
-        // 5. Agito (State 1900) - CASTING ANIMATION
-        if (Input.GetKeyDown(KeyCode.K)) 
+        // 5. Agito (State 1900) - Key: O (Remapped)
+        if (Input.GetKeyDown(KeyCode.O)) 
         {
             StartCoroutine(PerformSummon("Action_1500", agitoPrefab, new Vector2(2.0f, 0)));
         }
 
-        // 6. Mahoraga (State 1500) - CASTING ANIMATION
-        if (Input.GetKeyDown(KeyCode.L)) 
+        // 6. Mahoraga (State 1500) - Key: P (Remapped)
+        if (Input.GetKeyDown(KeyCode.P)) 
         {
             StartCoroutine(PerformSummon("Action_2000", mahoragaPrefab, new Vector2(2.5f, 0)));
         }
@@ -85,11 +85,7 @@ public class SukunaController : MonoBehaviour
         if(HasState(animName))
         {
             animator.Play(animName);
-            
-            // Wait for the animation to reach the "Summoning Point"
-            // MUGEN usually spawns helpers around frame 3 or 5 of the cast
-            // Adjust this delay (0.5f) to match when Sukuna's hands clap/move
-            yield return new WaitForSeconds(0.5f); 
+            yield return new WaitForSeconds(0.5f); // Wait for hand sign
         }
         else
         {
@@ -102,12 +98,15 @@ public class SukunaController : MonoBehaviour
         // 3. Wait for rest of animation to finish
         if(HasState(animName))
         {
-            // Wait remaining time or fixed amount
             yield return new WaitForSeconds(0.5f); 
         }
 
         // 4. Return to Idle
-        animator.Play("Idle"); // Make sure you have an "Idle" state!
+        // Using "Action_0" which is the standard Idle name in your other scripts
+        // If your Idle state is named "Idle", change this string back to "Idle"
+        if(HasState("Action_0")) animator.Play("Action_0"); 
+        else animator.Play("Idle");
+
         isBusy = false;
     }
 

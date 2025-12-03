@@ -127,6 +127,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 370944956813084071, guid: 8eb2928241f51474da7c93d7c2fc3cf2, type: 3}
+      propertyPath: Gojo
+      value: 
+      objectReference: {fileID: 6794450771046783715, guid: 520fd05e0f43243f589ad3838a935f5d, type: 3}
     - target: {fileID: 3186237162520753216, guid: 8eb2928241f51474da7c93d7c2fc3cf2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.91

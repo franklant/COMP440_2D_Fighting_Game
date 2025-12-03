@@ -2,37 +2,68 @@ using UnityEngine;
 
 public class MeleeDamage : MonoBehaviour
 {
-    // Removing specific script references to make it universal
-    // public GojoCombat combatScript; <--- OLD
-    // public MadaraCombat madaraScript; <--- OLD
-
-    // Universal reference to the parent character
     public MonoBehaviour combatScript; 
 
-    [Header("Current Attack Stats")]
+    [Header("Attack Stats")]
     public float damage = 10f;
+    public float stunDamage = 20f;
     public Vector2 knockback = new Vector2(2f, 0f);
+
+    [Header("Visual Effects")]
+    public GameObject hitEffectPrefab; // <--- ASSIGN YOUR PREFAB HERE
     
     [HideInInspector] public float facingDirection = 1f;
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.CompareTag("Enemy"))
-        {
-            // 1. Tell the Combat Script we landed a hit (Universal)
-            if (combatScript != null)
-            {
-                // This calls the function "RegisterHit" on WHATEVER script is attached
-                combatScript.SendMessage("RegisterHit", SendMessageOptions.DontRequireReceiver);
-            }
+        // Prevent hitting self
+        if (col.transform.root == transform.root) return;
 
-            // 2. Apply Damage to Enemy
-            EnemyDummy enemy = col.GetComponent<EnemyDummy>();
-            if(enemy != null)
+        bool hitConnected = false;
+
+        // --- 1. CHECK FOR LEGACY CHARACTER ---
+        CharacterScript enemyChar = col.GetComponent<CharacterScript>();
+        if (enemyChar == null) enemyChar = col.GetComponentInParent<CharacterScript>();
+
+        if (enemyChar != null)
+        {
+            hitConnected = true;
+
+            // Notify Combat Script
+            if (combatScript != null) 
+                combatScript.SendMessage("RegisterHit", SendMessageOptions.DontRequireReceiver);
+
+            // Launcher Logic
+            bool isLauncher = knockback.y > 1.0f;
+            enemyChar.GetHit(damage, stunDamage, isLauncher);
+            
+            // Apply Physics
+            float finalX = knockback.x * facingDirection;
+            if (isLauncher) enemyChar.velocity = new Vector3(finalX, knockback.y, 0);
+            else enemyChar.velocity = new Vector3(finalX, enemyChar.velocity.y, 0);
+        }
+        // --- 2. CHECK FOR DUMMY ---
+        else
+        {
+            EnemyDummy dummy = col.GetComponent<EnemyDummy>();
+            if (dummy != null)
             {
-                Vector2 finalKnockback = new Vector2(knockback.x * facingDirection, knockback.y);
-                enemy.TakeHit(damage, finalKnockback);
+                hitConnected = true;
+                if (combatScript != null) 
+                    combatScript.SendMessage("RegisterHit", SendMessageOptions.DontRequireReceiver);
+                    
+                dummy.TakeHit(damage, new Vector2(knockback.x * facingDirection, knockback.y));
             }
+        }
+
+        // --- 3. SPAWN HIT EFFECT ---
+        if (hitConnected && hitEffectPrefab != null)
+        {
+            // Find the exact point where our fist/foot touched the enemy collider
+            Vector3 hitPos = col.ClosestPoint(transform.position);
+            
+            // Spawn the effect
+            Instantiate(hitEffectPrefab, hitPos, Quaternion.identity);
         }
     }
 }
