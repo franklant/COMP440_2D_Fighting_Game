@@ -3,6 +3,7 @@ using UnityEngine.Events;
 using System;
 using System.Collections;
 using NUnit.Framework;
+using UnityEngine.UIElements;
 
 public class CharacterScript : MonoBehaviour
 {
@@ -101,6 +102,10 @@ public class CharacterScript : MonoBehaviour
 
     int GetState(STATE state) { return (int) state; }
 
+    Vector3 originalMidBoxPosition;
+    Vector3 reflectedMidBoxPosition;
+    Vector3 originalKickBoxPosition;
+    Vector3 reflectedKickBoxPosition;
     void Start()
     {
         characterName = PlayerPrefs.GetString("selectedCharacter");
@@ -186,6 +191,19 @@ public class CharacterScript : MonoBehaviour
         meter1 = LoadCharacterMove(characterName, "meter1");
         meter2 = LoadCharacterMove(characterName, "meter2");
         meter3 = LoadCharacterMove(characterName, "meter3");
+
+        // original and reflected positions of each hitbox.
+        originalMidBoxPosition = midJabHitBox.transform.localPosition;
+        reflectedMidBoxPosition = Vector3.Reflect(midJabHitBox.transform.localPosition, Vector3.right); // - (Vector3.left * 0.5f);
+        originalKickBoxPosition = kickHitBox.transform.localPosition;
+        reflectedKickBoxPosition = Vector3.Reflect(kickHitBox.transform.localPosition, Vector3.right); // - (Vector3.left * 0.5f);
+
+        // character requires more offsets
+        if (characterName == "Naruto")
+        {
+            reflectedMidBoxPosition -= (Vector3.left * 0.5f);
+            reflectedKickBoxPosition -= (Vector3.left * 0.5f);
+        }
 
         SetState(STATE.IDLE);
         isGrounded = false;
@@ -372,6 +390,26 @@ public class CharacterScript : MonoBehaviour
         {
             if (transform.position.x > enemyTarget.position.x) mySpriteRenderer.flipX = true;  
             else mySpriteRenderer.flipX = false; 
+        }
+
+        Debug.Log("AM " + tag + " FACING LEFT? " + mySpriteRenderer.flipX);
+        if (CompareTag("Player1"))
+        {
+            if (mySpriteRenderer.flipX == true)
+            {
+                // midJabHitBox.transform.position = new Vector3(
+                //     -midJabHitBox.transform.position.x,
+                //      midJabHitBox.transform.position.y,
+                //      midJabHitBox.transform.position.z
+                // );
+
+                midJabHitBox.transform.localPosition = reflectedMidBoxPosition;
+                kickHitBox.transform.localPosition = reflectedKickBoxPosition;
+            } else
+            {
+                midJabHitBox.transform.localPosition = originalMidBoxPosition;
+                kickHitBox.transform.localPosition = originalKickBoxPosition;
+            }
         }
 
         // Gravity State Check (FLOATING)
@@ -589,9 +627,18 @@ public class CharacterScript : MonoBehaviour
     float knockDuration = 0.2f;
     void KnockBackState()
     {
+        float knockbackAmount;
+        if (mySpriteRenderer.flipX) // facing left
+        {
+            knockbackAmount = 1;
+        } else
+        {
+            knockbackAmount = -1;
+        }
+
         if (knockTimer < knockDuration)
         {
-            velocity.x = 1;
+            velocity.x = knockbackAmount;
             knockTimer += Time.deltaTime;
         } else
         {
@@ -607,10 +654,21 @@ public class CharacterScript : MonoBehaviour
     void AerialKnockBackState()
     {
         isGrounded = false;
+        float knockbackAmountX;
+        float knockbackAmountY = 5f;
+
+        if (mySpriteRenderer.flipX) // facing left
+        {
+            knockbackAmountX = 1;
+        } else
+        {
+            knockbackAmountX = -1;
+        }
+        
         if (aerialKnockTimer < aerialKnockDuration)
         {
-            velocity.x = 1f;
-            velocity.y = 5f;
+            velocity.x = knockbackAmountX;
+            velocity.y = knockbackAmountY;
             aerialKnockTimer += Time.deltaTime;
         } else
         {
@@ -782,6 +840,23 @@ public class CharacterScript : MonoBehaviour
         }
     }
 
-    void OnCollisionStay2D(Collision2D collision) { if (collision.collider.CompareTag("Ground")) isGrounded = true; }
+    void OnCollisionStay2D(Collision2D collision) { 
+        if (collision.collider.CompareTag("Ground")) isGrounded = true; 
+        if (collision.collider.CompareTag(enemyTarget.gameObject.tag) && !isGrounded && velocity.y <= 0)
+        {
+            float closestToPlayer = collision.collider.ClosestPoint(transform.position).x;
+            float closestToCollider = GetComponent<BoxCollider2D>().ClosestPoint(collision.collider.transform.position).x;
+            float pushX = closestToCollider - closestToPlayer;
+            Debug.Log(pushX);
+
+            if (pushX < 0)
+            {
+                transform.position += new Vector3(Math.Abs(pushX + 0.1f), 0, 0);
+            } else
+            {
+                transform.position -= new Vector3(Math.Abs(pushX + 0.1f), 0, 0);
+            }
+        }
+    }
     void OnCollisionExit2D(Collision2D collision) { if (collision.collider.CompareTag("Ground")) isGrounded = false; }
 }
