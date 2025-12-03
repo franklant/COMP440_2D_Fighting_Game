@@ -44,6 +44,10 @@ public class CharacterScript : MonoBehaviour
     public float dashDuration = 0f;
     public float dashTimer = 0f;
 
+    [Header("--- AUDIO ---")]
+    public GameObject audioManager;
+    private AudioManager audioScript;
+
     [Header("--- Input & Data ---")]
     public NewInputReaderScript inputReaderScript;
     public GameObject moveDatabase;
@@ -121,6 +125,8 @@ public class CharacterScript : MonoBehaviour
         // Load Database
         LoadAllMoves();
 
+        audioScript = AudioManager.Instance;
+
         SetState(STATE.IDLE);
         isGrounded = false;
     }
@@ -165,9 +171,11 @@ public class CharacterScript : MonoBehaviour
             // --- DASHING ---
             if (inputReaderScript.FindInput(backDash.input)) {
                 dashTimer = 0; SetState(STATE.BDASHING);
+                audioScript.PlayWhoosh();
             }
             else if (inputReaderScript.FindInput(forwardDash.input)) {
                 dashTimer = 0; SetState(STATE.FDASHING);
+                audioScript.PlayWhoosh();
             }
 
             // --- METER 1 ---
@@ -178,6 +186,7 @@ public class CharacterScript : MonoBehaviour
                     if (characterName == "Gojo") StartCoroutine(Gojo_Meter1());
                     else if (characterName == "Sukuna") StartCoroutine(Sukuna_Meter1());
                     else PerformSuperMove("Meter1", meter1); // Generic Fallback
+                    audioScript.PlaySpecial();
                 }
             }
             // --- METER 2 ---
@@ -188,6 +197,7 @@ public class CharacterScript : MonoBehaviour
                     if (characterName == "Gojo") StartCoroutine(Gojo_Meter2());
                     else if (characterName == "Sukuna") StartCoroutine(Sukuna_Meter2());
                     else PerformSuperMove("Meter2", meter2);
+                    audioScript.PlaySpecial();
                 }
             }
             // --- METER 3 ---
@@ -198,15 +208,18 @@ public class CharacterScript : MonoBehaviour
                     if (characterName == "Gojo") StartCoroutine(Gojo_Meter3());
                     else if (characterName == "Sukuna") StartCoroutine(Sukuna_Meter3());
                     else PerformSuperMove("Meter3", meter3);
+                    audioScript.PlaySpecial();
                 }
             }
 
             // --- NORMALS ---
             else if (inputReaderScript.FindInput(lightPunch.input)) {
                 PerformAttack("Attack", lightPunch.damage, 1, lightPunch);
+                audioScript.PlayPunch();
             }
             else if (inputReaderScript.FindInput(kick.input)) {
                 PerformAttack("Kick", kick.damage, 2, kick);
+                audioScript.PlayKick();
             }
         }
     }
