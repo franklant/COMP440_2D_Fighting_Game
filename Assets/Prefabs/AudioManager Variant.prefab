@@ -1,0 +1,123 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &136963752105888857
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4728627330234445757, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4728627330234445757, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4728627330234445757, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4728627330234445757, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4728627330234445757, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4728627330234445757, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4728627330234445757, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4728627330234445757, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4728627330234445757, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4728627330234445757, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: sfxVolume
+      value: 0.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: musicVolume
+      value: 0.331
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: UISFX.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: 'UISFX.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 15035ba09480bc946b788e01a743f51b, type: 3}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: 'UISFX.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c28f173b12363f9448cf587431eaffe8, type: 3}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: 'UISFX.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: bc2ee2cb00b74d344914a8becf2d918c, type: 3}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: 'UISFX.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 56876cc5d8aea5449a0d5fea29cb345d, type: 3}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: specialSFX.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: AnnouncerSFX.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: VoiceLineSFX.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: 'specialSFX.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 4aa2f665f3fd74c4aada3fca2545bb9e, type: 3}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: 'specialSFX.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 87c7a7bb9e6787f4f94bc818b9e586af, type: 3}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: 'specialSFX.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 1dc9b06286788ba4098b8edf1e21c15b, type: 3}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: 'AnnouncerSFX.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 6ba6b6fda47c1ec4883e554f8961e55b, type: 3}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: 'VoiceLineSFX.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 08cacc57ebd44804fb13fdfb7f42f137, type: 3}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: 'VoiceLineSFX.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 0bf3b6c018e24494ba08beff849d43f6, type: 3}
+    - target: {fileID: 8829531645047036569, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: m_Name
+      value: AudioManager Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}

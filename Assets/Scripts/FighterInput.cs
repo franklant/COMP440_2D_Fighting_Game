@@ -48,7 +48,7 @@ public class FighterInput : MonoBehaviour
 
     void LowPunch()   { 
         Debug.Log("LP");
-        AudioManager.Instance.PlayPunch();
+        AudioManager.Instance.PlayWhoosh();
         }
     void MediumPunch(){ 
         Debug.Log("MP");
