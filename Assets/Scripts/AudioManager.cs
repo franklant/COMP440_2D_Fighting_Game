@@ -32,6 +32,18 @@ public class AudioManager : MonoBehaviour
     [Header("Block Sounds")]
     public AudioClip[] blockSFX;
 
+    [Header("Specials")]
+    public AudioClip[] specialSFX;
+
+    [Header("Announcer")]
+    public AudioClip[] AnnouncerSFX;
+
+    [Header("UI")]
+    public AudioClip[] UISFX;
+
+    [Header("Voice Lines")]
+    public AudioClip[] VoiceLineSFX;
+
     [Header("Pitch Variation")]
     public float minPitch = 0.90f;
     public float maxPitch = 1.10f;
@@ -51,6 +63,7 @@ public class AudioManager : MonoBehaviour
     {
         SetupMusic();
         CreateSFXPool();
+        Announcer();
     }
 
 
@@ -111,6 +124,11 @@ public class AudioManager : MonoBehaviour
     public void PlayHit() => PlayRandomClip(hitSFX);
     public void PlayWhoosh() => PlayRandomClip(whooshSFX);
     public void PlayBlock() => PlayRandomClip(blockSFX);
+    public void PlaySpecial() => PlayRandomClip(specialSFX);
+    public void UIClicks() => PlayRandomClip(UISFX);
+    public void VoiceLines() => PlayRandomClip(VoiceLineSFX);
+    public void Announcer() => PlayRandomClip(AnnouncerSFX);
+    
 
     // For UI sliders
     public void SetMusicVolume(float v)

@@ -5,21 +5,16 @@ public class FighterInput : MonoBehaviour
     public Animator animator;
     //public Rigidbody2D myRigidBody;
     // Assign in Inspector or use default keys
-    [Header("Punch Keys")]
-    public KeyCode lowPunchKey = KeyCode.J;
-    public KeyCode mediumPunchKey = KeyCode.K;
-    public KeyCode highPunchKey = KeyCode.L;
+    
+    private KeyCode lowPunchKey = KeyCode.J;
+    private KeyCode mediumPunchKey = KeyCode.K;
+    private KeyCode highPunchKey = KeyCode.L;
 
-    [Header("Kick Keys")]
-    public KeyCode lowKickKey = KeyCode.U;
-    public KeyCode mediumKickKey = KeyCode.I;
-    public KeyCode highKickKey = KeyCode.O;
+    
+    private KeyCode lowKickKey = KeyCode.I;
+    private KeyCode mediumKickKey = KeyCode.O;
+    private KeyCode highKickKey = KeyCode.P;
 
-    [Header("Movement Keys")]
-    public KeyCode walkForwardKey = KeyCode.D;
-    public KeyCode walkBackwardKey = KeyCode.A;
-    public KeyCode jumpKey = KeyCode.W;
-    public KeyCode crouchKey = KeyCode.S;
 
     void Update()
     {
@@ -53,33 +48,31 @@ public class FighterInput : MonoBehaviour
 
     void LowPunch()   { 
         Debug.Log("LP");
-        //animator.SetTrigger("Light Punch");
         AudioManager.Instance.PlayPunch();
         }
     void MediumPunch(){ 
         Debug.Log("MP");
-        //animator.SetTrigger("Medium Punch");
         AudioManager.Instance.PlayKick();
     }
     void HighPunch()  { 
         Debug.Log("HP");
-        //animator.SetTrigger("Heavy Punch");
         AudioManager.Instance.PlayHit();
     }
 
     void LowKick()    { 
         Debug.Log("LK");
-        //animator.SetTrigger("Light Kick");
-        AudioManager.Instance.PlayBlock();
+        AudioManager.Instance.PlaySpecial();
+        AudioManager.Instance.VoiceLines();
     }
     void MediumKick() { 
         Debug.Log("MK");
-        //animator.SetTrigger("Medium Kick");
-        AudioManager.Instance.PlayWhoosh();
+        AudioManager.Instance.PlaySpecial();
+        AudioManager.Instance.VoiceLines();
     }
     void HighKick() { 
         Debug.Log("HK");
-        //animator.SetTrigger("Heavy Kick");
+        AudioManager.Instance.PlaySpecial();
+        AudioManager.Instance.VoiceLines();
     }
 
 

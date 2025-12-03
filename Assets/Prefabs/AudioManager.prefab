@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   musicSource: {fileID: 4404476142775138734}
-  backgroundMusic: {fileID: 8300000, guid: ff8f9587dbca85543810a969113d4c26, type: 3}
+  backgroundMusic: {fileID: 8300000, guid: 67b3a78bc58143e4996987fbaa73fe49, type: 3}
   poolSize: 12
   musicVolume: 0.451
   sfxVolume: 1
