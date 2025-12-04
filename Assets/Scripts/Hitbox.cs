@@ -18,6 +18,7 @@ public class Hitbox : MonoBehaviour
 
     [Header("HitEffect")]
     public GameObject testHitEffect;
+    public ParticleSystem hitVfx;
 
     [Header("References")]
     public FighterStatsManager myStats; // Reference to YOUR stats (to gain meter)
@@ -65,6 +66,17 @@ public class Hitbox : MonoBehaviour
         yield return new WaitUntil(() => gameFeel != null);
     }
 
+    void EmitParticle(Vector3 position)
+    {
+        ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams();
+        emitParams.position = position;
+
+        if (hitVfx == null)
+            Debug.Log("CANNOT FIND HITVFX");
+        hitVfx.Emit(emitParams, 100);
+        hitVfx.Play();
+    }
+
     void OnTriggerEnter2D(Collider2D collision)
     {
         // 1. If we already hit someone this swing, stop.
@@ -78,6 +90,13 @@ public class Hitbox : MonoBehaviour
             else Debug.LogError("Shaker is null");
 
             //if (screenDimmer != null) screenDimmer.TriggerDim(0.1f);
+             // spawn hiteffect
+            Vector3 collisionPoint = collision.ClosestPoint(transform.position);
+            collisionPoint.x += Random.Range(-maxOffset, maxOffset);
+            collisionPoint.y += Random.Range(-maxOffset, maxOffset);
+
+            //Instantiate(testHitEffect, collisionPoint, Quaternion.identity);
+            EmitParticle(collisionPoint);
 
 
             CharacterScript enemyScript = collision.GetComponentInParent<CharacterScript>();
@@ -99,13 +118,6 @@ public class Hitbox : MonoBehaviour
                 {
                     myStats.AddHyperMeter(meterGainOnHit);
                 }
-
-                // spawn hiteffect
-                Vector3 collisionPoint = collision.ClosestPoint(transform.position);
-                collisionPoint.x += Random.Range(-maxOffset, maxOffset);
-                collisionPoint.y += Random.Range(-maxOffset, maxOffset);
-
-                Instantiate(testHitEffect, collisionPoint, Quaternion.identity);
 
                 // 6. Trigger Hitstop (Game Feel)
                 // 0.08f is snappy for melee hits

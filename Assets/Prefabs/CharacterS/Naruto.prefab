@@ -129,6 +129,7 @@ MonoBehaviour:
   maxOffset: 0.5
   enemyTag: Player2
   testHitEffect: {fileID: 3560096165090776704, guid: 4bf1bbf49963269498581c65182ceb62, type: 3}
+  hitVfx: {fileID: 687222731137008926, guid: 2c79f23e085f1d44fa6284f072c1440a, type: 3}
   myStats: {fileID: 0}
   isAerial: 0
 --- !u!1 &6460727995111898062
@@ -621,6 +622,7 @@ MonoBehaviour:
   maxOffset: 0.5
   enemyTag: Player2
   testHitEffect: {fileID: 3560096165090776704, guid: 4bf1bbf49963269498581c65182ceb62, type: 3}
+  hitVfx: {fileID: 687222731137008926, guid: 2c79f23e085f1d44fa6284f072c1440a, type: 3}
   myStats: {fileID: 0}
   isAerial: 0
 --- !u!61 &5097911923216291679
