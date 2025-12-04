@@ -1,47 +1,62 @@
-using UnityEditor;
 using UnityEngine;
 
 public class SpawnCharacterScript : MonoBehaviour
 {
+    [Header("UI Connection")]
+    // DRAG YOUR UI OBJECT (The one with StatsUIHandler) HERE
+    public StatsUIHandler statsUIHandler; 
+
     [Header("Characters to Spawn")]
     public GameObject Gojo;
     public GameObject Sukuna;
     public GameObject Naruto;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         string selectedCharacter = PlayerPrefs.GetString("selectedCharacter");
+        GameObject prefabToSpawn = null;
 
-        if (selectedCharacter != null)
+        // 1. Choose the character
+        if (!string.IsNullOrEmpty(selectedCharacter))
         {
             switch (selectedCharacter)
             {
                 case "Gojo":
-                    // GameObject IGojo = PrefabUtility.InstantiatePrefab(Gojo) as GameObject;
-                    // IGojo.transform.position = transform.position;
-                    Instantiate(Gojo, transform.position, transform.rotation);
+                    prefabToSpawn = Gojo;
                     break;
                 case "Sukuna":
-                    // GameObject ISukuna = PrefabUtility.InstantiatePrefab(Sukuna) as GameObject;
-                    // ISukuna.transform.position = transform.position;
-                    Instantiate(Sukuna, transform.position, transform.rotation);
+                    prefabToSpawn = Sukuna;
                     break;
                 case "Naruto":
-                    // GameObject INaruto = PrefabUtility.InstantiatePrefab(Naruto) as GameObject;
-                    // INaruto.transform.position = transform.position;
-                    Instantiate(Naruto, transform.position, transform.rotation);
+                    prefabToSpawn = Naruto;
                     break;
-                // can add more cases for characters.
             }
-        } else
-        {
-            Debug.LogError("Could not find selected character");
         }
-    }
+        else
+        {
+            Debug.LogError("Could not find selected character in PlayerPrefs");
+            return;
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // 2. Spawn and Connect
+        if (prefabToSpawn != null)
+        {
+            // Spawn the character
+            GameObject newCharacter = Instantiate(prefabToSpawn, transform.position, transform.rotation);
+
+            // Find the Stats Manager on the new character
+            FighterStatsManager characterStats = newCharacter.GetComponent<FighterStatsManager>();
+
+            // Connect it to the UI
+            if (statsUIHandler != null && characterStats != null)
+            {
+                statsUIHandler.SetTarget(characterStats);
+                Debug.Log($"Spawned {selectedCharacter} and connected to UI.");
+            }
+            else
+            {
+                Debug.LogWarning("Missing StatsUIHandler ref or FighterStatsManager on character!");
+            }
+        }
     }
 }

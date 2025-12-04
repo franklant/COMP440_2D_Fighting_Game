@@ -374,6 +374,15 @@ public class CharacterScript : MonoBehaviour
 
         attackCoolDownDuration = (moveData != null) ? moveData.totalFrames / 60f : 0.5f;
 
+        if (triggerName == "Kick")
+        {
+            AudioManager.Instance.PlayKick();
+        }
+        else // It's a punch or generic attack
+        {
+            AudioManager.Instance.PlayPunch();
+        }
+
         if (triggerName == "Attack" && midJabHitBox) {
             var hb = midJabHitBox.GetComponent<Hitbox>();
             if(hb) { hb.damage = dmg; hb.isAerial = false; }
@@ -599,10 +608,18 @@ public class CharacterScript : MonoBehaviour
         {
             float chipDamage = damage * 0.1f; 
             if(myStats != null) myStats.BlockAttack(chipDamage, 5f);
+            
+            // --- ADD BLOCK SOUND ---
+            AudioManager.Instance.PlayBlock();
         }
         else
         {
             if(myStats != null) myStats.TakeDamage(damage, 10f, stunDamage);
+            
+            // --- ADD HIT/VOICE SOUND ---
+            AudioManager.Instance.PlayHit();
+            // Optional: 50% chance to play a voice line when hit
+            if (Random.value > 0.5f) AudioManager.Instance.VoiceLines(); 
             
             if (isAerial)
             {

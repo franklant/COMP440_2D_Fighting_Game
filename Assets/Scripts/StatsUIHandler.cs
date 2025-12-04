@@ -142,4 +142,31 @@ public class StatsUIHandler : MonoBehaviour
     {
         if (comboGroup) comboGroup.SetActive(false);
     }
+
+    public void SetTarget(FighterStatsManager newTarget)
+    {
+        // 1. Clean up old connections if any
+        if (targetFighter != null)
+        {
+            targetFighter.OnHealthChanged -= UpdateHealth;
+            targetFighter.OnHyperChanged -= UpdateHyper;
+            targetFighter.OnComboUpdated -= UpdateCombo;
+            targetFighter.OnComboEnded -= HideCombo;
+        }
+
+        // 2. Assign the new fighter
+        targetFighter = newTarget;
+
+        // 3. Connect to the new fighter events
+        if (targetFighter != null)
+        {
+            targetFighter.OnHealthChanged += UpdateHealth;
+            targetFighter.OnHyperChanged += UpdateHyper;
+            targetFighter.OnComboUpdated += UpdateCombo;
+            targetFighter.OnComboEnded += HideCombo;
+            
+            // Optional: Reset UI immediately so it doesn't show empty bars
+            if(healthBarFill) healthBarFill.fillAmount = 1f; 
+        }
+    }
 }

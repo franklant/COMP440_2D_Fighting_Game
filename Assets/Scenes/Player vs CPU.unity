@@ -765,6 +765,7 @@ GameObject:
   - component: {fileID: 497112085}
   - component: {fileID: 497112084}
   - component: {fileID: 497112083}
+  - component: {fileID: 497112088}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -902,6 +903,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &497112088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 497112082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd09a897322474b45929dcc9d7baa88a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FightingGameCamera
+  player: {fileID: 1048464170}
+  enemy: {fileID: 1158256411}
+  offset: {x: 0, y: 2, z: -10}
+  smoothTime: 0.5
+  minZoom: 5
+  maxZoom: 12
+  zoomLimiter: 50
 --- !u!1 &633864178
 GameObject:
   m_ObjectHideFlags: 0
@@ -1327,6 +1347,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1048464170 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3186237162520753216, guid: 8eb2928241f51474da7c93d7c2fc3cf2, type: 3}
+  m_PrefabInstance: {fileID: 60530651}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1075426298
 GameObject:
   m_ObjectHideFlags: 0

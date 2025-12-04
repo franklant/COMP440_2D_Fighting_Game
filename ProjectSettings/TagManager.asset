@@ -18,11 +18,12 @@ TagManager:
   - ScreenDimmer
   - ScreenFlash
   - ScreenFlash2
+  - Enemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - 

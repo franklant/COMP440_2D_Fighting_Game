@@ -1,12 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor.Build;
 using System.Linq;
 using UnityEngine.XR;
 using UnityEngine.UIElements;
-using UnityEditor.Rendering.Universal;
 using System;
-using UnityEngine.Categorization;
 
 public class NewInputReaderScript : MonoBehaviour
 {

@@ -144,9 +144,10 @@ GameObject:
   - component: {fileID: 6126121350952694284}
   - component: {fileID: 3592546534566975358}
   - component: {fileID: 3154630874218971483}
+  - component: {fileID: 2096764758204867274}
   m_Layer: 0
   m_Name: Sukuna
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -401,4 +402,37 @@ MonoBehaviour:
   groundCheck: {fileID: 3223956308767158255}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 0
+--- !u!114 &2096764758204867274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4152758078302363907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5d0e2d5b6a64350b0f67448895d120, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FighterStatsManager
+  maxHealth: 1000
+  maxHyperMeter: 300
+  maxStun: 100
+  stunRecoveryRate: 15
+  comboResetTime: 2.5
+  scalingFactor: 0.9
+  minScalingCap: 0.2
+  currentHealth: 0
+  currentHyper: 0
+  currentStun: 0
+  currentComboCount: 0
+  isDizzied: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDizzyStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDizzyEnd:
+    m_PersistentCalls:
+      m_Calls: []

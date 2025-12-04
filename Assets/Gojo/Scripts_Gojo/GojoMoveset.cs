@@ -1,65 +1,101 @@
 using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(FighterStatsManager))]
 public class GojoMoveset : MonoBehaviour
 {
     [Header("Components")]
     public Animator animator;
     public Rigidbody2D rb;
     public AudioSource audioSource;
+    private FighterStatsManager stats; // Reference to stats
 
     [Header("Move Prefabs")]
-    public GameObject redProjectilePrefab;   // Assign your Red Prefab here
-    public GameObject blueOrbPrefab;         // Assign your Blue Prefab here
-    public GameObject purpleBlastPrefab;     // Assign your Purple Prefab here
+    public GameObject redProjectilePrefab;
+    public GameObject blueOrbPrefab;
+    public GameObject purpleBlastPrefab;
+
+    [Header("Meter Costs (Max = 300)")]
+    public float blueCost = 100f;   // 1 Bar (33%)
+    public float redCost = 200f;    // 2 Bars (66%)
+    public float purpleCost = 300f; // Full Meter (100%)
 
     [Header("Settings")]
-    public float facingDirection = 1f; // 1 for right, -1 for left
-
+    public float facingDirection = 1f;
     private bool isBusy = false;
+
+    void Awake()
+    {
+        stats = GetComponent<FighterStatsManager>();
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     void Update()
     {
         if (isBusy) return;
 
-        // Input Mapping (Change these keys to whatever you prefer)
-        if (Input.GetKeyDown(KeyCode.R)) StartCoroutine(PerformRed_Back()); // "R" for Red
-        if (Input.GetKeyDown(KeyCode.B)) StartCoroutine(PerformBlue_Spinning()); // "B" for Blue
-        if (Input.GetKeyDown(KeyCode.P)) StartCoroutine(PerformHollowPurple()); // "P" for Purple
-        if (Input.GetKeyDown(KeyCode.D)) StartCoroutine(PerformDomainExpansion()); // "D" for Domain
+        // --- INPUTS WITH METER CHECKS ---
+
+        // 1. Reversal Red (Cost: 200)
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            // CHANGED: "TryConsumeHyper" -> "TrySpendMeter"
+            if (stats.TrySpendMeter(redCost)) 
+                StartCoroutine(PerformRed_Back());
+            else
+                Debug.Log("Not enough meter for Red! Need " + redCost);
+        }
+
+        // 2. Lapse Blue (Cost: 100)
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            // CHANGED: "TryConsumeHyper" -> "TrySpendMeter"
+            if (stats.TrySpendMeter(blueCost)) 
+                StartCoroutine(PerformBlue_Spinning());
+            else
+                 Debug.Log("Not enough meter for Blue! Need " + blueCost);
+        }
+
+        // 3. Hollow Purple (Cost: 300 / Full)
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            // CHANGED: "TryConsumeHyper" -> "TrySpendMeter"
+            if (stats.TrySpendMeter(purpleCost)) 
+                StartCoroutine(PerformHollowPurple());
+            else
+                 Debug.Log("Not enough meter for Purple! Need " + purpleCost);
+        }
+
+        // 4. Domain Expansion (Optional: Make this free or cost 3 bars too?)
+        if (Input.GetKeyDown(KeyCode.D)) 
+        {
+            StartCoroutine(PerformDomainExpansion());
+        }
     }
 
-    // --- 1. REVERSAL RED (Back) ---
-    // Logic based on MUGEN State 1600 -> 1610 -> 1620
+    // --- MOVES (Logic remains the same) ---
+
     IEnumerator PerformRed_Back()
     {
         isBusy = true;
-        
-        // Play Animation
         if (animator) animator.Play("Action_1600");
         
-        // Teleport Backwards (The "Back" in Back Red)
         yield return new WaitForSeconds(0.06f); 
         transform.position += new Vector3(-2.0f * facingDirection, 0, 0); 
 
-        // Spawn The Red Orb
         yield return new WaitForSeconds(0.1f); 
         if (redProjectilePrefab != null)
         {
-            // Spawn it slightly in front
             Vector3 spawnPos = transform.position + new Vector3(1f * facingDirection, 0, 0);
             GameObject red = Instantiate(redProjectilePrefab, spawnPos, Quaternion.identity);
-            
-            // Start the launch logic for the projectile
             StartCoroutine(HandleRedProjectileLogic(red));
         }
 
-        yield return new WaitForSeconds(0.5f); // Recovery time
+        yield return new WaitForSeconds(0.5f);
         isBusy = false;
-        if (animator) animator.Play("Action_0"); // Return to Idle
+        if (animator) animator.Play("Action_0");
     }
 
-    // Logic to hold the red ball in place, then launch it
     IEnumerator HandleRedProjectileLogic(GameObject red)
     {
         Rigidbody2D redRb = red.GetComponent<Rigidbody2D>();
@@ -68,31 +104,22 @@ public class GojoMoveset : MonoBehaviour
         redRb.gravityScale = 0;
         redRb.linearVelocity = Vector2.zero;
         
-        // Wait/Charge for approx 0.5s (35 ticks)
         yield return new WaitForSeconds(0.58f); 
 
-        // Launch!
         redRb.linearVelocity = new Vector2(20f * facingDirection, 0); 
-        
-        // Destroy after 2 seconds to clean up
         Destroy(red, 2.0f);
     }
 
-    // --- 2. LAPSE BLUE (Spinning) ---
-    // Logic based on MUGEN State 1300 -> 1360
     IEnumerator PerformBlue_Spinning()
     {
         isBusy = true;
         if (animator) animator.Play("Action_1300");
 
-        // Wait a split second then spawn
         yield return new WaitForSeconds(0.1f);
         
         if (blueOrbPrefab != null)
         {
             GameObject blue = Instantiate(blueOrbPrefab, transform.position, Quaternion.identity);
-            
-            // Add the orbiting behavior script dynamically
             BlueOrbBehavior behavior = blue.AddComponent<BlueOrbBehavior>();
             behavior.owner = this.transform;
         }
@@ -102,17 +129,13 @@ public class GojoMoveset : MonoBehaviour
         if (animator) animator.Play("Action_0");
     }
 
-    // --- 3. HOLLOW PURPLE ---
-    // Logic based on MUGEN State 1900
     IEnumerator PerformHollowPurple()
     {
         isBusy = true;
         if (animator) animator.Play("Action_1900");
 
-        // Wait for charge up animation
         yield return new WaitForSeconds(0.6f);
 
-        // Spawn The Blast
         if (purpleBlastPrefab != null)
         {
             Vector3 spawnPos = transform.position + new Vector3(2f * facingDirection, 0, 0);
@@ -123,40 +146,26 @@ public class GojoMoveset : MonoBehaviour
             
             pRb.gravityScale = 0;
             pRb.linearVelocity = new Vector2(10f * facingDirection, 0); 
-            
-            // Clean up purple after 5 seconds
             Destroy(purple, 5.0f);
         }
 
         yield return new WaitForSeconds(1.0f);
-        
         isBusy = false;
         if (animator) animator.Play("Action_0");
     }
 
-    // --- 4. DOMAIN EXPANSION: UNLIMITED VOID ---
-    // Logic based on MUGEN State 3200
     IEnumerator PerformDomainExpansion()
     {
         isBusy = true;
         if (animator) animator.Play("Action_3200");
-
-        Debug.Log("Domain Expansion: Infinite Void Activated");
-
-        // Cinematic wait time
         yield return new WaitForSeconds(1.5f); 
-
-        // Here you would instantiate your domain background or apply global stun
-        // For now, we just wait for the animation to finish
-        
         yield return new WaitForSeconds(1.0f);
         isBusy = false;
         if (animator) animator.Play("Action_0");
     }
 }
 
-// --- HELPER CLASS FOR BLUE ORB ---
-// This handles the orbiting movement of Blue
+// Helper for Blue Orb
 public class BlueOrbBehavior : MonoBehaviour
 {
     public Transform owner;
@@ -165,29 +174,17 @@ public class BlueOrbBehavior : MonoBehaviour
     void Start()
     {
         startTime = Time.time;
-        // Automatically destroy the orb after 3 seconds
         Destroy(gameObject, 3.0f); 
     }
 
     void Update()
     {
-        if (owner == null) 
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        // Logic adapted from MUGEN [Statedef 1360]
-        // Calculates an orbital position using Sine waves
+        if (owner == null) { Destroy(gameObject); return; }
         
-        float time = (Time.time - startTime) * 10; // Speed multiplier
-        float xOffset = 3.0f * Mathf.Sin(time * Mathf.PI / 10f); // X Orbit
-        float yOffset = 1.0f * Mathf.Sin((time - 5f) * Mathf.PI / 10f); // Y Orbit
+        float time = (Time.time - startTime) * 10; 
+        float xOffset = 3.0f * Mathf.Sin(time * Mathf.PI / 10f); 
+        float yOffset = 1.0f * Mathf.Sin((time - 5f) * Mathf.PI / 10f); 
 
-        // Update position relative to Gojo (owner)
         transform.position = owner.position + new Vector3(xOffset, yOffset + 1.0f, 0);
-        
-        // Pull Logic (Optional Placeholder)
-        // You can add code here to find nearby objects and suck them in
     }
 }
