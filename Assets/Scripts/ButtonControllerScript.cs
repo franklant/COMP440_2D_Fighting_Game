@@ -76,6 +76,11 @@ public class ButtonControllerScript : MonoBehaviour
         if (isReady)
         {
             Debug.Log("Character <color=green>" + selectedCharacter + "</color> selected.");
+
+            /// !! remove once characters are added !! ///
+            if (selectedCharacter == "Madara" || selectedCharacter == "Luffy")
+                selectedCharacter = "Naruto";
+            
             PlayerPrefs.SetString("selectedCharacter", selectedCharacter);  // set the selected character, to be used in the final screen
             SceneManager.LoadScene("TestSelectedCharacterScene");
         } else

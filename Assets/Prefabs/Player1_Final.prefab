@@ -139,9 +139,6 @@ MonoBehaviour:
   myAnimator: {fileID: 6968108233768445780}
   myStats: {fileID: 4961772881205769181}
   myGroundCheck: {fileID: 0}
-  redScreenFlash: {fileID: 0}
-  camShake: {fileID: 0}
-  screenDimmer: {fileID: 0}
   midJabHitBox: {fileID: 0}
   kickHitBox: {fileID: 0}
   enemyTarget: {fileID: 0}
@@ -150,11 +147,6 @@ MonoBehaviour:
   redProjectilePrefab: {fileID: 6573110301316325902, guid: 88fccb7043e98462bb3d85798e8d7003, type: 3}
   purpleProjectilePrefab: {fileID: 3566979845838530738, guid: 21124ffa6d14c4dbd9c96086b4704956, type: 3}
   redSpawnOffset: 1.5
-  jabDamage: 50
-  kickDamage: 80
-  meter1Damage: 200
-  meter2Damage: 400
-  meter3Damage: 600
   GRAVITY: 19.6
   velocity: {x: 0, y: 0, z: 0}
   movementSpeed: 4
@@ -167,7 +159,8 @@ MonoBehaviour:
   attackLevel: 0
   dashDuration: 0
   dashTimer: 0
-  inputBuffer: {fileID: 0}
+  audioManager: {fileID: 0}
+  inputReaderScript: {fileID: 0}
   moveDatabase: {fileID: 0}
   lightPunch:
     input: 
@@ -265,11 +258,14 @@ MonoBehaviour:
     onHitAdvantage: 0
     onBlockAdvantage: 0
     specialEffects: []
+  hDirection: 0
   isGrounded: 0
-  isJumping: 0
   isAttacking: 0
+  isJumping: 0
   isBlocking: 0
-  lastInput: 
+  redScreenFlash: {fileID: 0}
+  camShake: {fileID: 0}
+  screenDimmer: {fileID: 0}
 --- !u!50 &2100150715879963525
 Rigidbody2D:
   serializedVersion: 5
@@ -294,7 +290,7 @@ Rigidbody2D:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!114 &4961772881205769181

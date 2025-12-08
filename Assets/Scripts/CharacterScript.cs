@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CharacterScript : MonoBehaviour
 {
@@ -519,7 +520,7 @@ public class CharacterScript : MonoBehaviour
             myAnimator.SetFloat("WalkDirection", normalizedSpeed);
             myAnimator.SetBool("IsBlocking", currentState == (int)STATE.BLOCKING);
             myAnimator.SetFloat("VerticalSpeed", velocity.y);
-            myAnimator.SetBool("IsGrounded", isGrounded);
+            myAnimator.SetBool("IsGrounded", CheckGround());
             // Compatibility parameters
             myAnimator.SetBool("isDash", currentState == GetState(STATE.FDASHING));
             myAnimator.SetBool("isBackDash", currentState == GetState(STATE.BDASHING));
@@ -543,13 +544,33 @@ public class CharacterScript : MonoBehaviour
             case (int) STATE.AERIALKNOCKBACK: AerialKnockBackState(); break;
         }
     }
+
+    bool CheckGround()
+    {
+        List<Collider2D> results = new List<Collider2D>();
+        ContactFilter2D filter = ContactFilter2D.noFilter;
+        int hitCount = GetComponent<CapsuleCollider2D>().Overlap(filter, results);
+
+        if (hitCount > 0)
+        {
+            foreach (Collider2D c in results)
+            {
+                if (c.gameObject.CompareTag("Ground"))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
     
     // --- STANDARD STATES ---
     
     void IdleState() {
         velocity.x = 0;
         if (hDirection != 0) SetState(STATE.WALKING);
-        if (isJumping && isGrounded) SetState(STATE.JUMPING);
+        if (isJumping && CheckGround()) SetState(STATE.JUMPING);
         if (isBlocking) SetState(STATE.BLOCKING);
     }
 
@@ -557,8 +578,8 @@ public class CharacterScript : MonoBehaviour
         velocity.x += hDirection * movementSpeed * acceleration * Time.deltaTime;
         float absVelocity = Mathf.Abs(velocity.x); // Fixed Math.Abs -> Mathf.Abs
         velocity.x = Mathf.Clamp(absVelocity, 0, maxSpeed) * hDirection; // Fixed Math.Clamp -> Mathf.Clamp
-        if (hDirection == 0 && isGrounded) SetState(STATE.IDLE);
-        if (isJumping && isGrounded) SetState(STATE.JUMPING);
+        if (hDirection == 0 && CheckGround()) SetState(STATE.IDLE);
+        if (isJumping && CheckGround()) SetState(STATE.JUMPING);
         if (isBlocking) SetState(STATE.BLOCKING);
     }
     
@@ -597,7 +618,7 @@ public class CharacterScript : MonoBehaviour
         if (isBlocking) velocity.y -= GRAVITY * 5 * Time.deltaTime; 
         else velocity.y -= GRAVITY * Time.deltaTime;
         HandleAirControl();
-        if (isGrounded) { if (hDirection != 0) SetState(STATE.WALKING); else SetState(STATE.IDLE); }
+        if (CheckGround()) { if (hDirection != 0) SetState(STATE.WALKING); else SetState(STATE.IDLE); }
     }
 
     void HandleAirControl() {
@@ -624,10 +645,10 @@ public class CharacterScript : MonoBehaviour
         velocity.y -= GRAVITY * Time.deltaTime;
 
         // 2. Air Drag (Slows X movement)
-        velocity.x = Mathf.Lerp(velocity.x, 0, Time.deltaTime * 2f);
+        velocity.x = Mathf.Lerp(velocity.x, 0, Time.deltaTime * 10f);   
 
-        // 3. Landing Logic
-        if (velocity.y < 0 && isGrounded)
+        // check if we're still not grounded
+        if (velocity.y <= 0 && CheckGround())
         {
             velocity.x = 0;
             velocity.y = 0;
@@ -635,6 +656,7 @@ public class CharacterScript : MonoBehaviour
             SetState(STATE.IDLE); 
         }
     }
+
 
     // =========================================================
     //               GET HIT FUNCTION
@@ -663,6 +685,7 @@ public class CharacterScript : MonoBehaviour
             
             if (isAerial)
             {
+                velocity.y = 15;
                 SetState(STATE.AERIALKNOCKBACK);
             } else
             {
@@ -685,10 +708,13 @@ public class CharacterScript : MonoBehaviour
     float knockTimer = 0;
     float aerialKnockTimer = 0;
 
-    void OnCollisionStay2D(Collision2D collision) { 
+    void OnCollisionEnter2D(Collision2D collision) { 
         if (collision.collider.CompareTag("Ground")) isGrounded = true; 
+    }
+    void OnCollisionStay2D(Collision2D collision)
+    {
         if (enemyTarget != null) {
-            if (collision.collider.CompareTag(enemyTarget.gameObject.tag) && !isGrounded && velocity.y <= 0) {
+            if (collision.collider.CompareTag(enemyTarget.gameObject.tag) && !CheckGround() && velocity.y <= 0) {
                 float myX = GetComponent<BoxCollider2D>().ClosestPoint(collision.collider.transform.position).x;
                 float theirX = collision.collider.ClosestPoint(transform.position).x;
                 float push = myX - theirX;
