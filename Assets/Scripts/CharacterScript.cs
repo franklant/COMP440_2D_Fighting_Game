@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CharacterScript : MonoBehaviour
 {
@@ -54,22 +55,30 @@ public class CharacterScript : MonoBehaviour
     private MovementDataManager moveDatabaseManagerScript;
 
     // Moves
+   // Moves
     public MoveDetails lightPunch, kick, superMove, forwardDash, backDash;
     public MoveDetails meter1, meter2, meter3;
-    private float hDirection = 0;
+    
+    [HideInInspector] // Hides it from the Inspector but keeps it public for the AI script
+    public float hDirection = 0; 
 
     // Flags
-    public bool isGrounded, isJumping, isAttacking, isBlocking; 
-
-    private enum STATE {
+    public bool isGrounded, isAttacking; // These are read-only state flags
+    
+    [HideInInspector]
+    public bool isJumping, isBlocking; // These are input flags set by Player or AI
+    // FIX: Make the STATE enum public so AIController can use it.
+    public enum STATE { 
         IDLE = 0, WALKING = 1, JUMPING = 2, FALLING = 3,
         ATTACKING = 4, DIZZIED = 5, DEAD = 6, BLOCKING = 7,
         FDASHING = 8, BDASHING = 9, KNOCKBACK = 10, AERIALKNOCKBACK = 11
     };
 
-    void SetState(STATE state) { currentState = (int) state; }
-    int GetState(STATE state) { return (int) state; }
+    // FIX: Make GetState public so AIController can check the current state.
+    public int GetState(STATE state) { return (int) state; }
 
+    // NOTE: SetState should remain private/internal as only the CharacterScript should change its own state directly.
+    void SetState(STATE state) { currentState = (int) state; }
     Vector3 originalMidBoxPosition, reflectedMidBoxPosition;
     Vector3 originalKickBoxPosition, reflectedKickBoxPosition;
 
@@ -80,7 +89,11 @@ public class CharacterScript : MonoBehaviour
 
     void Start()
     {
-        characterName = PlayerPrefs.GetString("selectedCharacter");
+        if (isPlayer)   
+            characterName = PlayerPrefs.GetString("selectedCharacter");
+        if (name == "AIFighter")
+            characterName = name;
+        
         if (string.IsNullOrEmpty(characterName)) characterName = "Gojo"; 
 
         // Component Fetching
@@ -109,6 +122,13 @@ public class CharacterScript : MonoBehaviour
         if (kickHitBox) {
             originalKickBoxPosition = kickHitBox.transform.localPosition;
             reflectedKickBoxPosition = Vector3.Reflect(kickHitBox.transform.localPosition, Vector3.right);
+        }
+
+        // character requires more offsets
+        if (characterName == "Naruto" && CompareTag("Player1"))
+        {
+            reflectedMidBoxPosition -= (Vector3.left * 0.5f);
+            reflectedKickBoxPosition -= (Vector3.left * 0.5f);
         }
 
         // Stats Listeners
@@ -229,7 +249,7 @@ public class CharacterScript : MonoBehaviour
     // =========================================================
     
     // 1. The Trigger Setter
-    void PerformSuperMove(string triggerName, MoveDetails moveData)
+    public void PerformSuperMove(string triggerName, MoveDetails moveData)
     {
         velocity.x = 0;
         isAttacking = true;
@@ -378,7 +398,7 @@ public class CharacterScript : MonoBehaviour
         SetState(STATE.IDLE);
     }
 
-    void PerformAttack(string triggerName, float dmg, int level, MoveDetails moveData)
+    public void PerformAttack(string triggerName, float dmg, int level, MoveDetails moveData)
     {
         velocity.x = 0;
         isAttacking = true;
@@ -438,48 +458,67 @@ public class CharacterScript : MonoBehaviour
     }
 
     void Update()
-    {
-        if (myStats != null && myStats.CurrentHealth == 0) SetState(STATE.DEAD);
+{
+    // 1. Core State Checks (Must run first)
+    if (myStats != null && myStats.CurrentHealth == 0) SetState(STATE.DEAD);
 
-        if (currentState == (int)STATE.DIZZIED || currentState == (int)STATE.DEAD) {
-            HandleStates(); 
-            myRigidBody.linearVelocity = velocity;
-            return; 
-        }
-
-        if (isPlayer) {
-            hDirection = Input.GetAxisRaw("Horizontal");
-            isJumping = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W);
-            isBlocking = Input.GetKey(KeyCode.S); 
-            if (!isAttacking) HandleInput();
-        } else {
-            hDirection = 0; isJumping = false; isBlocking = false; isAttacking = false;
-        }
-
-        // Facing
-        if (enemyTarget != null) {
-            if (transform.position.x > enemyTarget.position.x) mySpriteRenderer.flipX = true;  
-            else mySpriteRenderer.flipX = false; 
-        }
-
-        // Hitbox flip
-        if (CompareTag("Player1") && midJabHitBox && kickHitBox) {
-            if (mySpriteRenderer.flipX) {
-                midJabHitBox.transform.localPosition = reflectedMidBoxPosition;
-                kickHitBox.transform.localPosition = reflectedKickBoxPosition;
-            } else {
-                midJabHitBox.transform.localPosition = originalMidBoxPosition;
-                kickHitBox.transform.localPosition = originalKickBoxPosition;
-            }
-        }
-
-        HandleStates();
-        UpdateAnimator();
-
-        if (isGrounded) velocity.y = 0;
-        else velocity.y -= GRAVITY * Time.deltaTime;
+    if (currentState == (int)STATE.DIZZIED || currentState == (int)STATE.DEAD) {
+        HandleStates(); 
         myRigidBody.linearVelocity = velocity;
+        return; // Halt all normal movement/input processing
     }
+
+    // 2. Input Acquisition
+    if (isPlayer) 
+    {
+        // PLAYER: Read inputs directly from the keyboard/controller
+        hDirection = Input.GetAxisRaw("Horizontal");
+        isJumping = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W);
+        isBlocking = Input.GetKey(KeyCode.S); 
+        
+        // Only allow attack input if not already attacking
+        if (!isAttacking) HandleInput(); 
+    } 
+    // AI: If isPlayer is FALSE, the AIController sets hDirection, isJumping, and isBlocking.
+    // We remove the redundant 'else' block that previously zeroed out the AI's inputs:
+    // REMOVED: else { hDirection = 0; isJumping = false; isBlocking = false; isAttacking = false; }
+
+
+    // 3. Facing Logic (Always check facing regardless of control source)
+    if (enemyTarget != null) 
+    {
+        // Face the opponent
+        if (transform.position.x > enemyTarget.position.x) mySpriteRenderer.flipX = true;  
+        else mySpriteRenderer.flipX = false; 
+    }
+
+    // 4. Hitbox Flipping Logic
+    if (midJabHitBox && kickHitBox) 
+    {
+        if (mySpriteRenderer.flipX) 
+        {
+            midJabHitBox.transform.localPosition = reflectedMidBoxPosition;
+            kickHitBox.transform.localPosition = reflectedKickBoxPosition;
+        } 
+        else 
+        {
+            midJabHitBox.transform.localPosition = originalMidBoxPosition;
+            kickHitBox.transform.localPosition = originalKickBoxPosition;
+        }
+    }
+
+    // 5. State Handling and Physics (Crucial: Must execute for BOTH Player and AI)
+    
+    // HandleStates contains the logic that uses hDirection to switch between IDLE/WALKING
+    // and applies the jump velocity when isJumping is true.
+    HandleStates(); 
+    UpdateAnimator();
+
+    if (isGrounded) velocity.y = 0;
+    else velocity.y -= GRAVITY * Time.deltaTime;
+    
+    myRigidBody.linearVelocity = velocity;
+}
 
     void UpdateAnimator()
     {
@@ -492,7 +531,7 @@ public class CharacterScript : MonoBehaviour
             myAnimator.SetFloat("WalkDirection", normalizedSpeed);
             myAnimator.SetBool("IsBlocking", currentState == (int)STATE.BLOCKING);
             myAnimator.SetFloat("VerticalSpeed", velocity.y);
-            myAnimator.SetBool("IsGrounded", isGrounded);
+            myAnimator.SetBool("IsGrounded", CheckGround());
             // Compatibility parameters
             myAnimator.SetBool("isDash", currentState == GetState(STATE.FDASHING));
             myAnimator.SetBool("isBackDash", currentState == GetState(STATE.BDASHING));
@@ -516,13 +555,33 @@ public class CharacterScript : MonoBehaviour
             case (int) STATE.AERIALKNOCKBACK: AerialKnockBackState(); break;
         }
     }
+
+    bool CheckGround()
+    {
+        List<Collider2D> results = new List<Collider2D>();
+        ContactFilter2D filter = ContactFilter2D.noFilter;
+        int hitCount = GetComponent<CapsuleCollider2D>().Overlap(filter, results);
+
+        if (hitCount > 0)
+        {
+            foreach (Collider2D c in results)
+            {
+                if (c.gameObject.CompareTag("Ground"))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
     
     // --- STANDARD STATES ---
     
     void IdleState() {
         velocity.x = 0;
         if (hDirection != 0) SetState(STATE.WALKING);
-        if (isJumping && isGrounded) SetState(STATE.JUMPING);
+        if (isJumping && CheckGround()) SetState(STATE.JUMPING);
         if (isBlocking) SetState(STATE.BLOCKING);
     }
 
@@ -530,8 +589,8 @@ public class CharacterScript : MonoBehaviour
         velocity.x += hDirection * movementSpeed * acceleration * Time.deltaTime;
         float absVelocity = Mathf.Abs(velocity.x); // Fixed Math.Abs -> Mathf.Abs
         velocity.x = Mathf.Clamp(absVelocity, 0, maxSpeed) * hDirection; // Fixed Math.Clamp -> Mathf.Clamp
-        if (hDirection == 0 && isGrounded) SetState(STATE.IDLE);
-        if (isJumping && isGrounded) SetState(STATE.JUMPING);
+        if (hDirection == 0 && CheckGround()) SetState(STATE.IDLE);
+        if (isJumping && CheckGround()) SetState(STATE.JUMPING);
         if (isBlocking) SetState(STATE.BLOCKING);
     }
     
@@ -570,7 +629,7 @@ public class CharacterScript : MonoBehaviour
         if (isBlocking) velocity.y -= GRAVITY * 5 * Time.deltaTime; 
         else velocity.y -= GRAVITY * Time.deltaTime;
         HandleAirControl();
-        if (isGrounded) { if (hDirection != 0) SetState(STATE.WALKING); else SetState(STATE.IDLE); }
+        if (CheckGround()) { if (hDirection != 0) SetState(STATE.WALKING); else SetState(STATE.IDLE); }
     }
 
     void HandleAirControl() {
@@ -597,10 +656,10 @@ public class CharacterScript : MonoBehaviour
         velocity.y -= GRAVITY * Time.deltaTime;
 
         // 2. Air Drag (Slows X movement)
-        velocity.x = Mathf.Lerp(velocity.x, 0, Time.deltaTime * 2f);
+        velocity.x = Mathf.Lerp(velocity.x, 0, Time.deltaTime * 10f);   
 
-        // 3. Landing Logic
-        if (velocity.y < 0 && isGrounded)
+        // check if we're still not grounded
+        if (velocity.y <= 0 && CheckGround())
         {
             velocity.x = 0;
             velocity.y = 0;
@@ -608,6 +667,7 @@ public class CharacterScript : MonoBehaviour
             SetState(STATE.IDLE); 
         }
     }
+
 
     // =========================================================
     //               GET HIT FUNCTION
@@ -636,6 +696,7 @@ public class CharacterScript : MonoBehaviour
             
             if (isAerial)
             {
+                velocity.y = 15;
                 SetState(STATE.AERIALKNOCKBACK);
             } else
             {
@@ -658,10 +719,13 @@ public class CharacterScript : MonoBehaviour
     float knockTimer = 0;
     float aerialKnockTimer = 0;
 
-    void OnCollisionStay2D(Collision2D collision) { 
+    void OnCollisionEnter2D(Collision2D collision) { 
         if (collision.collider.CompareTag("Ground")) isGrounded = true; 
+    }
+    void OnCollisionStay2D(Collision2D collision)
+    {
         if (enemyTarget != null) {
-            if (collision.collider.CompareTag(enemyTarget.gameObject.tag) && !isGrounded && velocity.y <= 0) {
+            if (collision.collider.CompareTag(enemyTarget.gameObject.tag) && !CheckGround() && velocity.y <= 0) {
                 float myX = GetComponent<BoxCollider2D>().ClosestPoint(collision.collider.transform.position).x;
                 float theirX = collision.collider.ClosestPoint(transform.position).x;
                 float push = myX - theirX;

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Categorization;
 
 public class Hitbox : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class Hitbox : MonoBehaviour
     public float stun = 15f;
     public float meterGainOnHit = 10f;
     public float hitStop = 0.2f;
-    public float maxOffset = 0.5f;
+    public float maxOffset = 0.2f;
     private GameFeelManager gameFeel;
     private GameObject dimmerObject;
     private ScreenDimmer screenDimmer;
@@ -57,6 +58,28 @@ public class Hitbox : MonoBehaviour
 
         if (testHitEffect == null)
             Debug.LogError("Hit effect not instantiated.");
+
+        
+        if (CompareTag("Player1"))
+        {
+            enemyTag = "Player2";
+        } 
+        // else
+        // {
+        //     enemyTag = "Player1";
+        // }
+        
+        
+        GameObject[] vfx = GameObject.FindGameObjectsWithTag("Particles");
+        
+        if (CompareTag("Kick"))
+        {
+            hitVfx = vfx[0].GetComponent<ParticleSystem>();
+        } else
+        {
+            hitVfx = vfx[1].GetComponent<ParticleSystem>();
+        }
+        //hitVfx.Play();
     }
 
     IEnumerator FindGameFeel()
@@ -68,12 +91,12 @@ public class Hitbox : MonoBehaviour
 
     void EmitParticle(Vector3 position)
     {
-        ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams();
-        emitParams.position = position;
+        // var emitParams = new ParticleSystem.EmitParams();
+        // emitParams.position = position;
+        // emitParams.startLifetime = 0.2f;
+        hitVfx.gameObject.transform.position = position;
 
-        if (hitVfx == null)
-            Debug.Log("CANNOT FIND HITVFX");
-        hitVfx.Emit(emitParams, 100);
+        // hitVfx.Emit(emitParams, 7);
         hitVfx.Play();
     }
 
@@ -128,6 +151,6 @@ public class Hitbox : MonoBehaviour
                 //     gameFeel.HitStop(0.08f);
                 // }
             }
-        }
+        } 
     }
 }
