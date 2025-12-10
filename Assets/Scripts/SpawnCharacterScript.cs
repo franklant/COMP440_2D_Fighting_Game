@@ -10,6 +10,9 @@ public class SpawnCharacterScript : MonoBehaviour
     public GameObject Gojo;
     public GameObject Sukuna;
     public GameObject Naruto;
+    // NEW CHARACTERS
+    public GameObject Madara;
+    public GameObject Luffy;
 
     void Start()
     {
@@ -29,6 +32,16 @@ public class SpawnCharacterScript : MonoBehaviour
                     break;
                 case "Naruto":
                     prefabToSpawn = Naruto;
+                    break;
+                // NEW CASES
+                case "Madara":
+                    prefabToSpawn = Madara;
+                    break;
+                case "Luffy":
+                    prefabToSpawn = Luffy;
+                    break;
+                default:
+                    Debug.LogWarning("Selected character '" + selectedCharacter + "' not found in Spawn list!");
                     break;
             }
         }

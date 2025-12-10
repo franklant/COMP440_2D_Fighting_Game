@@ -12,11 +12,13 @@ public class LuffyCombatController : MonoBehaviour
     public KeyCode keyComboB = KeyCode.K; 
     public KeyCode keySpecial1 = KeyCode.I; 
     public KeyCode keySpecial2 = KeyCode.O; 
-    public KeyCode keyUltimate = KeyCode.P; // NEW: Ultimate Key
+    public KeyCode keyUltimate = KeyCode.P; 
     public KeyCode keyTransform = KeyCode.Return; 
-    
     public KeyCode keyJump = KeyCode.Space;
     public KeyCode keyCrouch = KeyCode.S; 
+
+    [Header("Effects")]
+    public ChildEffectHandler fxChild; // The reference to your Child Object Script
 
     // --- CURRENT ACTIVE STATE ---
     [Header("Active Action IDs (Do not edit)")]
@@ -34,8 +36,7 @@ public class LuffyCombatController : MonoBehaviour
     public int[] currentComboA;
     public int[] currentComboB;
 
-    // --- STATE DEFINITIONS ---
-    // 1. BASE FORM
+    // 1. BASE FORM DATA
     private int BASE_IDLE = 0;
     private int BASE_RUN_FWD = 20;
     private int BASE_RUN_BACK = 21;
@@ -47,14 +48,13 @@ public class LuffyCombatController : MonoBehaviour
     private int[] BASE_COMBO_A = { 200, 205, 210 };
     private int[] BASE_COMBO_B = { 305, 300, 320 };
     
-    // Base Specials
-    public int ID_SPECIAL_I = 1003; // Red Hawk
-    public int ID_SPECIAL_O_1 = 1301; // Grab Run
-    public int ID_SPECIAL_O_2 = 1302; // Grab Hit
-    public int ID_ULTIMATE_1 = -1; // Base has no P ultimate defined yet
+    public int ID_SPECIAL_I = 1003; 
+    public int ID_SPECIAL_O_1 = 1301; 
+    public int ID_SPECIAL_O_2 = 1302;
+    public int ID_ULTIMATE_1 = -1; 
     public int ID_ULTIMATE_2 = -1;
 
-    // 2. GEAR 5 FORM
+    // 2. GEAR 5 FORM DATA
     private int G5_TRANSFORM = 900;
     private int G5_IDLE = 2000;
     private int G5_CROUCH_IN = 2010;
@@ -69,12 +69,11 @@ public class LuffyCombatController : MonoBehaviour
     private int[] G5_COMBO_A = { 2200, 2205, 2220 };
     private int[] G5_COMBO_B = { 2300, 2310, 2320 };
 
-    // Gear 5 Specials
-    private int G5_SPECIAL_I = 2400;   // Python
-    private int G5_SPECIAL_O_1 = 41000; // Kong Gun (Start)
-    private int G5_SPECIAL_O_2 = 43001; // Leo Bazooka (End)
-    private int G5_ULTIMATE_1 = 3300;   // King Kong Gun (Charge)
-    private int G5_ULTIMATE_2 = 3350;   // King Kong Gun (Hit)
+    private int G5_SPECIAL_I = 2400;   
+    private int G5_SPECIAL_O_1 = 41000; 
+    private int G5_SPECIAL_O_2 = 43001; 
+    private int G5_ULTIMATE_1 = 3300;   
+    private int G5_ULTIMATE_2 = 3350;   
 
     // Internal State
     private Animator animator;
@@ -141,57 +140,50 @@ public class LuffyCombatController : MonoBehaviour
         {
             if (isGrounded) rb.linearVelocity = Vector2.zero; 
 
-            // --- CHAIN LOGIC FOR SPECIALS ---
-            
-            // Base Form: Grab Logic (1301 -> 1302)
+            // Base Form: Grab Logic
             if (!isGear5 && isGrabbing)
             {
                 HandleBaseGrab();
                 return;
             }
 
-            // Gear 5: O Key Chain (41000 -> 43001)
-            if (isGear5 && currentActionID == ID_SPECIAL_O_1)
+            // Gear 5: O Key Chain
+            if (isGear5 && currentActionID == ID_SPECIAL_O_1 && IsAnimationFinished())
             {
-                if (IsAnimationFinished()) PlayAction(ID_SPECIAL_O_2); // Auto-chain
+                PlayAction(ID_SPECIAL_O_2); 
                 return;
             }
-            if (isGear5 && currentActionID == ID_SPECIAL_O_2)
+            if (isGear5 && currentActionID == ID_SPECIAL_O_2 && IsAnimationFinished())
             {
-                if (IsAnimationFinished()) EndAttack();
-                return;
-            }
-
-            // Gear 5: Ultimate Chain (3300 -> 3350)
-            if (isGear5 && currentActionID == ID_ULTIMATE_1)
-            {
-                if (IsAnimationFinished()) PlayAction(ID_ULTIMATE_2); // Auto-chain
-                return;
-            }
-            if (isGear5 && currentActionID == ID_ULTIMATE_2)
-            {
-                if (IsAnimationFinished()) EndAttack();
+                EndAttack(); 
                 return;
             }
 
-            // Crouch Out Logic
-            if (currentActionID == ID_CROUCH_OUT && IsAnimationFinished())
+            // Gear 5: Ultimate Chain
+            if (isGear5 && currentActionID == ID_ULTIMATE_1 && IsAnimationFinished())
             {
-                EndAttack();
+                PlayAction(ID_ULTIMATE_2); 
+                return;
+            }
+            if (isGear5 && currentActionID == ID_ULTIMATE_2 && IsAnimationFinished())
+            {
+                EndAttack(); 
                 return;
             }
 
-            // Jump Start Logic
-            if (currentActionID == ID_JUMP_START && IsAnimationFinished())
+            // Normal End Logic
+            if ((currentActionID == ID_CROUCH_OUT || currentActionID == ID_JUMP_START) && IsAnimationFinished())
             {
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-                isAttacking = false;
-                isGrounded = false;
-                PlayAction(ID_JUMP);
+                if(currentActionID == ID_JUMP_START) {
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+                    isAttacking = false; isGrounded = false;
+                    PlayAction(ID_JUMP);
+                } else {
+                    EndAttack();
+                }
                 return;
             }
 
-            // Standard Combos
             CheckComboInput();
             if (IsAnimationFinished()) EndAttack();
             return;
@@ -206,21 +198,19 @@ public class LuffyCombatController : MonoBehaviour
         else if (Input.GetKeyDown(keyComboA)) ExecuteCombo(currentComboA);
         else if (Input.GetKeyDown(keyComboB)) ExecuteCombo(currentComboB);
         else if (Input.GetKeyDown(keySpecial1)) PerformSpecial(ID_SPECIAL_I);
-        else if (Input.GetKeyDown(keySpecial2)) PerformSpecial(ID_SPECIAL_O_1); // Starts chain
-        else if (Input.GetKeyDown(keyUltimate)) PerformSpecial(ID_ULTIMATE_1);  // Starts chain
+        else if (Input.GetKeyDown(keySpecial2)) PerformSpecial(ID_SPECIAL_O_1); 
+        else if (Input.GetKeyDown(keyUltimate)) PerformSpecial(ID_ULTIMATE_1);  
         
         else HandleMovement();
     }
-
-    // --- LOGIC HELPERS ---
 
     void HandleBaseGrab()
     {
         float dir = facingRight ? 1f : -1f;
         rb.linearVelocity = new Vector2(dir * moveSpeed, rb.linearVelocity.y);
         
-        if (currentActionID == ID_SPECIAL_O_1 && IsAnimationFinished()) EndAttack(); // Missed
-        else if (currentActionID == ID_SPECIAL_O_2 && IsAnimationFinished()) EndAttack(); // Hit finished
+        if (currentActionID == ID_SPECIAL_O_1 && IsAnimationFinished()) EndAttack(); 
+        else if (currentActionID == ID_SPECIAL_O_2 && IsAnimationFinished()) EndAttack(); 
     }
 
     void EndAttack()
@@ -234,58 +224,32 @@ public class LuffyCombatController : MonoBehaviour
     void SetBaseStats()
     {
         isGear5 = false;
-        ID_IDLE = BASE_IDLE;
-        ID_RUN_FWD = BASE_RUN_FWD;
-        ID_RUN_BACK = BASE_RUN_BACK;
-        ID_JUMP_START = -1; 
-        ID_JUMP = BASE_JUMP;
-        ID_LAND = BASE_LAND;
-        ID_CROUCH_IN = BASE_CROUCH_IN;
-        ID_CROUCH_LOOP = BASE_CROUCH_LOOP;
-        ID_CROUCH_OUT = -1; 
+        ID_IDLE = BASE_IDLE; ID_RUN_FWD = BASE_RUN_FWD; ID_RUN_BACK = BASE_RUN_BACK;
+        ID_JUMP_START = -1; ID_JUMP = BASE_JUMP; ID_LAND = BASE_LAND;
+        ID_CROUCH_IN = BASE_CROUCH_IN; ID_CROUCH_LOOP = BASE_CROUCH_LOOP; ID_CROUCH_OUT = -1;
         ID_GUARD = BASE_GUARD;
-        currentComboA = BASE_COMBO_A;
-        currentComboB = BASE_COMBO_B;
-        
-        // Base Special Mapping
-        ID_SPECIAL_I = 1003; 
-        ID_SPECIAL_O_1 = 1301; 
-        ID_SPECIAL_O_2 = 1302;
-        ID_ULTIMATE_1 = -1; // No ultimate for base
+        currentComboA = BASE_COMBO_A; currentComboB = BASE_COMBO_B;
+        ID_SPECIAL_I = 1003; ID_SPECIAL_O_1 = 1301; ID_SPECIAL_O_2 = 1302;
+        ID_ULTIMATE_1 = -1;
     }
 
     void SetGear5Stats()
     {
         isGear5 = true;
-        ID_IDLE = G5_IDLE;
-        ID_RUN_FWD = G5_RUN_FWD;
-        ID_RUN_BACK = G5_RUN_BACK;
-        ID_JUMP_START = G5_JUMP_START;
-        ID_JUMP = G5_JUMP;
-        ID_LAND = G5_LAND;
-        ID_CROUCH_IN = G5_CROUCH_IN;
-        ID_CROUCH_LOOP = G5_CROUCH_LOOP;
-        ID_CROUCH_OUT = G5_CROUCH_OUT;
+        ID_IDLE = G5_IDLE; ID_RUN_FWD = G5_RUN_FWD; ID_RUN_BACK = G5_RUN_BACK;
+        ID_JUMP_START = G5_JUMP_START; ID_JUMP = G5_JUMP; ID_LAND = G5_LAND;
+        ID_CROUCH_IN = G5_CROUCH_IN; ID_CROUCH_LOOP = G5_CROUCH_LOOP; ID_CROUCH_OUT = G5_CROUCH_OUT;
         ID_GUARD = G5_GUARD;
-        currentComboA = G5_COMBO_A;
-        currentComboB = G5_COMBO_B;
-
-        // Gear 5 Special Mapping
-        ID_SPECIAL_I = G5_SPECIAL_I;     // 2400
-        ID_SPECIAL_O_1 = G5_SPECIAL_O_1; // 41000 (Starts O chain)
-        ID_SPECIAL_O_2 = G5_SPECIAL_O_2; // 43001 (Ends O chain)
-        ID_ULTIMATE_1 = G5_ULTIMATE_1;   // 3300 (Starts P chain)
-        ID_ULTIMATE_2 = G5_ULTIMATE_2;   // 3350 (Ends P chain)
+        currentComboA = G5_COMBO_A; currentComboB = G5_COMBO_B;
+        ID_SPECIAL_I = G5_SPECIAL_I; ID_SPECIAL_O_1 = G5_SPECIAL_O_1; ID_SPECIAL_O_2 = G5_SPECIAL_O_2;
+        ID_ULTIMATE_1 = G5_ULTIMATE_1; ID_ULTIMATE_2 = G5_ULTIMATE_2;
     }
 
     void PerformSpecial(int id)
     {
-        if (id == -1) return; // Ignore if no move assigned
-        
+        if (id == -1) return;
         isAttacking = true;
-        // Base Form Grab Flag Logic
         if (!isGear5 && id == ID_SPECIAL_O_1) isGrabbing = true;
-        
         PlayAction(id);
     }
 
@@ -303,13 +267,11 @@ public class LuffyCombatController : MonoBehaviour
         if (isGrabbing) return; 
         if (Input.GetKeyDown(keyComboA))
         {
-            if (comboIndex < currentComboA.Length && GetAnimationProgress() > 0.4f)
-                ExecuteCombo(currentComboA);
+            if (comboIndex < currentComboA.Length && GetAnimationProgress() > 0.4f) ExecuteCombo(currentComboA);
         }
         else if (Input.GetKeyDown(keyComboB))
         {
-            if (comboIndex < currentComboB.Length && GetAnimationProgress() > 0.4f)
-                ExecuteCombo(currentComboB);
+            if (comboIndex < currentComboB.Length && GetAnimationProgress() > 0.4f) ExecuteCombo(currentComboB);
         }
     }
 
@@ -317,17 +279,8 @@ public class LuffyCombatController : MonoBehaviour
     {
         if (isGrounded && Input.GetKeyDown(keyJump))
         {
-            if (ID_JUMP_START != -1)
-            {
-                isAttacking = true; 
-                PlayAction(ID_JUMP_START);
-            }
-            else
-            {
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-                PlayAction(ID_JUMP);
-                isGrounded = false;
-            }
+            if (ID_JUMP_START != -1) { isAttacking = true; PlayAction(ID_JUMP_START); }
+            else { rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce); PlayAction(ID_JUMP); isGrounded = false; }
             return;
         }
 
@@ -338,14 +291,9 @@ public class LuffyCombatController : MonoBehaviour
             else if (currentActionID == ID_CROUCH_IN && IsAnimationFinished()) PlayAction(ID_CROUCH_LOOP);
             return;
         }
-        else if (isGrounded && !Input.GetKey(keyCrouch) && currentActionID == ID_CROUCH_LOOP)
+        else if (isGrounded && !Input.GetKey(keyCrouch) && currentActionID == ID_CROUCH_LOOP && ID_CROUCH_OUT != -1)
         {
-            if (ID_CROUCH_OUT != -1)
-            {
-                isAttacking = true;
-                PlayAction(ID_CROUCH_OUT);
-                return;
-            }
+            isAttacking = true; PlayAction(ID_CROUCH_OUT); return;
         }
 
         float x = Input.GetAxisRaw("Horizontal");
@@ -354,9 +302,9 @@ public class LuffyCombatController : MonoBehaviour
             if (x != 0)
             {
                 rb.linearVelocity = new Vector2(x * moveSpeed, rb.linearVelocity.y);
+                // FIGHTING GAME LOGIC:
                 bool movingFwd = (x > 0 && facingRight) || (x < 0 && !facingRight);
-                if (movingFwd) PlayAction(ID_RUN_FWD);
-                else PlayAction(ID_RUN_BACK);
+                if (movingFwd) PlayAction(ID_RUN_FWD); else PlayAction(ID_RUN_BACK);
             }
             else
             {
@@ -371,6 +319,23 @@ public class LuffyCombatController : MonoBehaviour
         if (currentActionID == id && !isAttacking) return;
         currentActionID = id;
         animator.Play($"Action_{id}");
+
+        // --- EFFECT TRIGGER LOGIC (UPDATED) ---
+        // Uses TriggerVisualEffect instead of Instantiate
+        if (id == 210) TriggerVisualEffect(1552, 1.5f, 0.5f);
+        else if (id == 211) TriggerVisualEffect(1553, 1.5f, 0.5f);
+    }
+
+    void TriggerVisualEffect(int effectID, float xOffset, float yOffset)
+    {
+        // Safety Check
+        if (fxChild == null) return;
+
+        // Z is -1 to draw in front of Luffy
+        Vector3 offset = new Vector3(xOffset, yOffset, -1f);
+        
+        // Tell the child to wake up and play
+        fxChild.PlayEffect(effectID, offset);
     }
 
     bool IsAnimationFinished()
@@ -389,19 +354,13 @@ public class LuffyCombatController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isGrounded = true;
-            isAttacking = false; 
-            isGrabbing = false;
-            comboIndex = 0; 
-            isLanding = true;
-            rb.linearVelocity = Vector2.zero; 
+            isGrounded = true; isAttacking = false; isGrabbing = false;
+            comboIndex = 0; isLanding = true; rb.linearVelocity = Vector2.zero; 
             PlayAction(ID_LAND);
         }
-        // Base form grab collision
         if (!isGear5 && isGrabbing && currentActionID == ID_SPECIAL_O_1 && collision.gameObject.CompareTag("Enemy"))
         {
-            rb.linearVelocity = Vector2.zero;
-            PlayAction(ID_SPECIAL_O_2);
+            rb.linearVelocity = Vector2.zero; PlayAction(ID_SPECIAL_O_2);
         }
     }
 }

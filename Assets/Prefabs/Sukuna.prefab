@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &741576804440616633
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1790993211199338213}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1790993211199338213
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741576804440616633}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.078, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5462891436674541687}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1545759862042196397
 GameObject:
   m_ObjectHideFlags: 0
@@ -45,7 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 175ccae3361ab48f8848fdecd5a84f9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeDamage
-  combatScript: {fileID: 2133282213664518858}
+  combatScript: {fileID: 0}
   damage: 10
   stunDamage: 20
   knockback: {x: 2, y: 0}
@@ -138,13 +169,12 @@ GameObject:
   m_Component:
   - component: {fileID: 5462891436674541687}
   - component: {fileID: 6660243791380156999}
-  - component: {fileID: 2133282213664518858}
   - component: {fileID: 6123892939320419804}
   - component: {fileID: 8133903709479265568}
   - component: {fileID: 6126121350952694284}
   - component: {fileID: 3592546534566975358}
-  - component: {fileID: 3154630874218971483}
   - component: {fileID: 2096764758204867274}
+  - component: {fileID: 1099365978396112655}
   m_Layer: 0
   m_Name: Sukuna
   m_TagString: Untagged
@@ -167,6 +197,7 @@ Transform:
   m_Children:
   - {fileID: 3223956308767158255}
   - {fileID: 2083242026391935843}
+  - {fileID: 1790993211199338213}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6660243791380156999
@@ -227,26 +258,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2133282213664518858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4152758078302363907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 184115b1f9e0440b59028f5de4128f9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SukunaController
-  mahoragaPrefab: {fileID: 5054277842723607446, guid: 9f35cc9073126469b9ff7f614753e637, type: 3}
-  agitoPrefab: {fileID: 8335640833978000201, guid: 37872aa8915404fe0839d04cae74351a, type: 3}
-  bullPrefab: {fileID: 1583743654212054950, guid: 45edd3dba75164ef099c9c1ef6966eba, type: 3}
-  nuePrefab: {fileID: 1786156902810999720, guid: 3f03a27837dfa4445a70cbe519ce8dfb, type: 3}
-  divineDogsPrefab: {fileID: 0}
-  maxElephantPrefab: {fileID: 3975683818451529615, guid: 096896c2a5b234599b3f2f39c0714dca, type: 3}
-  spawnPoint: {fileID: 5462891436674541687}
-  isFacingRight: 1
 --- !u!95 &6123892939320419804
 Animator:
   serializedVersion: 7
@@ -379,30 +390,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.8125, y: 1.875}
   m_EdgeRadius: 0
---- !u!114 &3154630874218971483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4152758078302363907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94a480b7c1d514fd99dc02e533789126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SukunaMovement
-  rb: {fileID: 8133903709479265568}
-  animator: {fileID: 6123892939320419804}
-  walkSpeed: 3
-  runSpeed: 8
-  jumpForce: 14
-  gravityScale: 2
-  isGrounded: 1
-  isAttacking: 0
-  groundCheck: {fileID: 3223956308767158255}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &2096764758204867274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -436,3 +423,40 @@ MonoBehaviour:
   OnDizzyEnd:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1099365978396112655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4152758078302363907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32a2cc5782ee84a509d0e03b7f502b93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SukunaCombatController
+  walkSpeed: 3
+  runSpeed: 8
+  jumpForce: 14
+  gravityScale: 2
+  facingRight: 1
+  mahoragaPrefab: {fileID: 5054277842723607446, guid: 9f35cc9073126469b9ff7f614753e637, type: 3}
+  agitoPrefab: {fileID: 8335640833978000201, guid: 37872aa8915404fe0839d04cae74351a, type: 3}
+  bullPrefab: {fileID: 0}
+  nuePrefab: {fileID: 0}
+  divineDogsPrefab: {fileID: 0}
+  maxElephantPrefab: {fileID: 3975683818451529615, guid: 096896c2a5b234599b3f2f39c0714dca, type: 3}
+  keyLightAttack: 104
+  keyMediumAttack: 110
+  keyHeavyAttack: 109
+  keySummonDogs: 117
+  keySummonNue: 105
+  keySummonElephant: 111
+  keySummonBull: 106
+  keySummonAgito: 107
+  keySummonMahoraga: 108
+  groundCheck: {fileID: 3223956308767158255}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  spawnPoint: {fileID: 1790993211199338213}
