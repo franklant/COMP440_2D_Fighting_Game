@@ -30,13 +30,18 @@ public class PlayerFreeze : MonoBehaviour
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
 
+        rb.gameObject.GetComponent<SpriteRenderer>().color = Color.aliceBlue;
+
         yield return new WaitForSeconds(freezeDuration);
 
         rb.gravityScale = originalGravity;
         rb.linearVelocity = originalVelocity;
 
+        rb.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+
         if (movementScript != null)
             movementScript.enabled = true;
+
     }
 
     private System.Collections.IEnumerator HideSelf()

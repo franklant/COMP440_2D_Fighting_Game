@@ -3074,6 +3074,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7730572840220579205, guid: b34a84d2638e8f64ba17f88fecb99529, type: 3}
+      propertyPath: actionCooldown
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 7923312302345763504, guid: b34a84d2638e8f64ba17f88fecb99529, type: 3}
       propertyPath: m_Name
       value: AIFighter

@@ -10,6 +10,8 @@ public class SpawnCharacterScript : MonoBehaviour
     public GameObject Gojo;
     public GameObject Sukuna;
     public GameObject Naruto;
+    public GameObject Madara;
+    public GameObject Luffy;
 
     void Start()
     {
@@ -30,6 +32,12 @@ public class SpawnCharacterScript : MonoBehaviour
                 case "Naruto":
                     prefabToSpawn = Naruto;
                     break;
+                case "Madara":
+                    prefabToSpawn = Madara;
+                    break;
+                case "Luffy":
+                    prefabToSpawn = Luffy;
+                    break;
             }
         }
         else
@@ -46,6 +54,9 @@ public class SpawnCharacterScript : MonoBehaviour
 
             // Find the Stats Manager on the new character
             FighterStatsManager characterStats = newCharacter.GetComponent<FighterStatsManager>();
+
+            // Debug.LogWarning("Character Stats: " + characterStats);
+            // Debug.LogWarning("statsUIHandler");
 
             // Connect it to the UI
             if (statsUIHandler != null && characterStats != null)

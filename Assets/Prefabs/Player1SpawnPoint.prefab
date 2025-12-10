@@ -44,6 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162b9ba971b37914cb08a3473103b3c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  statsUIHandler: {fileID: 0}
   Gojo: {fileID: 6460727995111898062, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
   Sukuna: {fileID: 6460727995111898062, guid: 80bbfe3c90e12cf46bf55124b9f9a4f0, type: 3}
   Naruto: {fileID: 6460727995111898062, guid: 01775a19f76f6df4ba3040935f3832cf, type: 3}
+  Madara: {fileID: 8342093687214396170, guid: 130728a3ffad74d5ca6276eb138f02b7, type: 3}
+  Luffy: {fileID: 1256006589523825340, guid: bb6b3e1092d86420fabca117f3f23a85, type: 3}

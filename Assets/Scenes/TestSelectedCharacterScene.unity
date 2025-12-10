@@ -132,6 +132,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6794450771046783715, guid: 520fd05e0f43243f589ad3838a935f5d, type: 3}
     - target: {fileID: 370944956813084071, guid: 8eb2928241f51474da7c93d7c2fc3cf2, type: 3}
+      propertyPath: Madara
+      value: 
+      objectReference: {fileID: 8342093687214396170, guid: 130728a3ffad74d5ca6276eb138f02b7, type: 3}
+    - target: {fileID: 370944956813084071, guid: 8eb2928241f51474da7c93d7c2fc3cf2, type: 3}
       propertyPath: Sukuna
       value: 
       objectReference: {fileID: 4152758078302363907, guid: ce222f6df2a864f10bdd92c2af42cb5a, type: 3}

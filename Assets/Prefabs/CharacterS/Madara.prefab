@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 2906072850123496987}
   m_Layer: 0
   m_Name: Madara
-  m_TagString: Untagged
+  m_TagString: Player1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -317,7 +317,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MeleeDamage
   combatScript: {fileID: 537168465654461545}
   damage: 10
+  stunDamage: 20
   knockback: {x: 2, y: 0}
+  hitEffectPrefab: {fileID: 0}
   facingDirection: 1
 --- !u!61 &9152584889455145135
 BoxCollider2D:
