@@ -58,6 +58,16 @@ public class Hitbox : MonoBehaviour
 
         if (testHitEffect == null)
             Debug.LogError("Hit effect not instantiated.");
+
+        
+        if (CompareTag("Player1"))
+        {
+            enemyTag = "Player2";
+        } 
+        // else
+        // {
+        //     enemyTag = "Player1";
+        // }
         
         
         GameObject[] vfx = GameObject.FindGameObjectsWithTag("Particles");
@@ -141,6 +151,6 @@ public class Hitbox : MonoBehaviour
                 //     gameFeel.HitStop(0.08f);
                 // }
             }
-        }
+        } 
     }
 }

@@ -60,7 +60,7 @@
         "activeFrames": 2,
         "recoveryFrames": 1,
         "totalFrames": 6,
-        "damage": 30,
+        "damage": 50,
         "onHitAdvantage": 4,
         "onBlockAdvantage": -1,
         "_comment": "OnHit/OnBlock advantage is how many frames you recover before the opponent. Positive is good, negative is bad.",
@@ -75,7 +75,7 @@
         "activeFrames": 2,
         "recoveryFrames": 1,
         "totalFrames": 5,
-        "damage": 50,
+        "damage": 70,
         "onHitAdvantage": 4,
         "onBlockAdvantage": -1,
         "_comment": "OnHit/OnBlock advantage is how many frames you recover before the opponent. Positive is good, negative is bad.",
@@ -91,7 +91,7 @@
         "activeFrames": 2,
         "recoveryFrames": 0,
         "totalFrames": 5,
-        "damage": 100,
+        "damage": 120,
         "onHitAdvantage": -2,
         "onBlockAdvantage": -8,
         "specialEffects": [
@@ -106,7 +106,7 @@
         "activeFrames": 2,
         "recoveryFrames": 0,
         "totalFrames": 5,
-        "damage": 100,
+        "damage": 120,
         "onHitAdvantage": -2,
         "onBlockAdvantage": -8,
         "specialEffects": [
@@ -121,7 +121,7 @@
         "activeFrames": 2,
         "recoveryFrames": 0,
         "totalFrames": 5,
-        "damage": 130,
+        "damage": 150,
         "onHitAdvantage": -2,
         "onBlockAdvantage": -8,
         "specialEffects": [
@@ -135,7 +135,7 @@
         "activeFrames": 2,
         "recoveryFrames": 1,
         "totalFrames": 5,
-        "damage": 150,
+        "damage": 170,
         "onHitAdvantage": -2,
         "onBlockAdvantage": -8,
         "specialEffects": [
@@ -205,7 +205,7 @@
         "activeFrames": 2,
         "recoveryFrames": 2,
         "totalFrames": 5,
-        "damage": 25,
+        "damage": 45,
         "onHitAdvantage": 4,
         "onBlockAdvantage": -1,
         "_comment": "OnHit/OnBlock advantage is how many frames you recover before the opponent. Positive is good, negative is bad.",
@@ -220,7 +220,7 @@
         "activeFrames": 1,
         "recoveryFrames": 1,
         "totalFrames": 3,
-        "damage": 17,
+        "damage": 37,
         "onHitAdvantage": 4,
         "onBlockAdvantage": -1,
         "_comment": "OnHit/OnBlock advantage is how many frames you recover before the opponent. Positive is good, negative is bad.",
@@ -236,7 +236,7 @@
         "activeFrames": 2,
         "recoveryFrames": 0,
         "totalFrames": 5,
-        "damage": 100,
+        "damage": 120,
         "onHitAdvantage": -2,
         "onBlockAdvantage": -8,
         "specialEffects": [
@@ -251,7 +251,7 @@
         "activeFrames": 11,
         "recoveryFrames": 0,
         "totalFrames": 11,
-        "damage": 110,
+        "damage": 130,
         "onHitAdvantage": -2,
         "onBlockAdvantage": -8,
         "specialEffects": [
@@ -266,7 +266,7 @@
         "activeFrames": 2,
         "recoveryFrames": 0,
         "totalFrames": 2,
-        "damage": 125,
+        "damage": 145,
         "onHitAdvantage": -2,
         "onBlockAdvantage": -8,
         "specialEffects": [
@@ -280,7 +280,7 @@
         "activeFrames": 6,
         "recoveryFrames": 0,
         "totalFrames": 6,
-        "damage": 150,
+        "damage": 170,
         "onHitAdvantage": -2,
         "onBlockAdvantage": -8,
         "specialEffects": [
@@ -350,7 +350,7 @@
         "activeFrames": 3,
         "recoveryFrames": 1,
         "totalFrames": 5,
-        "damage": 30,
+        "damage": 50,
         "onHitAdvantage": 4,
         "onBlockAdvantage": -1,
         "_comment": "OnHit/OnBlock advantage is how many frames you recover before the opponent. Positive is good, negative is bad.",
@@ -365,7 +365,7 @@
         "activeFrames": 6,
         "recoveryFrames": 0,
         "totalFrames": 19,
-        "damage": 60,
+        "damage": 80,
         "onHitAdvantage": 4,
         "onBlockAdvantage": -1,
         "_comment": "Apprarently narutos kick",
@@ -381,7 +381,7 @@
         "activeFrames": 2,
         "recoveryFrames": 0,
         "totalFrames": 5,
-        "damage": 100,
+        "damage": 120,
         "onHitAdvantage": -2,
         "onBlockAdvantage": -8,
         "specialEffects": [
@@ -396,7 +396,7 @@
         "activeFrames": 0,
         "recoveryFrames": 0,
         "totalFrames": 3,
-        "damage": 100,
+        "damage": 120,
         "onHitAdvantage": -2,
         "onBlockAdvantage": -8,
         "specialEffects": [
@@ -411,7 +411,7 @@
         "activeFrames": 2,
         "recoveryFrames": 0,
         "totalFrames": 5,
-        "damage": 130,
+        "damage": 150,
         "onHitAdvantage": -2,
         "onBlockAdvantage": -8,
         "specialEffects": [
@@ -425,7 +425,442 @@
         "activeFrames": 2,
         "recoveryFrames": 1,
         "totalFrames": 5,
-        "damage": 155,
+        "damage": 175,
+        "onHitAdvantage": -2,
+        "onBlockAdvantage": -8,
+        "specialEffects": [
+          "hitbox_Mid_Frames_12-15",
+          "causesKnockdown_OnHit"
+        ]
+      }
+    }
+  }, 
+
+  "Madara": {
+    "_comment": "Moves for Naruto",
+    "movement": {
+      "walkForward": {
+        "input": "d",
+        "speed": 1.5,
+        "_comment": "Speed in units per second"
+      },
+      "walkBack": {
+        "input": "a",
+        "speed": 1.0
+      },
+      "forwardDash": {
+        "input": "dd",
+        "startupFrames": 2,
+        "activeFrames": 14,
+        "recoveryFrames": 4,
+        "totalFrames": 20,
+        "distance": 3.0,
+        "_comment": "Active frames are the 'moving' part of the dash.",
+        "specialEffects": [
+          "canCancelIntoAttack_After_Frame_10",
+          "isAirborne_Frames_5-15"
+        ]
+      },
+      "backDash": {
+        "input": "aa",
+        "startupFrames": 1,
+        "activeFrames": 12,
+        "recoveryFrames": 8,
+        "totalFrames": 21,
+        "distance": -2.5,
+        "specialEffects": [
+          "invincible_FullBody_Frames_1-10",
+          "isAirborne_Frames_3-15"
+        ]
+      },
+      "jumpNeutral": {
+        "input": "w",
+        "startupFrames": 4,
+        "activeFrames": 32,
+        "recoveryFrames": 4,
+        "totalFrames": 40,
+        "_comment": "Startup = pre-jump frames (on ground). Active = airborne frames. Recovery = landing frames (on ground).",
+        "jumpHeight": 5.0,
+        "specialEffects": [
+          "isAirborne_Frames_5-35",
+          "invincible_LowerBody_Frames_1-4"
+        ]
+      }
+    },
+    "attacks": {
+      "_comment": "This is the database for this characters attack options.",
+      "lightPunch": {
+        "input": "j",
+        "startupFrames": 1,
+        "activeFrames": 3,
+        "recoveryFrames": 1,
+        "totalFrames": 5,
+        "damage": 50,
+        "onHitAdvantage": 4,
+        "onBlockAdvantage": -1,
+        "_comment": "OnHit/OnBlock advantage is how many frames you recover before the opponent. Positive is good, negative is bad.",
+        "specialEffects": [
+          "hitbox_High_Frames_4-5",
+          "canCancelIntoSpecial_OnHitOrBlock"
+        ]
+      },
+      "kick": {
+        "input": "k",
+        "startupFrames": 13,
+        "activeFrames": 6,
+        "recoveryFrames": 0,
+        "totalFrames": 19,
+        "damage": 80,
+        "onHitAdvantage": 4,
+        "onBlockAdvantage": -1,
+        "_comment": "Apprarently narutos kick",
+        "specialEffects": [
+          "hitbox_High_Frames_4-5",
+          "canCancelIntoSpecial_OnHitOrBlock"
+        ]
+      },
+      "superMove": {
+        "input": "2",
+        "_comment": "input can be switched back to sk later",
+        "startupFrames": 3,
+        "activeFrames": 2,
+        "recoveryFrames": 0,
+        "totalFrames": 5,
+        "damage": 120,
+        "onHitAdvantage": -2,
+        "onBlockAdvantage": -8,
+        "specialEffects": [
+          "hitbox_Mid_Frames_12-15",
+          "causesKnockdown_OnHit"
+        ]
+      },
+      "meter1": {
+        "input": "i",
+        "_comment": "input can be switched back to sk later",
+        "startupFrames": 3,
+        "activeFrames": 0,
+        "recoveryFrames": 0,
+        "totalFrames": 3,
+        "damage": 120,
+        "onHitAdvantage": -2,
+        "onBlockAdvantage": -8,
+        "specialEffects": [
+          "hitbox_Mid_Frames_12-15",
+          "causesKnockdown_OnHit"
+        ]
+      },
+      "meter2": {
+        "input": "o",
+        "_comment": "NOT CREATED YET",
+        "startupFrames": 4,
+        "activeFrames": 2,
+        "recoveryFrames": 0,
+        "totalFrames": 5,
+        "damage": 150,
+        "onHitAdvantage": -2,
+        "onBlockAdvantage": -8,
+        "specialEffects": [
+          "hitbox_Mid_Frames_12-15",
+          "causesKnockdown_OnHit"
+        ]
+      },
+      "meter3": {
+        "input": "NOT CREATED YET",
+        "startupFrames": 4,
+        "activeFrames": 2,
+        "recoveryFrames": 1,
+        "totalFrames": 5,
+        "damage": 175,
+        "onHitAdvantage": -2,
+        "onBlockAdvantage": -8,
+        "specialEffects": [
+          "hitbox_Mid_Frames_12-15",
+          "causesKnockdown_OnHit"
+        ]
+      }
+    }
+  }, 
+  "AIFighter": {
+    "_comment": "Moves for AIFighter.",
+    "movement": {
+      "_comment": "This is the database for this characters movement options",
+      "walkForward": {
+        "input": "d",
+        "speed": 1.5,
+        "_comment": "Speed in units per second"
+      },
+      "walkBack": {
+        "input": "a",
+        "speed": 1.0
+      },
+      "forwardDash": {
+        "input": "dd",
+        "startupFrames": 2,
+        "activeFrames": 14,
+        "recoveryFrames": 4,
+        "totalFrames": 20,
+        "distance": 3.0,
+        "_comment": "Active frames are the 'moving' part of the dash.",
+        "specialEffects": [
+          "canCancelIntoAttack_After_Frame_10",
+          "isAirborne_Frames_5-15"
+        ]
+      },
+      "backDash": {
+        "input": "aa",
+        "startupFrames": 1,
+        "activeFrames": 12,
+        "recoveryFrames": 8,
+        "totalFrames": 21,
+        "distance": -2.5,
+        "specialEffects": [
+          "invincible_FullBody_Frames_1-10",
+          "isAirborne_Frames_3-15"
+        ]
+      },
+      "jumpNeutral": {
+        "input": "w",
+        "startupFrames": 4,
+        "activeFrames": 32,
+        "recoveryFrames": 4,
+        "totalFrames": 40,
+        "_comment": "Startup = pre-jump frames (on ground). Active = airborne frames. Recovery = landing frames (on ground).",
+        "jumpHeight": 5.0,
+        "specialEffects": [
+          "isAirborne_Frames_5-35",
+          "invincible_LowerBody_Frames_1-4"
+        ]
+      }
+    },
+    "attacks": {
+      "_comment": "This is the database for this characters attack options.",
+      "lightPunch": {
+        "input": "j",
+        "startupFrames": 3,
+        "activeFrames": 2,
+        "recoveryFrames": 1,
+        "totalFrames": 6,
+        "damage": 50,
+        "onHitAdvantage": 4,
+        "onBlockAdvantage": -1,
+        "_comment": "OnHit/OnBlock advantage is how many frames you recover before the opponent. Positive is good, negative is bad.",
+        "specialEffects": [
+          "hitbox_High_Frames_4-5",
+          "canCancelIntoSpecial_OnHitOrBlock"
+        ]
+      },
+      "kick": {
+        "input": "k",
+        "startupFrames": 2,
+        "activeFrames": 2,
+        "recoveryFrames": 1,
+        "totalFrames": 5,
+        "damage": 70,
+        "onHitAdvantage": 4,
+        "onBlockAdvantage": -1,
+        "_comment": "OnHit/OnBlock advantage is how many frames you recover before the opponent. Positive is good, negative is bad.",
+        "specialEffects": [
+          "hitbox_High_Frames_4-5",
+          "canCancelIntoSpecial_OnHitOrBlock"
+        ]
+      },
+      "superMove": {
+        "input": "2",
+        "_comment": "input can be switched back to sk later",
+        "startupFrames": 3,
+        "activeFrames": 2,
+        "recoveryFrames": 0,
+        "totalFrames": 5,
+        "damage": 120,
+        "onHitAdvantage": -2,
+        "onBlockAdvantage": -8,
+        "specialEffects": [
+          "hitbox_Mid_Frames_12-15",
+          "causesKnockdown_OnHit"
+        ]
+      },
+      "meter1": {
+        "input": "i",
+        "_comment": "input can be switched back to sk later",
+        "startupFrames": 3,
+        "activeFrames": 2,
+        "recoveryFrames": 0,
+        "totalFrames": 5,
+        "damage": 120,
+        "onHitAdvantage": -2,
+        "onBlockAdvantage": -8,
+        "specialEffects": [
+          "hitbox_Mid_Frames_12-15",
+          "causesKnockdown_OnHit"
+        ]
+      },
+      "meter2": {
+        "input": "o",
+        "_comment": "input can be switched back to sk later",
+        "startupFrames": 4,
+        "activeFrames": 2,
+        "recoveryFrames": 0,
+        "totalFrames": 5,
+        "damage": 150,
+        "onHitAdvantage": -2,
+        "onBlockAdvantage": -8,
+        "specialEffects": [
+          "hitbox_Mid_Frames_12-15",
+          "causesKnockdown_OnHit"
+        ]
+      },
+      "meter3": {
+        "input": "p",
+        "startupFrames": 4,
+        "activeFrames": 2,
+        "recoveryFrames": 1,
+        "totalFrames": 5,
+        "damage": 170,
+        "onHitAdvantage": -2,
+        "onBlockAdvantage": -8,
+        "specialEffects": [
+          "hitbox_Mid_Frames_12-15",
+          "causesKnockdown_OnHit"
+        ]
+      }
+    }
+  }, 
+  "Luffy": {
+    "_comment": "Moves for Luffy.",
+    "movement": {
+      "_comment": "This is the database for this characters movement options",
+      "walkForward": {
+        "input": "d",
+        "speed": 1.5,
+        "_comment": "Speed in units per second"
+      },
+      "walkBack": {
+        "input": "a",
+        "speed": 1.0
+      },
+      "forwardDash": {
+        "input": "dd",
+        "startupFrames": 2,
+        "activeFrames": 14,
+        "recoveryFrames": 4,
+        "totalFrames": 20,
+        "distance": 3.0,
+        "_comment": "Active frames are the 'moving' part of the dash.",
+        "specialEffects": [
+          "canCancelIntoAttack_After_Frame_10",
+          "isAirborne_Frames_5-15"
+        ]
+      },
+      "backDash": {
+        "input": "aa",
+        "startupFrames": 1,
+        "activeFrames": 12,
+        "recoveryFrames": 8,
+        "totalFrames": 21,
+        "distance": -2.5,
+        "specialEffects": [
+          "invincible_FullBody_Frames_1-10",
+          "isAirborne_Frames_3-15"
+        ]
+      },
+      "jumpNeutral": {
+        "input": "w",
+        "startupFrames": 4,
+        "activeFrames": 32,
+        "recoveryFrames": 4,
+        "totalFrames": 40,
+        "_comment": "Startup = pre-jump frames (on ground). Active = airborne frames. Recovery = landing frames (on ground).",
+        "jumpHeight": 5.0,
+        "specialEffects": [
+          "isAirborne_Frames_5-35",
+          "invincible_LowerBody_Frames_1-4"
+        ]
+      }
+    },
+    "attacks": {
+      "_comment": "This is the database for this characters attack options.",
+      "lightPunch": {
+        "input": "j",
+        "startupFrames": 3,
+        "activeFrames": 2,
+        "recoveryFrames": 1,
+        "totalFrames": 6,
+        "damage": 50,
+        "onHitAdvantage": 4,
+        "onBlockAdvantage": -1,
+        "_comment": "OnHit/OnBlock advantage is how many frames you recover before the opponent. Positive is good, negative is bad.",
+        "specialEffects": [
+          "hitbox_High_Frames_4-5",
+          "canCancelIntoSpecial_OnHitOrBlock"
+        ]
+      },
+      "kick": {
+        "input": "k",
+        "startupFrames": 2,
+        "activeFrames": 2,
+        "recoveryFrames": 1,
+        "totalFrames": 5,
+        "damage": 70,
+        "onHitAdvantage": 4,
+        "onBlockAdvantage": -1,
+        "_comment": "OnHit/OnBlock advantage is how many frames you recover before the opponent. Positive is good, negative is bad.",
+        "specialEffects": [
+          "hitbox_High_Frames_4-5",
+          "canCancelIntoSpecial_OnHitOrBlock"
+        ]
+      },
+      "superMove": {
+        "input": "2",
+        "_comment": "input can be switched back to sk later",
+        "startupFrames": 3,
+        "activeFrames": 2,
+        "recoveryFrames": 0,
+        "totalFrames": 5,
+        "damage": 120,
+        "onHitAdvantage": -2,
+        "onBlockAdvantage": -8,
+        "specialEffects": [
+          "hitbox_Mid_Frames_12-15",
+          "causesKnockdown_OnHit"
+        ]
+      },
+      "meter1": {
+        "input": "i",
+        "_comment": "input can be switched back to sk later",
+        "startupFrames": 3,
+        "activeFrames": 2,
+        "recoveryFrames": 0,
+        "totalFrames": 5,
+        "damage": 120,
+        "onHitAdvantage": -2,
+        "onBlockAdvantage": -8,
+        "specialEffects": [
+          "hitbox_Mid_Frames_12-15",
+          "causesKnockdown_OnHit"
+        ]
+      },
+      "meter2": {
+        "input": "o",
+        "_comment": "input can be switched back to sk later",
+        "startupFrames": 4,
+        "activeFrames": 2,
+        "recoveryFrames": 0,
+        "totalFrames": 5,
+        "damage": 150,
+        "onHitAdvantage": -2,
+        "onBlockAdvantage": -8,
+        "specialEffects": [
+          "hitbox_Mid_Frames_12-15",
+          "causesKnockdown_OnHit"
+        ]
+      },
+      "meter3": {
+        "input": "p",
+        "startupFrames": 4,
+        "activeFrames": 2,
+        "recoveryFrames": 1,
+        "totalFrames": 5,
+        "damage": 170,
         "onHitAdvantage": -2,
         "onBlockAdvantage": -8,
         "specialEffects": [

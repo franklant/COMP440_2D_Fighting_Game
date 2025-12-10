@@ -24,7 +24,7 @@ public class FightingGameCamera : MonoBehaviour
         cam = GetComponent<Camera>();
         
         // Auto-find targets if empty
-        if (player == null) player = GameObject.Find("Satoru Gojo").transform;
+        if (player == null) player = GameObject.Find(PlayerPrefs.GetString("selectedCharacter") + "(Clone)").transform;
         if (enemy == null) 
         {
             GameObject e = GameObject.FindGameObjectWithTag("Enemy");
