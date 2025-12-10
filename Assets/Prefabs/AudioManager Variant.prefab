@@ -57,9 +57,33 @@ PrefabInstance:
       value: 0.331
       objectReference: {fileID: 0}
     - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: Gojo.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
       propertyPath: UISFX.Array.size
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: Madara.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: Naruto.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: Sukuna.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: 'Gojo.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 0bf3b6c018e24494ba08beff849d43f6, type: 3}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: 'Gojo.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 08cacc57ebd44804fb13fdfb7f42f137, type: 3}
     - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
       propertyPath: 'UISFX.Array.data[0]'
       value: 
@@ -76,6 +100,18 @@ PrefabInstance:
       propertyPath: 'UISFX.Array.data[3]'
       value: 
       objectReference: {fileID: 8300000, guid: 56876cc5d8aea5449a0d5fea29cb345d, type: 3}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: 'Madara.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 3ae7ad8328a3b7b4fb40e2add67734b2, type: 3}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: 'Naruto.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 7ada37acf7e31e143beb8c710f22aeeb, type: 3}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: 'Sukuna.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 77eb660f26cea774a90ded703a41a67d, type: 3}
     - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
       propertyPath: specialSFX.Array.size
       value: 3
