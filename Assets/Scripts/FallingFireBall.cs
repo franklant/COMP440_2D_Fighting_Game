@@ -8,11 +8,14 @@ public class FallingFireBall : MonoBehaviour
     public float minStartDelay = 0f;
     public float maxStartDelay = 2f;
 
-    [Header("Respawn settings")]
-    public float disappearDelay = 2f;
+    [Header("Respawn Settings")]
     public float respawnDelay = 3f;
     public float respawnHeightOffset = 6f;
     public bool resetRotationOnRespawn = true;
+
+    [Header("Fire Impact Animation")]
+    public Sprite[] impactFrames;   // <<< Drag sliced fire sprites here
+    public float frameRate = 0.05f;
 
     // Internals
     private Rigidbody2D rb;
@@ -22,6 +25,8 @@ public class FallingFireBall : MonoBehaviour
     private Vector3 initialSpawnPosition;
     private float initialGravity;
     private RigidbodyType2D initialBodyType;
+
+    private bool playingImpact;
 
     void Awake()
     {
@@ -33,7 +38,7 @@ public class FallingFireBall : MonoBehaviour
         initialGravity = rb.gravityScale;
         initialSpawnPosition = transform.position;
 
-        // Stop falling at start for stagger
+        // Stop falling at start for staggered drop
         rb.gravityScale = 0f;
         rb.linearVelocity = Vector2.zero;
     }
@@ -47,10 +52,7 @@ public class FallingFireBall : MonoBehaviour
     IEnumerator StartFallAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-
-        rb.gravityScale = initialGravity;
-        rb.bodyType = initialBodyType;
-        rb.constraints = RigidbodyConstraints2D.None;
+        ResetPhysics();
     }
 
     public void SetInitialSpawnPosition(Vector3 pos)
@@ -58,50 +60,75 @@ public class FallingFireBall : MonoBehaviour
         initialSpawnPosition = pos;
     }
 
-    // ✅ FIX: Collision instead of Trigger
+    // ✅ Collide with Ground
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Ground"))
-        {
-            rb.linearVelocity = Vector2.zero;
-            rb.angularVelocity = 0f;
+        if (!collision.collider.CompareTag("Ground")) return;
+        if (playingImpact) return;
 
-            rb.constraints = RigidbodyConstraints2D.FreezePosition | RigidbodyConstraints2D.FreezeRotation;
-
-            StartCoroutine(HideThenRespawnRoutine());
-        }
-    }
-
-    private IEnumerator HideThenRespawnRoutine()
-    {
-        yield return new WaitForSeconds(disappearDelay);
-
-        if (sprite) sprite.enabled = false;
-        if (col) col.enabled = false;
-
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
 
-        yield return new WaitForSeconds(respawnDelay);
+        StartCoroutine(PlayImpactThenRespawn());
+    }
 
-        Vector3 respawnPos = initialSpawnPosition;
+    // ✅ Play fire animation before hiding + respawn
+    IEnumerator PlayImpactThenRespawn()
+    {
+        playingImpact = true;
 
-        if (respawnHeightOffset != 0f)
+        // Disable collider during animation
+        col.enabled = false;
+
+        // Play fire animation
+        if (impactFrames.Length > 0)
         {
-            respawnPos.y += Mathf.Abs(respawnHeightOffset);
+            for (int i = 0; i < impactFrames.Length; i++)
+            {
+                sprite.sprite = impactFrames[i];
+                yield return new WaitForSeconds(frameRate);
+            }
         }
 
+        // Hide sprite after animation
+        sprite.enabled = false;
+
+        // Wait before respawn
+        yield return new WaitForSeconds(respawnDelay);
+
+        Respawn();
+    }
+
+    // ✅ Reset fireball into starting state
+    void Respawn()
+    {
+        Vector3 respawnPos = initialSpawnPosition;
+        respawnPos.y += Mathf.Abs(respawnHeightOffset);
         transform.position = respawnPos;
 
         if (resetRotationOnRespawn)
             transform.rotation = Quaternion.identity;
 
-        if (sprite) sprite.enabled = true;
-        if (col) col.enabled = true;
+        sprite.enabled = true;
+        col.enabled = true;
 
+        playingImpact = false;
+
+        ResetPhysics();
+
+        // Reset sprite to first frame
+        if (impactFrames.Length > 0)
+            sprite.sprite = impactFrames[0];
+    }
+
+    // ✅ Restore physics so the fireball falls again
+    void ResetPhysics()
+    {
         rb.constraints = RigidbodyConstraints2D.None;
+        rb.gravityScale = initialGravity;
         rb.bodyType = initialBodyType;
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
-        rb.gravityScale = initialGravity;
     }
 }
