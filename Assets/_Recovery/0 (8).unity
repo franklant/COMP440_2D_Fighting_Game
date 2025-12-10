@@ -271,18 +271,6 @@ PrefabInstance:
       propertyPath: inputBuffer
       value: 
       objectReference: {fileID: 536784946}
-    - target: {fileID: 3024910979309358244, guid: 80bbfe3c90e12cf46bf55124b9f9a4f0, type: 3}
-      propertyPath: redProjectilePrefab
-      value: 
-      objectReference: {fileID: 8335640833978000201, guid: 37872aa8915404fe0839d04cae74351a, type: 3}
-    - target: {fileID: 3024910979309358244, guid: 80bbfe3c90e12cf46bf55124b9f9a4f0, type: 3}
-      propertyPath: blueProjectilePrefab
-      value: 
-      objectReference: {fileID: 1583743654212054950, guid: 45edd3dba75164ef099c9c1ef6966eba, type: 3}
-    - target: {fileID: 3024910979309358244, guid: 80bbfe3c90e12cf46bf55124b9f9a4f0, type: 3}
-      propertyPath: purpleProjectilePrefab
-      value: 
-      objectReference: {fileID: 5054277842723607446, guid: 9f35cc9073126469b9ff7f614753e637, type: 3}
     - target: {fileID: 6460727995111898062, guid: 80bbfe3c90e12cf46bf55124b9f9a4f0, type: 3}
       propertyPath: m_Name
       value: Sukuna
@@ -1232,10 +1220,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FighterInput
   isPlayer1: 0
-  isGojo: 0
-  isSukuna: 1
-  isNaruto: 0
-  isMadara: 0
   animator: {fileID: 1171822149}
 --- !u!1 &1349914774 stripped
 GameObject:
@@ -1358,10 +1342,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FighterInput
   isPlayer1: 1
-  isGojo: 1
-  isSukuna: 0
-  isNaruto: 0
-  isMadara: 0
   animator: {fileID: 1833164040}
 --- !u!1 &1943386941
 GameObject:
@@ -1513,42 +1493,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6405035961460645369, guid: cd5ebe5f11157c040acc296e3060f653, type: 3}
-      propertyPath: Gojo.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405035961460645369, guid: cd5ebe5f11157c040acc296e3060f653, type: 3}
-      propertyPath: Madara.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405035961460645369, guid: cd5ebe5f11157c040acc296e3060f653, type: 3}
-      propertyPath: Naruto.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405035961460645369, guid: cd5ebe5f11157c040acc296e3060f653, type: 3}
-      propertyPath: Sukuna.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405035961460645369, guid: cd5ebe5f11157c040acc296e3060f653, type: 3}
-      propertyPath: 'Gojo.Array.data[0]'
-      value: 
-      objectReference: {fileID: 8300000, guid: 08cacc57ebd44804fb13fdfb7f42f137, type: 3}
-    - target: {fileID: 6405035961460645369, guid: cd5ebe5f11157c040acc296e3060f653, type: 3}
-      propertyPath: 'Gojo.Array.data[1]'
-      value: 
-      objectReference: {fileID: 8300000, guid: 0bf3b6c018e24494ba08beff849d43f6, type: 3}
-    - target: {fileID: 6405035961460645369, guid: cd5ebe5f11157c040acc296e3060f653, type: 3}
-      propertyPath: 'Madara.Array.data[0]'
-      value: 
-      objectReference: {fileID: 8300000, guid: 3ae7ad8328a3b7b4fb40e2add67734b2, type: 3}
-    - target: {fileID: 6405035961460645369, guid: cd5ebe5f11157c040acc296e3060f653, type: 3}
-      propertyPath: 'Naruto.Array.data[0]'
-      value: 
-      objectReference: {fileID: 8300000, guid: 7ada37acf7e31e143beb8c710f22aeeb, type: 3}
-    - target: {fileID: 6405035961460645369, guid: cd5ebe5f11157c040acc296e3060f653, type: 3}
-      propertyPath: 'Sukuna.Array.data[0]'
-      value: 
-      objectReference: {fileID: 8300000, guid: 77eb660f26cea774a90ded703a41a67d, type: 3}
     - target: {fileID: 8894146982155196096, guid: cd5ebe5f11157c040acc296e3060f653, type: 3}
       propertyPath: m_Name
       value: AudioManager
