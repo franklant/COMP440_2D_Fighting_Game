@@ -28,12 +28,11 @@ public class LuffyHitboxImporter : EditorWindow
         public int Duration;
         public bool FlipH; 
         
-        // Rect = x, y, width, height (Converted from Clsn)
-        public Rect? Hurtbox; // Clsn2 (Blue/Vulnerable)
-        public Rect? Hitbox;  // Clsn1 (Red/Attack)
+        public Rect? Hurtbox; // Clsn2
+        public Rect? Hitbox;  // Clsn1
     }
 
-    [MenuItem("Tools/Luffy Hitbox Importer")]
+    [MenuItem("Tools/Luffy Hitbox Importer (Fixed)")]
     public static void ShowWindow()
     {
         GetWindow<LuffyHitboxImporter>("Hitbox Importer");
@@ -41,8 +40,8 @@ public class LuffyHitboxImporter : EditorWindow
 
     void OnGUI()
     {
-        GUILayout.Label("Luffy Importer (Sprites + Hitboxes)", EditorStyles.boldLabel);
-        EditorGUILayout.HelpBox("Requirement: Your character prefab must have child objects named 'Hurtbox' and 'Hitbox' with BoxCollider2D components.", MessageType.Info);
+        GUILayout.Label("Luffy Importer (Sprites + Hitboxes + Flips)", EditorStyles.boldLabel);
+        EditorGUILayout.HelpBox("Requirement: Child objects 'Hurtbox' and 'Hitbox' with BoxCollider2D.", MessageType.Info);
         
         airFile = (TextAsset)EditorGUILayout.ObjectField("AIR File", airFile, typeof(TextAsset), false);
 
@@ -71,7 +70,7 @@ public class LuffyHitboxImporter : EditorWindow
 
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
-        Debug.Log($"Imported {actions.Count} clips with Hitboxes.");
+        Debug.Log($"Imported {actions.Count} clips with Hitboxes & Flips.");
     }
 
     // --- Parsing ---
@@ -82,23 +81,18 @@ public class LuffyHitboxImporter : EditorWindow
         string[] lines = content.Split('\n');
         MugenAction currentAction = null;
 
-        // Regex for Action Header
         Regex actionRegex = new Regex(@"^\s*\[Begin Action\s+(\d+)\]", RegexOptions.IgnoreCase);
-        // Regex for Frame: 50,0, 0,0, 10
         Regex frameRegex = new Regex(@"^\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)");
-        // Regex for Clsn Box: Clsn2[0] = x1, y1, x2, y2
         Regex clsnBoxRegex = new Regex(@"=\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)");
 
-        // Temp storage for current frame's boxes
-        List<Rect> currentClsn2 = new List<Rect>(); // Hurtboxes
-        List<Rect> currentClsn1 = new List<Rect>(); // Hitboxes
+        List<Rect> currentClsn2 = new List<Rect>(); 
+        List<Rect> currentClsn1 = new List<Rect>(); 
 
         for (int i = 0; i < lines.Length; i++)
         {
             string line = lines[i].Trim();
             if (string.IsNullOrEmpty(line) || line.StartsWith(";")) continue;
 
-            // 1. New Action
             Match actionMatch = actionRegex.Match(line);
             if (actionMatch.Success)
             {
@@ -110,36 +104,26 @@ public class LuffyHitboxImporter : EditorWindow
 
             if (currentAction != null)
             {
-                // 2. Clsn Header (Reset temp boxes)
-                if (line.Contains("Clsn2Default") || line.Contains("Clsn1Default")) continue; // Skip defaults for simplicity
-                if (line.StartsWith("Clsn")) 
-                {
-                    // Usually "Clsn2: 2" means 2 boxes follow. We just read the lines.
-                    continue; 
-                }
+                if (line.Contains("Clsn2Default") || line.Contains("Clsn1Default")) continue; 
+                if (line.StartsWith("Clsn")) continue; 
 
-                // 3. Clsn Data Line
                 if (line.Contains("Clsn2[") || line.Contains("Clsn1["))
                 {
                     Match boxMatch = clsnBoxRegex.Match(line);
                     if (boxMatch.Success)
                     {
-                        // Parse MUGEN coords
                         float x1 = float.Parse(boxMatch.Groups[1].Value);
                         float y1 = float.Parse(boxMatch.Groups[2].Value);
                         float x2 = float.Parse(boxMatch.Groups[3].Value);
                         float y2 = float.Parse(boxMatch.Groups[4].Value);
-
-                        // Convert to Rect (Width/Height)
                         Rect r = new Rect(x1, y1, x2 - x1, y2 - y1);
                         
-                        if (line.Contains("Clsn2")) currentClsn2.Add(r); // Hurtbox
-                        else currentClsn1.Add(r); // Hitbox
+                        if (line.Contains("Clsn2")) currentClsn2.Add(r);
+                        else currentClsn1.Add(r);
                     }
                     continue;
                 }
 
-                // 4. Frame Line (The moment we hit a frame, we attach the previously read Clsns to it)
                 Match frameMatch = frameRegex.Match(line);
                 if (frameMatch.Success)
                 {
@@ -147,15 +131,14 @@ public class LuffyHitboxImporter : EditorWindow
                     frame.Group = int.Parse(frameMatch.Groups[1].Value);
                     frame.Index = int.Parse(frameMatch.Groups[2].Value);
                     frame.Duration = int.Parse(frameMatch.Groups[5].Value);
-                    if (line.Contains("H")) frame.FlipH = true;
+                    
+                    // CHECK FOR FLIP FLAGS (H or V)
+                    if (line.Contains("H") || line.Contains(",H")) frame.FlipH = true;
 
-                    // Combine all boxes into one bounding box for Unity (Simplification)
                     frame.Hurtbox = GetBoundingBox(currentClsn2);
                     frame.Hitbox = GetBoundingBox(currentClsn1);
 
                     currentAction.Frames.Add(frame);
-
-                    // Clear boxes for next frame
                     currentClsn2.Clear();
                     currentClsn1.Clear();
                 }
@@ -167,12 +150,10 @@ public class LuffyHitboxImporter : EditorWindow
     private Rect? GetBoundingBox(List<Rect> rects)
     {
         if (rects.Count == 0) return null;
-        
         float xMin = rects.Min(r => r.xMin);
         float xMax = rects.Max(r => r.xMax);
         float yMin = rects.Min(r => r.yMin);
         float yMax = rects.Max(r => r.yMax);
-
         return new Rect(xMin, yMin, xMax - xMin, yMax - yMin);
     }
 
@@ -183,20 +164,21 @@ public class LuffyHitboxImporter : EditorWindow
         AnimationClip clip = new AnimationClip();
         clip.frameRate = 60;
 
-        // SPRITE BINDING
+        // BINDINGS
         EditorCurveBinding spriteBinding = new EditorCurveBinding { type = typeof(SpriteRenderer), propertyName = "m_Sprite" };
-        List<ObjectReferenceKeyframe> spriteKeys = new List<ObjectReferenceKeyframe>();
+        EditorCurveBinding flipBinding = new EditorCurveBinding { type = typeof(SpriteRenderer), propertyName = "m_FlipX" };
 
-        // COLLIDER BINDINGS (We animate the "Hurtbox" and "Hitbox" children)
-        // Note: We animate Center (Offset) and Size
+        List<ObjectReferenceKeyframe> spriteKeys = new List<ObjectReferenceKeyframe>();
+        List<Keyframe> flipKeys = new List<Keyframe>();
+
         string hurtPath = "Hurtbox";
         string hitPath = "Hitbox";
 
+        // Curve containers
         AnimationCurve hurtOffX = new AnimationCurve();
         AnimationCurve hurtOffY = new AnimationCurve();
         AnimationCurve hurtSizeX = new AnimationCurve();
         AnimationCurve hurtSizeY = new AnimationCurve();
-        // Enabled status (Disable collider if no box exists for frame)
         AnimationCurve hurtEnabled = new AnimationCurve(); 
 
         AnimationCurve hitOffX = new AnimationCurve();
@@ -209,29 +191,35 @@ public class LuffyHitboxImporter : EditorWindow
 
         foreach (var frame in action.Frames)
         {
-            // 1. Sprite
             Sprite s = FindSprite(frame.Group, frame.Index);
-            if (s != null) spriteKeys.Add(new ObjectReferenceKeyframe { time = time, value = s });
+            if (s != null)
+            {
+                spriteKeys.Add(new ObjectReferenceKeyframe { time = time, value = s });
+                
+                // FLIP KEY (Instant toggle)
+                Keyframe kf = new Keyframe(time, frame.FlipH ? 1f : 0f);
+                kf.inTangent = float.PositiveInfinity;
+                kf.outTangent = float.PositiveInfinity;
+                flipKeys.Add(kf);
+            }
 
-            // 2. Hurtbox Logic
-            AddColliderKeys(frame.Hurtbox, time, hurtOffX, hurtOffY, hurtSizeX, hurtSizeY, hurtEnabled);
+            // COLLIDER KEYS (Pass FlipH to calculate inverted Offset)
+            AddColliderKeys(frame.Hurtbox, frame.FlipH, time, hurtOffX, hurtOffY, hurtSizeX, hurtSizeY, hurtEnabled);
+            AddColliderKeys(frame.Hitbox, frame.FlipH, time, hitOffX, hitOffY, hitSizeX, hitSizeY, hitEnabled);
 
-            // 3. Hitbox Logic
-            AddColliderKeys(frame.Hitbox, time, hitOffX, hitOffY, hitSizeX, hitSizeY, hitEnabled);
-
-            // Time Step
             float duration = (frame.Duration == -1 ? 1 : frame.Duration) / 60f;
             time += duration;
         }
 
-        // Apply Sprite Curve
         if (spriteKeys.Count > 0) AnimationUtility.SetObjectReferenceCurve(clip, spriteBinding, spriteKeys.ToArray());
+        
+        // APPLY FLIP CURVE (Only if there is any flipping)
+        if (flipKeys.Any(k => k.value > 0))
+            AnimationUtility.SetEditorCurve(clip, flipBinding, new AnimationCurve(flipKeys.ToArray()));
 
-        // Apply Collider Curves
         SetBoxCurves(clip, hurtPath, hurtOffX, hurtOffY, hurtSizeX, hurtSizeY, hurtEnabled);
         SetBoxCurves(clip, hitPath, hitOffX, hitOffY, hitSizeX, hitSizeY, hitEnabled);
 
-        // Loop Settings
         AnimationClipSettings settings = AnimationUtility.GetAnimationClipSettings(clip);
         settings.loopTime = (action.ActionID == 0 || action.ActionID == 20 || action.ActionID == 2000); 
         AnimationUtility.SetAnimationClipSettings(clip, settings);
@@ -239,31 +227,29 @@ public class LuffyHitboxImporter : EditorWindow
         AssetDatabase.CreateAsset(clip, $"{animationOutputPath}/{clipName}.anim");
     }
 
-    private void AddColliderKeys(Rect? rect, float time, AnimationCurve offX, AnimationCurve offY, AnimationCurve sizeX, AnimationCurve sizeY, AnimationCurve enabled)
+    private void AddColliderKeys(Rect? rect, bool flipH, float time, AnimationCurve offX, AnimationCurve offY, AnimationCurve sizeX, AnimationCurve sizeY, AnimationCurve enabled)
     {
         if (rect.HasValue)
         {
             Rect r = rect.Value;
-            // Conversion: MUGEN Pixels -> Unity Units
-            // MUGEN Center X = x + width/2
-            // MUGEN Center Y = y + height/2
-            // NOTE: In Unity 2D, Y is usually Up. In MUGEN, Y is usually Down.
-            // We invert Y here: -1 * (y + h/2) / PPU
             
+            // Standard calc
             float cX = (r.x + (r.width / 2f)) / pixelsPerUnit;
             float cY = -1f * (r.y + (r.height / 2f)) / pixelsPerUnit;
             float sX = r.width / pixelsPerUnit;
             float sY = r.height / pixelsPerUnit;
 
+            // FIX: If Sprite is flipped, invert the X Offset relative to center
+            if (flipH) cX = -cX;
+
             offX.AddKey(new Keyframe(time, cX, float.PositiveInfinity, float.PositiveInfinity));
             offY.AddKey(new Keyframe(time, cY, float.PositiveInfinity, float.PositiveInfinity));
             sizeX.AddKey(new Keyframe(time, sX, float.PositiveInfinity, float.PositiveInfinity));
             sizeY.AddKey(new Keyframe(time, sY, float.PositiveInfinity, float.PositiveInfinity));
-            enabled.AddKey(new Keyframe(time, 1f, float.PositiveInfinity, float.PositiveInfinity)); // Enabled
+            enabled.AddKey(new Keyframe(time, 1f, float.PositiveInfinity, float.PositiveInfinity)); 
         }
         else
         {
-            // Disable collider for this frame
             enabled.AddKey(new Keyframe(time, 0f, float.PositiveInfinity, float.PositiveInfinity)); 
         }
     }
@@ -271,7 +257,6 @@ public class LuffyHitboxImporter : EditorWindow
     private void SetBoxCurves(AnimationClip clip, string path, AnimationCurve ox, AnimationCurve oy, AnimationCurve sx, AnimationCurve sy, AnimationCurve en)
     {
         if (en.keys.Length == 0) return;
-
         clip.SetCurve(path, typeof(BoxCollider2D), "m_Offset.x", ox);
         clip.SetCurve(path, typeof(BoxCollider2D), "m_Offset.y", oy);
         clip.SetCurve(path, typeof(BoxCollider2D), "m_Size.x", sx);
