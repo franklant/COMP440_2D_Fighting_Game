@@ -13,65 +13,59 @@ public class SukunaController : MonoBehaviour
 
     [Header("Settings")]
     public Transform spawnPoint; 
-    public bool isFacingRight = true;
 
     private Animator animator;
-    private bool isBusy = false; // Prevents spamming summons
+    private SukunaMovement movementScript; // Reference to the movement script
+    private bool isBusy = false; 
 
     void Awake()
     {
         animator = GetComponent<Animator>();
+        movementScript = GetComponent<SukunaMovement>();
     }
 
     void Update()
     {
-        // Prevent moving/attacking while casting
+        // If we are casting, don't allow new inputs
         if (isBusy) return;
 
-        // --- MOVEMENT & FACING ---
-        float horizontal = Input.GetAxis("Horizontal");
-        if (horizontal > 0 && !isFacingRight) Flip();
-        else if (horizontal < 0 && isFacingRight) Flip();
-
-        // --- SUMMON INPUTS ---
         HandleSummonInputs();
     }
 
     void HandleSummonInputs()
     {
-        // 1. Divine Dogs (State 1400) - Key: U (Unchanged)
+        // 1. Divine Dogs (State 1400) - U
         if (Input.GetKeyDown(KeyCode.U)) 
         {
             Summon(divineDogsPrefab, new Vector2(1.5f, 0)); 
         }
 
-        // 2. Nue (State 1200) - Key: Y (Remapped from I to make room for Elephant)
-        // Feel free to change this if you prefer a different key for Nue
-        if (Input.GetKeyDown(KeyCode.Y)) 
+        // 2. Nue (State 1200) - I
+        if (Input.GetKeyDown(KeyCode.I)) 
         {
             Summon(nuePrefab, new Vector2(0.5f, 2.0f)); 
         }
 
-        // 3. Max Elephant (State 1700) - Key: I (Remapped)
-        if (Input.GetKeyDown(KeyCode.I)) 
+        // 3. Max Elephant (State 1700) - O
+        if (Input.GetKeyDown(KeyCode.O)) 
         {
             Summon(maxElephantPrefab, new Vector2(3.0f, 5.0f)); 
         }
 
-        // 4. Piercing Ox (State 1000) - Key: Q (Unchanged)
-        if (Input.GetKeyDown(KeyCode.Q)) 
+        // 4. Piercing Ox (State 1000) - J
+        if (Input.GetKeyDown(KeyCode.J)) 
         {
             Summon(bullPrefab, new Vector2(1.5f, 0)); 
         }
 
-        // 5. Agito (State 1900) - Key: O (Remapped)
-        if (Input.GetKeyDown(KeyCode.O)) 
+        // 5. Agito (State 1900) - K (Has Casting Animation)
+        if (Input.GetKeyDown(KeyCode.K)) 
         {
             StartCoroutine(PerformSummon("Action_1500", agitoPrefab, new Vector2(2.0f, 0)));
         }
 
-        // 6. Mahoraga (State 1500) - Key: P (Remapped)
-        if (Input.GetKeyDown(KeyCode.P)) 
+        // 6. Mahoraga (State 1500) - L (Has Casting Animation)
+        if (Input.GetKeyDown(KeyCode.L)) 
         {
             StartCoroutine(PerformSummon("Action_2000", mahoragaPrefab, new Vector2(2.5f, 0)));
         }
@@ -79,7 +73,13 @@ public class SukunaController : MonoBehaviour
 
     IEnumerator PerformSummon(string animName, GameObject prefab, Vector2 offset)
     {
-        isBusy = true; // Lock input
+        isBusy = true; 
+        
+        // Tell the movement script to stop updating animations/physics
+        if(movementScript != null) movementScript.isAttacking = true;
+        
+        // Stop any current movement physics immediately
+        if(GetComponent<Rigidbody2D>()) GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
 
         // 1. Play Casting Animation
         if(HasState(animName))
@@ -95,17 +95,23 @@ public class SukunaController : MonoBehaviour
         // 2. Spawn the Summon
         Summon(prefab, offset);
 
-        // 3. Wait for rest of animation to finish
+        // 3. Wait for rest of animation
         if(HasState(animName))
         {
             yield return new WaitForSeconds(0.5f); 
         }
 
-        // 4. Return to Idle
-        // Using "Action_0" which is the standard Idle name in your other scripts
-        // If your Idle state is named "Idle", change this string back to "Idle"
-        if(HasState("Action_0")) animator.Play("Action_0"); 
-        else animator.Play("Idle");
+        // 4. Return control to Movement Script
+        if(movementScript != null) 
+        {
+            movementScript.isAttacking = false;
+            // Let SukunaMovement handle the transition back to Idle (Action_0)
+        }
+        else
+        {
+            // Fallback if movement script is missing
+            if(HasState("Action_0")) animator.Play("Action_0"); 
+        }
 
         isBusy = false;
     }
@@ -115,7 +121,10 @@ public class SukunaController : MonoBehaviour
         if (prefab == null) return;
 
         Vector3 spawnOrigin = spawnPoint != null ? spawnPoint.position : transform.position;
-        float facingDir = isFacingRight ? 1 : -1;
+        
+        // Determine facing from Transform (since we removed isFacingRight variable)
+        float facingDir = transform.localScale.x > 0 ? 1 : -1;
+        
         Vector3 finalPosition = spawnOrigin + new Vector3(offset.x * facingDir, offset.y, 0);
 
         GameObject summon = Instantiate(prefab, finalPosition, Quaternion.identity);
@@ -128,13 +137,5 @@ public class SukunaController : MonoBehaviour
     bool HasState(string stateName)
     {
         return animator.HasState(0, Animator.StringToHash(stateName));
-    }
-
-    void Flip()
-    {
-        isFacingRight = !isFacingRight;
-        Vector3 scale = transform.localScale;
-        scale.x *= -1;
-        transform.localScale = scale;
     }
 }
