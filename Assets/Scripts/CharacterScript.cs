@@ -89,7 +89,11 @@ public class CharacterScript : MonoBehaviour
 
     void Start()
     {
-        characterName = PlayerPrefs.GetString("selectedCharacter");
+        if (isPlayer)   
+            characterName = PlayerPrefs.GetString("selectedCharacter");
+        if (name == "AIFighter")
+            characterName = name;
+        
         if (string.IsNullOrEmpty(characterName)) characterName = "Gojo"; 
 
         // Component Fetching
@@ -118,6 +122,13 @@ public class CharacterScript : MonoBehaviour
         if (kickHitBox) {
             originalKickBoxPosition = kickHitBox.transform.localPosition;
             reflectedKickBoxPosition = Vector3.Reflect(kickHitBox.transform.localPosition, Vector3.right);
+        }
+
+        // character requires more offsets
+        if (characterName == "Naruto" && CompareTag("Player1"))
+        {
+            reflectedMidBoxPosition -= (Vector3.left * 0.5f);
+            reflectedKickBoxPosition -= (Vector3.left * 0.5f);
         }
 
         // Stats Listeners
@@ -482,7 +493,7 @@ public class CharacterScript : MonoBehaviour
     }
 
     // 4. Hitbox Flipping Logic
-    if (CompareTag("Player1") && midJabHitBox && kickHitBox) 
+    if (midJabHitBox && kickHitBox) 
     {
         if (mySpriteRenderer.flipX) 
         {

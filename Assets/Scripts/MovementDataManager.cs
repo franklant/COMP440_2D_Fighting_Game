@@ -87,6 +87,9 @@ public class MoveDatabase
     public CharacterData Gojo;
     public CharacterData Sukuna;
     public CharacterData Naruto;
+    public CharacterData Luffy;
+    public CharacterData Madara;
+    public CharacterData AIFighter;
     // If you add a new character "Monk" to your JSON,
     // you would add: public CharacterData Monk;
 }
@@ -243,6 +246,117 @@ public class MovementDataManager : MonoBehaviour
             if (moveName == "meter3")
             {
                 return moveDB.Naruto.attacks.meter3;
+            }
+        } 
+        else if (characterName == "Luffy")
+        {
+            if (moveName == "lightPunch")
+            {
+                return moveDB.Luffy.attacks.lightPunch;
+            }
+            if (moveName == "kick")
+            {
+                return moveDB.Luffy.attacks.kick;
+            }
+            if (moveName == "superMove")
+            {
+                return moveDB.Luffy.attacks.superMove;
+            }
+            if (moveName == "forwardDash")
+            {
+                return moveDB.Luffy.movement.forwardDash;
+            }
+            // ... you would add more "if" checks for each move ...
+            if (moveName == "backDash")
+            {
+                return moveDB.Luffy.movement.backDash;
+            }
+
+            if (moveName == "meter1")
+            {
+                return moveDB.Luffy.attacks.meter1;
+            }
+            if (moveName == "meter2")
+            {
+                return moveDB.Luffy.attacks.meter2;
+            }
+            if (moveName == "meter3")
+            {
+                return moveDB.Luffy.attacks.meter3;
+            }
+        }
+        else if (characterName == "Madara")
+        {
+            if (moveName == "lightPunch")
+            {
+                return moveDB.Madara.attacks.lightPunch;
+            }
+            if (moveName == "kick")
+            {
+                return moveDB.Madara.attacks.kick;
+            }
+            if (moveName == "superMove")
+            {
+                return moveDB.Madara.attacks.superMove;
+            }
+            if (moveName == "forwardDash")
+            {
+                return moveDB.Madara.movement.forwardDash;
+            }
+            // ... you would add more "if" checks for each move ...
+            if (moveName == "backDash")
+            {
+                return moveDB.Madara.movement.backDash;
+            }
+
+            if (moveName == "meter1")
+            {
+                return moveDB.Madara.attacks.meter1;
+            }
+            if (moveName == "meter2")
+            {
+                return moveDB.Madara.attacks.meter2;
+            }
+            if (moveName == "meter3")
+            {
+                return moveDB.Madara.attacks.meter3;
+            }
+        }  
+        else if (characterName == "AIFighter")
+        {
+            if (moveName == "lightPunch")
+            {
+                return moveDB.AIFighter.attacks.lightPunch;
+            }
+            if (moveName == "kick")
+            {
+                return moveDB.AIFighter.attacks.kick;
+            }
+            if (moveName == "superMove")
+            {
+                return moveDB.AIFighter.attacks.superMove;
+            }
+            if (moveName == "forwardDash")
+            {
+                return moveDB.AIFighter.movement.forwardDash;
+            }
+            // ... you would add more "if" checks for each move ...
+            if (moveName == "backDash")
+            {
+                return moveDB.AIFighter.movement.backDash;
+            }
+
+            if (moveName == "meter1")
+            {
+                return moveDB.AIFighter.attacks.meter1;
+            }
+            if (moveName == "meter2")
+            {
+                return moveDB.AIFighter.attacks.meter2;
+            }
+            if (moveName == "meter3")
+            {
+                return moveDB.AIFighter.attacks.meter3;
             }
         } 
         
