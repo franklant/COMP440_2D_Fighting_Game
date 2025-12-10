@@ -42,7 +42,10 @@ public class AudioManager : MonoBehaviour
     public AudioClip[] UISFX;
 
     [Header("Voice Lines")]
-    public AudioClip[] VoiceLineSFX;
+    public AudioClip[] Gojo;
+    public AudioClip[] Naruto;
+    public AudioClip[] Sukuna;
+    public AudioClip[] Madara;
 
     [Header("Pitch Variation")]
     public float minPitch = 0.90f;
@@ -126,9 +129,11 @@ public class AudioManager : MonoBehaviour
     public void PlayBlock() => PlayRandomClip(blockSFX);
     public void PlaySpecial() => PlayRandomClip(specialSFX);
     public void UIClicks() => PlayRandomClip(UISFX);
-    public void VoiceLines() => PlayRandomClip(VoiceLineSFX);
+    public void GojoVL() => PlayRandomClip(Gojo);
     public void Announcer() => PlayRandomClip(AnnouncerSFX);
-    
+    public void SukunaVL() => PlayRandomClip(Sukuna);
+    public void NarutoVL() => PlayRandomClip(Naruto);
+    public void MadaraVL() => PlayRandomClip(Madara);
 
     // For UI sliders
     public void SetMusicVolume(float v)

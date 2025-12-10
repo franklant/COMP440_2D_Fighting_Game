@@ -55,11 +55,11 @@ public class InputReaderScript : MonoBehaviour
         isRight = (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow));
         isDown = (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow));
         isUp = (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow));
-        isKick = Input.GetKeyDown(KeyCode.K);
-        isPunch = Input.GetKeyDown(KeyCode.J);
-        isMeter1 = Input.GetKeyDown(KeyCode.I);
-        isMeter2 = Input.GetKeyDown(KeyCode.O);
-        isMeter3 = Input.GetKeyDown(KeyCode.P);
+        isKick = (Input.GetKeyDown(KeyCode.H)||Input.GetKeyDown(KeyCode.K));
+        isPunch = (Input.GetKeyDown(KeyCode.G)||Input.GetKeyDown(KeyCode.J));
+        isMeter1 = (Input.GetKeyDown(KeyCode.R)||Input.GetKeyDown(KeyCode.I));
+        isMeter2 = (Input.GetKeyDown(KeyCode.T)||Input.GetKeyDown(KeyCode.O));
+        isMeter3 = (Input.GetKeyDown(KeyCode.Y)||Input.GetKeyDown(KeyCode.P));
         bool anyInput = isLeft || isRight || isDown || isUp || isKick || isPunch || isMeter1 || isMeter2 || isMeter3;
 
         if(anyInput) {
