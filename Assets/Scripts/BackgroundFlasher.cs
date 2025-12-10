@@ -10,25 +10,21 @@ public class BackgroundFlasher : MonoBehaviour
     public float fadeSpeed = 2f;
     public float flashDuration = 0.1f;
 
-    private bool showingA = true;
-
     void Start()
     {
-        StartCoroutine(SwapLoop());
+        StartCoroutine(DoSingleSwap());
     }
 
-    IEnumerator SwapLoop()
+    IEnumerator DoSingleSwap()
     {
-        while (true)
-        {
-            yield return new WaitForSeconds(switchDelay);
+        // Wait before starting transition
+        yield return new WaitForSeconds(switchDelay);
 
-            // FLASH EFFECT
-            yield return StartCoroutine(FlashScreen());
+        // FLASH EFFECT
+        yield return StartCoroutine(FlashScreen());
 
-            // FADE SWITCH
-            yield return StartCoroutine(FadeSwap());
-        }
+        // FADE A → B
+        yield return StartCoroutine(FadeToB());
     }
 
     IEnumerator FlashScreen()
@@ -39,12 +35,9 @@ public class BackgroundFlasher : MonoBehaviour
         yield return new WaitForSeconds(flashDuration);
     }
 
-    IEnumerator FadeSwap()
+    IEnumerator FadeToB()
     {
-        SpriteRenderer from = showingA ? bgA : bgB;
-        SpriteRenderer to = showingA ? bgB : bgA;
-
-        to.gameObject.SetActive(true);
+        bgB.gameObject.SetActive(true);
 
         float fade = 0f;
 
@@ -52,13 +45,15 @@ public class BackgroundFlasher : MonoBehaviour
         {
             fade += Time.deltaTime * fadeSpeed;
 
-            from.color = new Color(1, 1, 1, 1 - fade);
-            to.color = new Color(1, 1, 1, fade);
+            bgA.color = new Color(1, 1, 1, 1 - fade);
+            bgB.color = new Color(1, 1, 1, fade);
 
             yield return null;
         }
 
-        from.gameObject.SetActive(false);
-        showingA = !showingA;
+        // Ensure final state is locked
+        bgA.gameObject.SetActive(false);
+        bgA.color = new Color(1,1,1,1);
+        bgB.color = new Color(1,1,1,1);
     }
 }

@@ -5,22 +5,18 @@ using UnityEngine;
 public class FallingObjectBehaviour : MonoBehaviour
 {
     [Header("Initial Drop Stagger")]
-    [Tooltip("Min random delay before object begins falling when play starts")]
     public float minStartDelay = 0f;
-
-    [Tooltip("Max random delay before object begins falling when play starts")]
     public float maxStartDelay = 2f;
 
     [Header("Respawn settings")]
-    public float disappearDelay = 2f;    
-    public float respawnDelay = 3f;      
+    public float disappearDelay = 2f;
+    public float respawnDelay = 3f;
     public float respawnHeightOffset = 6f;
     public bool resetRotationOnRespawn = true;
 
     [Header("Freeze settings")]
     public float freezeDuration = 1.5f;
 
-    // Internals
     private Rigidbody2D rb;
     private Collider2D col;
     private SpriteRenderer sprite;
@@ -39,7 +35,7 @@ public class FallingObjectBehaviour : MonoBehaviour
         initialGravity = rb.gravityScale;
         initialSpawnPosition = transform.position;
 
-        // Freeze gravity at start so we can stagger falling
+        // Pause dropping at start
         rb.gravityScale = 0f;
         rb.linearVelocity = Vector2.zero;
     }
@@ -53,20 +49,14 @@ public class FallingObjectBehaviour : MonoBehaviour
     IEnumerator StartFallAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-
         rb.gravityScale = initialGravity;
         rb.bodyType = initialBodyType;
         rb.constraints = RigidbodyConstraints2D.None;
     }
 
-    public void SetInitialSpawnPosition(Vector3 pos)
-    {
-        initialSpawnPosition = pos;
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Handle hitting the ground
+        // Ground detection
         if (collision.CompareTag("Ground"))
         {
             rb.linearVelocity = Vector2.zero;
@@ -76,14 +66,14 @@ public class FallingObjectBehaviour : MonoBehaviour
             StartCoroutine(HideThenRespawnRoutine());
         }
 
-        // Handle freezing the player
-        if (collision.CompareTag("Player") || collision.CompareTag("opponent"))
+        // ✅ UPDATED PLAYER TAGS
+        if (collision.CompareTag("Player1") || collision.CompareTag("Player2"))
         {
             Rigidbody2D targetRb = collision.GetComponent<Rigidbody2D>();
+
             if (targetRb != null)
                 StartCoroutine(FreezePlayerRoutine(targetRb));
 
-            // Also hide/resapwn the falling object immediately
             StartCoroutine(HideThenRespawnRoutine());
         }
     }
@@ -100,13 +90,11 @@ public class FallingObjectBehaviour : MonoBehaviour
 
         yield return new WaitForSeconds(respawnDelay);
 
-        Vector3 respawnPos = initialSpawnPosition;
-        if (respawnHeightOffset != 0f)
-            respawnPos = new Vector3(
-                initialSpawnPosition.x,
-                initialSpawnPosition.y + Mathf.Abs(respawnHeightOffset),
-                initialSpawnPosition.z
-            );
+        Vector3 respawnPos = new Vector3(
+            initialSpawnPosition.x,
+            initialSpawnPosition.y + Mathf.Abs(respawnHeightOffset),
+            initialSpawnPosition.z
+        );
 
         transform.position = respawnPos;
 
