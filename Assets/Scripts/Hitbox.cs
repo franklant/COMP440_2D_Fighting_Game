@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Categorization;
 
 public class Hitbox : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class Hitbox : MonoBehaviour
     public float stun = 15f;
     public float meterGainOnHit = 10f;
     public float hitStop = 0.2f;
-    public float maxOffset = 0.5f;
+    public float maxOffset = 0.2f;
     private GameFeelManager gameFeel;
     private GameObject dimmerObject;
     private ScreenDimmer screenDimmer;
@@ -18,6 +19,7 @@ public class Hitbox : MonoBehaviour
 
     [Header("HitEffect")]
     public GameObject testHitEffect;
+    public ParticleSystem hitVfx;
 
     [Header("References")]
     public FighterStatsManager myStats; // Reference to YOUR stats (to gain meter)
@@ -56,6 +58,28 @@ public class Hitbox : MonoBehaviour
 
         if (testHitEffect == null)
             Debug.LogError("Hit effect not instantiated.");
+
+        
+        if (CompareTag("Player1"))
+        {
+            enemyTag = "Player2";
+        } 
+        // else
+        // {
+        //     enemyTag = "Player1";
+        // }
+        
+        
+        GameObject[] vfx = GameObject.FindGameObjectsWithTag("Particles");
+        
+        if (CompareTag("Kick"))
+        {
+            hitVfx = vfx[0].GetComponent<ParticleSystem>();
+        } else
+        {
+            hitVfx = vfx[1].GetComponent<ParticleSystem>();
+        }
+        //hitVfx.Play();
     }
 
     IEnumerator FindGameFeel()
@@ -63,6 +87,17 @@ public class Hitbox : MonoBehaviour
         GameObject feelManager = GameObject.FindGameObjectWithTag("GameFeel");
         gameFeel = feelManager.GetComponent<GameFeelManager>();
         yield return new WaitUntil(() => gameFeel != null);
+    }
+
+    void EmitParticle(Vector3 position)
+    {
+        // var emitParams = new ParticleSystem.EmitParams();
+        // emitParams.position = position;
+        // emitParams.startLifetime = 0.2f;
+        hitVfx.gameObject.transform.position = position;
+
+        // hitVfx.Emit(emitParams, 7);
+        hitVfx.Play();
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -78,6 +113,13 @@ public class Hitbox : MonoBehaviour
             else Debug.LogError("Shaker is null");
 
             //if (screenDimmer != null) screenDimmer.TriggerDim(0.1f);
+             // spawn hiteffect
+            Vector3 collisionPoint = collision.ClosestPoint(transform.position);
+            collisionPoint.x += Random.Range(-maxOffset, maxOffset);
+            collisionPoint.y += Random.Range(-maxOffset, maxOffset);
+
+            //Instantiate(testHitEffect, collisionPoint, Quaternion.identity);
+            EmitParticle(collisionPoint);
 
 
             CharacterScript enemyScript = collision.GetComponentInParent<CharacterScript>();
@@ -100,13 +142,6 @@ public class Hitbox : MonoBehaviour
                     myStats.AddHyperMeter(meterGainOnHit);
                 }
 
-                // spawn hiteffect
-                Vector3 collisionPoint = collision.ClosestPoint(transform.position);
-                collisionPoint.x += Random.Range(-maxOffset, maxOffset);
-                collisionPoint.y += Random.Range(-maxOffset, maxOffset);
-
-                Instantiate(testHitEffect, collisionPoint, Quaternion.identity);
-
                 // 6. Trigger Hitstop (Game Feel)
                 // 0.08f is snappy for melee hits
                 gameFeel.HitStop(hitStop); 
@@ -116,6 +151,6 @@ public class Hitbox : MonoBehaviour
                 //     gameFeel.HitStop(0.08f);
                 // }
             }
-        }
+        } 
     }
 }

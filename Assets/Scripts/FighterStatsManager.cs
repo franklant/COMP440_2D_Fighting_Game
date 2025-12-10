@@ -17,7 +17,7 @@ public class FighterStatsManager : MonoBehaviour
 
     [Header("--- Debug View ---")]
     [SerializeField] private float currentHealth;
-    [SerializeField] private float currentHyper;
+    [SerializeField] public float currentHyper;
     [SerializeField] private float currentStun;
     [SerializeField] private int currentComboCount;
     [SerializeField] private bool isDizzied;

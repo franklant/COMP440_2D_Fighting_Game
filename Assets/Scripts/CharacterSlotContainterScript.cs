@@ -1,5 +1,3 @@
-using Mono.Cecil;
-using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
@@ -48,6 +46,10 @@ public class CharacterSlotContainterScript : MonoBehaviour
     /// <summary>
     /// Updates the position of each slot relative to the number of slots in the container and the size of each slot.
     /// </summary>
+    /// global float row to store the current row of slot containers
+    int row = 0;
+    int slotsPerRow = 3;
+    int z = 1;
     void UpdateSlotPositions()
     {
         int slotIndex = 0;          // keep track of the current slot index
@@ -78,12 +80,33 @@ public class CharacterSlotContainterScript : MonoBehaviour
 
             scale = border.transform.localScale;
 
+
+            // start a new row
+            if (slotIndex >= 3)
+            {
+                slotIndex = 0;
+                row += 1;
+                z++;
+                int cardRemainder = currentNumberOfSlots - slotsPerRow;
+
+                if (cardRemainder < slotsPerRow)
+                {
+                    slotsPerRow = cardRemainder;
+                }
+            }
+
             // calculate the relative postition based on the amout of slots in the container
-            float relativeX = ((currentNumberOfSlots - 1) * scale.x) / 2;  
+            float relativeX = ((slotsPerRow - 1) * scale.x) / 2;  
 
             float offsetX = slotIndex * scale.x;
-            Vector3 finalPosition = new Vector3(relativeX - offsetX, transform.position.y, 0);
+            float offsetY = row * scale.y + 0.2f;
+
+            Vector3 finalPosition = new Vector3(relativeX - offsetX, transform.position.y - offsetY, z);
+
             slotScript.SetPosition(finalPosition);
+
+            if (row >= 1)
+                slotScript.UpdateOrderInLayer(row);
 
             // set the slot color as well
             // int colorIndex = Random.Range(0, colors.Length);

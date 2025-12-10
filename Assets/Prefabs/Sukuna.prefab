@@ -1,5 +1,133 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1545759862042196397
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2083242026391935843}
+  - component: {fileID: 2658314796723674077}
+  - component: {fileID: 1710360492546204246}
+  m_Layer: 0
+  m_Name: MeleeDamage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2083242026391935843
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1545759862042196397}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.632, y: -0.112, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5462891436674541687}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2658314796723674077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1545759862042196397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 175ccae3361ab48f8848fdecd5a84f9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MeleeDamage
+  combatScript: {fileID: 2133282213664518858}
+  damage: 10
+  stunDamage: 20
+  knockback: {x: 2, y: 0}
+  hitEffectPrefab: {fileID: 3560096165090776704, guid: 4bf1bbf49963269498581c65182ceb62, type: 3}
+  facingDirection: 1
+--- !u!61 &1710360492546204246
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1545759862042196397}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.13578987, y: -0.09833059}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.72842026, y: 0.42874593}
+  m_EdgeRadius: 0
+--- !u!1 &3608915951730198123
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3223956308767158255}
+  m_Layer: 0
+  m_Name: GroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3223956308767158255
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3608915951730198123}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.955, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5462891436674541687}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4152758078302363907
 GameObject:
   m_ObjectHideFlags: 0
@@ -13,12 +141,13 @@ GameObject:
   - component: {fileID: 2133282213664518858}
   - component: {fileID: 6123892939320419804}
   - component: {fileID: 8133903709479265568}
-  - component: {fileID: 3455416609066975934}
   - component: {fileID: 6126121350952694284}
   - component: {fileID: 3592546534566975358}
+  - component: {fileID: 3154630874218971483}
+  - component: {fileID: 2096764758204867274}
   m_Layer: 0
   m_Name: Sukuna
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35,7 +164,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3223956308767158255}
+  - {fileID: 2083242026391935843}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6660243791380156999
@@ -164,19 +295,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &3455416609066975934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4152758078302363907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45053f56056dc4ead89d5351a65a966c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyDummy
+  m_Constraints: 4
 --- !u!70 &6126121350952694284
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -260,3 +379,60 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.8125, y: 1.875}
   m_EdgeRadius: 0
+--- !u!114 &3154630874218971483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4152758078302363907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94a480b7c1d514fd99dc02e533789126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SukunaMovement
+  rb: {fileID: 8133903709479265568}
+  animator: {fileID: 6123892939320419804}
+  walkSpeed: 3
+  runSpeed: 8
+  jumpForce: 14
+  gravityScale: 2
+  isGrounded: 1
+  isAttacking: 0
+  groundCheck: {fileID: 3223956308767158255}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!114 &2096764758204867274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4152758078302363907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5d0e2d5b6a64350b0f67448895d120, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FighterStatsManager
+  maxHealth: 1000
+  maxHyperMeter: 300
+  maxStun: 100
+  stunRecoveryRate: 15
+  comboResetTime: 2.5
+  scalingFactor: 0.9
+  minScalingCap: 0.2
+  currentHealth: 0
+  currentHyper: 0
+  currentStun: 0
+  currentComboCount: 0
+  isDizzied: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDizzyStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDizzyEnd:
+    m_PersistentCalls:
+      m_Calls: []

@@ -450,6 +450,67 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &936643060
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5222146175530344417, guid: 520fd05e0f43243f589ad3838a935f5d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.78625
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222146175530344417, guid: 520fd05e0f43243f589ad3838a935f5d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.06395
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222146175530344417, guid: 520fd05e0f43243f589ad3838a935f5d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222146175530344417, guid: 520fd05e0f43243f589ad3838a935f5d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222146175530344417, guid: 520fd05e0f43243f589ad3838a935f5d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222146175530344417, guid: 520fd05e0f43243f589ad3838a935f5d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222146175530344417, guid: 520fd05e0f43243f589ad3838a935f5d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222146175530344417, guid: 520fd05e0f43243f589ad3838a935f5d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222146175530344417, guid: 520fd05e0f43243f589ad3838a935f5d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222146175530344417, guid: 520fd05e0f43243f589ad3838a935f5d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6794450771046783715, guid: 520fd05e0f43243f589ad3838a935f5d, type: 3}
+      propertyPath: m_Name
+      value: Satoru Gojo
+      objectReference: {fileID: 0}
+    - target: {fileID: 9104610592755991205, guid: 520fd05e0f43243f589ad3838a935f5d, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 520fd05e0f43243f589ad3838a935f5d, type: 3}
 --- !u!1 &1020324199
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,7 +522,7 @@ GameObject:
   - component: {fileID: 1020324202}
   - component: {fileID: 1020324201}
   - component: {fileID: 1020324200}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -600,6 +661,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2133282213664518858, guid: ce222f6df2a864f10bdd92c2af42cb5a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4152758078302363907, guid: ce222f6df2a864f10bdd92c2af42cb5a, type: 3}
       propertyPath: m_Name
       value: Sukuna
@@ -658,3 +723,4 @@ SceneRoots:
   - {fileID: 4852886485315800907}
   - {fileID: 799099980}
   - {fileID: 1020324202}
+  - {fileID: 936643060}

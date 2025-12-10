@@ -191,6 +191,15 @@ public class CharacterSlotScript : MonoBehaviour
         );  // smooth reset translation
     }
 
+    public void UpdateOrderInLayer(int amount)
+    {
+        SpriteRenderer bgSpriteRenderer = GetBackground().GetComponent<SpriteRenderer>();
+        SpriteRenderer bdSpriteRenderer = GetBorder().GetComponent<SpriteRenderer>();
+
+        bgSpriteRenderer.sortingOrder += 2 + amount;
+        bdSpriteRenderer.sortingOrder += 2 + amount;
+    }
+
     /// <summary>
     /// Returns the character name of the slot. Used for selecting characters.
     /// </summary>
