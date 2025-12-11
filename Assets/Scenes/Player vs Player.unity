@@ -883,11 +883,44 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &1051964927 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4333083615954827163, guid: 606f9b45fa3e94c9091efa6631e31db0, type: 3}
+  m_PrefabInstance: {fileID: 251846881}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!4 &1056474025 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7065591984697312344, guid: 0c9592aec4e87de42b8dc3efabdf5f10, type: 3}
   m_PrefabInstance: {fileID: 193569608570103405}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1095489678 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8592260768321632968, guid: 82d92741af28e4840bbb46beb566764a, type: 3}
+  m_PrefabInstance: {fileID: 1360911283}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df182c411a0224156a4a3d01388bcec6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraShake
+--- !u!114 &1095489679 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2854584147566545458, guid: 82d92741af28e4840bbb46beb566764a, type: 3}
+  m_PrefabInstance: {fileID: 1360911283}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5209f8d9a83747679e84e8c70b13927, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScreenDimmer
 --- !u!1 &1123168955
 GameObject:
   m_ObjectHideFlags: 0
@@ -967,6 +1000,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1204539522 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1913630841293235854, guid: 692769446a1424bfc865de4ffba53a8c, type: 3}
+  m_PrefabInstance: {fileID: 1696133927}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1360911283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -975,6 +1013,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 432347972682032535, guid: 82d92741af28e4840bbb46beb566764a, type: 3}
+      propertyPath: flashPanel
+      value: 
+      objectReference: {fileID: 1051964927}
     - target: {fileID: 6734890864565760707, guid: 82d92741af28e4840bbb46beb566764a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1024,6 +1066,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 82d92741af28e4840bbb46beb566764a, type: 3}
+--- !u!212 &1512469671 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 5146143854480062888, guid: 692769446a1424bfc865de4ffba53a8c, type: 3}
+  m_PrefabInstance: {fileID: 1696133927}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1689845892
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1133,6 +1180,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2236090674555334237, guid: 692769446a1424bfc865de4ffba53a8c, type: 3}
+      propertyPath: bgA
+      value: 
+      objectReference: {fileID: 1204539522}
+    - target: {fileID: 2236090674555334237, guid: 692769446a1424bfc865de4ffba53a8c, type: 3}
+      propertyPath: bgB
+      value: 
+      objectReference: {fileID: 1512469671}
     - target: {fileID: 5542853615763392900, guid: 692769446a1424bfc865de4ffba53a8c, type: 3}
       propertyPath: m_Name
       value: BackgroundController
@@ -1315,9 +1370,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4027494502846121269, guid: 0c9592aec4e87de42b8dc3efabdf5f10, type: 3}
+      propertyPath: camShake
+      value: 
+      objectReference: {fileID: 1095489678}
+    - target: {fileID: 4027494502846121269, guid: 0c9592aec4e87de42b8dc3efabdf5f10, type: 3}
       propertyPath: enemyTarget
       value: 
       objectReference: {fileID: 132875098}
+    - target: {fileID: 4027494502846121269, guid: 0c9592aec4e87de42b8dc3efabdf5f10, type: 3}
+      propertyPath: screenDimmer
+      value: 
+      objectReference: {fileID: 1095489679}
     - target: {fileID: 5167653569243017823, guid: 0c9592aec4e87de42b8dc3efabdf5f10, type: 3}
       propertyPath: m_Name
       value: P1
@@ -1419,6 +1482,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5785745615686873213, guid: eb520132c73388146b6d8a0629b5e4d5, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 9d0bea376dd664259b109eb0d2308b2c, type: 2}
+    - target: {fileID: 8874906292468013181, guid: eb520132c73388146b6d8a0629b5e4d5, type: 3}
+      propertyPath: camShake
+      value: 
+      objectReference: {fileID: 1095489678}
     - target: {fileID: 8874906292468013181, guid: eb520132c73388146b6d8a0629b5e4d5, type: 3}
       propertyPath: firePoint
       value: 
@@ -1427,6 +1498,10 @@ PrefabInstance:
       propertyPath: enemyTarget
       value: 
       objectReference: {fileID: 1833164042}
+    - target: {fileID: 8874906292468013181, guid: eb520132c73388146b6d8a0629b5e4d5, type: 3}
+      propertyPath: screenDimmer
+      value: 
+      objectReference: {fileID: 1095489679}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
