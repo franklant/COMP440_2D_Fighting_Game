@@ -1,0 +1,170 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5967450660462302425
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1397890674622994688, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1397890674622994688, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      propertyPath: m_FlipY
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3024910979309358244, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      propertyPath: camShake
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3024910979309358244, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      propertyPath: isPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3024910979309358244, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      propertyPath: firePoint
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3024910979309358244, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      propertyPath: inputBuffer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3024910979309358244, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      propertyPath: screenDimmer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3024910979309358244, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      propertyPath: inputReaderScript
+      value: 
+      objectReference: {fileID: 8929564224523614546, guid: 9f1e9736aeaf99c49b117e10ae2ab24c, type: 3}
+    - target: {fileID: 6460727995111898062, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      propertyPath: m_Name
+      value: P2 Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 6460727995111898062, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      propertyPath: m_TagString
+      value: Player2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999109291040698590, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      propertyPath: enemyTag
+      value: Player1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7159843630758305163, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7159843630758305163, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 7159843630758305163, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 7159843630758305163, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7159843630758305163, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99954444
+      objectReference: {fileID: 0}
+    - target: {fileID: 7159843630758305163, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7159843630758305163, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.030182552
+      objectReference: {fileID: 0}
+    - target: {fileID: 7159843630758305163, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7159843630758305163, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7159843630758305163, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 3.459
+      objectReference: {fileID: 0}
+    - target: {fileID: 7159843630758305163, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8039309892484355275, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      propertyPath: enemyTag
+      value: Player1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6460727995111898062, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7128262367635381377}
+    - targetCorrespondingSourceObject: {fileID: 6460727995111898062, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6752631233601276716}
+  m_SourcePrefab: {fileID: 100100000, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+--- !u!1 &826895569469730583 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6460727995111898062, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+  m_PrefabInstance: {fileID: 5967450660462302425}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7128262367635381377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826895569469730583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be2fd12e8a8345749827d242345d061b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FighterMovement
+  isPlayer1: 0
+  walkSpeed: 5
+  jumpForce: 8
+  gravity: -25
+  isGrounded: 1
+  isCrouching: 0
+  isBlocking: 0
+  facingRight: 1
+  isMoving: 0
+  rb: {fileID: 4871892000389898468}
+  animator: {fileID: 5785745615686873213}
+--- !u!114 &6752631233601276716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826895569469730583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad3dacf8f9885c042bcb73308d0f1590, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FighterInput
+  isPlayer1: 0
+  isGojo: 1
+  isSukuna: 0
+  isNaruto: 0
+  isMadara: 0
+  isLuffy: 0
+  animator: {fileID: 5785745615686873213}
+--- !u!50 &4871892000389898468 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 1246594623167018045, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+  m_PrefabInstance: {fileID: 5967450660462302425}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5785745615686873213 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 187950764751889572, guid: ffdf93cfe631481428c19df4a44497d0, type: 3}
+  m_PrefabInstance: {fileID: 5967450660462302425}
+  m_PrefabAsset: {fileID: 0}
