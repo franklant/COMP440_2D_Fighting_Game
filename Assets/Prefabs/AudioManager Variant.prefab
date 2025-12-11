@@ -61,6 +61,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: Luffy.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
       propertyPath: UISFX.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -84,6 +88,10 @@ PrefabInstance:
       propertyPath: 'Gojo.Array.data[1]'
       value: 
       objectReference: {fileID: 8300000, guid: 08cacc57ebd44804fb13fdfb7f42f137, type: 3}
+    - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
+      propertyPath: 'Luffy.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 7f2d6c6b1bcf22546a25a501d893fa88, type: 3}
     - target: {fileID: 6414768037355229600, guid: 6bd051f1ac1c45c46b663a01d4fdb80d, type: 3}
       propertyPath: 'UISFX.Array.data[0]'
       value: 
