@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 2083242026391935843}
   - component: {fileID: 2658314796723674077}
   - component: {fileID: 1710360492546204246}
+  - component: {fileID: 5512527944420346770}
   m_Layer: 0
   m_Name: MeleeDamage
   m_TagString: Untagged
@@ -128,6 +129,28 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.72842026, y: 0.42874593}
   m_EdgeRadius: 0
+--- !u!114 &5512527944420346770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1545759862042196397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42d8670191a404badb7d026bb727a6d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Hitbox
+  damage: 50
+  stun: 15
+  meterGainOnHit: 10
+  hitStop: 0.2
+  maxOffset: 0.2
+  enemyTag: Player2
+  testHitEffect: {fileID: 7057478824990846583, guid: ac2341ad4952d8643ba6a72ca41a4aab, type: 3}
+  hitVfx: {fileID: 3156256388958477678, guid: ac2341ad4952d8643ba6a72ca41a4aab, type: 3}
+  myStats: {fileID: 0}
+  isAerial: 0
 --- !u!1 &3608915951730198123
 GameObject:
   m_ObjectHideFlags: 0
@@ -435,10 +458,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32a2cc5782ee84a509d0e03b7f502b93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SukunaCombatController
+  meleeHitbox: {fileID: 1545759862042196397}
   walkSpeed: 3
   runSpeed: 8
   jumpForce: 14
-  gravityScale: 2
   facingRight: 1
   mahoragaPrefab: {fileID: 5054277842723607446, guid: 9f35cc9073126469b9ff7f614753e637, type: 3}
   agitoPrefab: {fileID: 8335640833978000201, guid: 37872aa8915404fe0839d04cae74351a, type: 3}
@@ -446,17 +469,7 @@ MonoBehaviour:
   nuePrefab: {fileID: 0}
   divineDogsPrefab: {fileID: 0}
   maxElephantPrefab: {fileID: 3975683818451529615, guid: 096896c2a5b234599b3f2f39c0714dca, type: 3}
+  spawnPoint: {fileID: 1790993211199338213}
   keyLightAttack: 104
   keyMediumAttack: 110
   keyHeavyAttack: 109
-  keySummonDogs: 117
-  keySummonNue: 105
-  keySummonElephant: 111
-  keySummonBull: 106
-  keySummonAgito: 107
-  keySummonMahoraga: 108
-  groundCheck: {fileID: 3223956308767158255}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  spawnPoint: {fileID: 1790993211199338213}
