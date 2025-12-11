@@ -17,6 +17,7 @@ public class FighterMovement : MonoBehaviour
     public bool isCrouching = false;
     public bool isBlocking = false;
     public bool facingRight = true;
+    public bool isMoving = false;
 
     [Header("References")]
     public Rigidbody2D rb;
@@ -35,6 +36,7 @@ public class FighterMovement : MonoBehaviour
         HandleJump();
         HandleCrouch();
         HandleBlock();
+        UpdateAnimations();
     }
 
     void FixedUpdate()
@@ -89,8 +91,9 @@ public class FighterMovement : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftArrow)) move = -1f;
             if (Input.GetKey(KeyCode.RightArrow)) move = 1f;
         }
-
+        
         velocity.x = move * walkSpeed;
+        if(velocity.x != 0) isMoving = true;
     }
 
     // ---------------------------
@@ -165,6 +168,7 @@ public class FighterMovement : MonoBehaviour
         animator.SetFloat("WalkDirection", walkSpeed);
         animator.SetFloat("Speed", Mathf.Abs(rb.linearVelocity.x));
         animator.SetFloat("VerticalSpeed", rb.linearVelocity.y);
+        animator.SetBool("IsWalking",isMoving);
     }
 }
 
