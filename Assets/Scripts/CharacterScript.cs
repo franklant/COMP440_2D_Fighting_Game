@@ -692,7 +692,7 @@ public class CharacterScript : MonoBehaviour
             // --- ADD HIT/VOICE SOUND ---
             AudioManager.Instance.PlayHit();
             // Optional: 50% chance to play a voice line when hit
-            if (Random.value > 0.5f) AudioManager.Instance.VoiceLines(); 
+            //if (Random.value > 0.5f) AudioManager.Instance.VoiceLines(); 
             
             if (isAerial)
             {

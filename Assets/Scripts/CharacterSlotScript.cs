@@ -22,7 +22,12 @@ public class CharacterSlotScript : MonoBehaviour
     public Vector3 position;
     [Tooltip("Assigned to true or false based on the mouse's position over the slot.")]
     public bool isHovering;
+    public bool playHover;
     public bool isSelected;
+    [Header("Sound")]
+    public AudioSource Audio;
+    public AudioClip SelectSfx;
+    public AudioClip HoverSfx;
     private GameObject characterSlotContainer;
     private CharacterSlotContainterScript containerScript;
     private GameObject myBorder;
@@ -225,6 +230,7 @@ public class CharacterSlotScript : MonoBehaviour
             Debug.LogError(ID.ToString() + " Cannot find Character Container Script!");
 
         // Debug.Log("Set Position: " + position);
+        isSelected = false;
         myBorder = GetBorder();
     }
 
@@ -244,10 +250,25 @@ public class CharacterSlotScript : MonoBehaviour
             ResetBorderBackgroundPosition();
         }
 
-        if (isHovering && Input.GetMouseButton(0))
+        // if (playHover)
+        // {
+        //     HoverSfx.Play();
+        //     playHover = false;
+        // }
+
+        // character is being selected
+        if (isHovering && Input.GetMouseButtonUp(0))
         {
             isSelected = true;
-        } else if (isSelected && !isHovering && Input.GetMouseButton(0))
+
+            // if (HoverSfx.isPlaying)
+            //     HoverSfx.Stop();
+            // if (SelectSfx.isPlaying)
+            //     SelectSfx.Stop();
+            
+            Audio.PlayOneShot(SelectSfx);
+        } 
+        else if (!isHovering && Input.GetMouseButtonUp(0))
         {
             isSelected = false;
         }
@@ -262,6 +283,7 @@ public class CharacterSlotScript : MonoBehaviour
     {
         Debug.Log("Hovering over <color=blue>" + name + "</color> !");
         isHovering = true;
+        Audio.PlayOneShot(HoverSfx);
     }
 
     void OnMouseExit()

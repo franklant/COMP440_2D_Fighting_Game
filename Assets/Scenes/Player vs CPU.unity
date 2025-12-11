@@ -3078,6 +3078,10 @@ PrefabInstance:
       propertyPath: actionCooldown
       value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 7823859556781769502, guid: b34a84d2638e8f64ba17f88fecb99529, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: bd741a59672c54ceca579adbd46490a7, type: 2}
     - target: {fileID: 7923312302345763504, guid: b34a84d2638e8f64ba17f88fecb99529, type: 3}
       propertyPath: m_Name
       value: AIFighter

@@ -30,7 +30,7 @@ public class PlayerFreeze : MonoBehaviour
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
 
-        rb.gameObject.GetComponent<SpriteRenderer>().color = Color.aliceBlue;
+        rb.gameObject.GetComponent<SpriteRenderer>().color = Color.skyBlue;
 
         yield return new WaitForSeconds(freezeDuration);
 

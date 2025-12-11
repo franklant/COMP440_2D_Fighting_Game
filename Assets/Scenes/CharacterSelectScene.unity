@@ -269,7 +269,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: ff9a82a0aa1b14ca6ac006c45be92bd4, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1342,6 +1342,7 @@ MonoBehaviour:
   containterScript: {fileID: 1985167248}
   characterSlots: []
   isReady: 0
+  isButtonHovered: 0
   selectedCharacter: 
 --- !u!4 &1367376760
 Transform:
