@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1215305870374431914}
   - component: {fileID: 5262763371748767877}
   - component: {fileID: 4843571539526651479}
+  - component: {fileID: 7143125230740088753}
   m_Layer: 0
   m_Name: Luffy
   m_TagString: Player1
@@ -109,6 +110,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf3fc3bce7c464d1bb08c9dca7c8c627, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LuffyCombatController
+  myStats: {fileID: 0}
+  isDead: 0
+  isHurt: 0
+  punchHitbox: {fileID: 2314312728540103228}
+  kickHitbox: {fileID: 2314312728540103228}
   moveSpeed: 6
   jumpForce: 12
   facingRight: 1
@@ -131,6 +137,9 @@ MonoBehaviour:
   ID_CROUCH_LOOP: 11
   ID_CROUCH_OUT: 0
   ID_GUARD: 120
+  ID_HURT_GROUND: 5000
+  ID_HURT_AIR: 5010
+  ID_DEATH: 6000
   currentComboA: 
   currentComboB: 
   ID_SPECIAL_I: 1003
@@ -233,6 +242,39 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.3125, y: 2.0625}
   m_EdgeRadius: 0
+--- !u!114 &7143125230740088753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1256006589523825340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5d0e2d5b6a64350b0f67448895d120, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FighterStatsManager
+  maxHealth: 1000
+  maxHyperMeter: 300
+  maxStun: 100
+  stunRecoveryRate: 15
+  comboResetTime: 2.5
+  scalingFactor: 0.9
+  minScalingCap: 0.2
+  currentHealth: 0
+  currentHyper: 0
+  currentStun: 0
+  currentComboCount: 0
+  isDizzied: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDizzyStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDizzyEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2314312728540103228
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,6 +285,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5625853588073999531}
   - component: {fileID: 6050037127431481686}
+  - component: {fileID: 6982761306773292518}
   m_Layer: 0
   m_Name: Hitbox
   m_TagString: Untagged
@@ -311,6 +354,28 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &6982761306773292518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2314312728540103228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42d8670191a404badb7d026bb727a6d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Hitbox
+  damage: 50
+  stun: 15
+  meterGainOnHit: 10
+  hitStop: 0.2
+  maxOffset: 0.2
+  enemyTag: Player2
+  testHitEffect: {fileID: 8635136616524265784, guid: 2c79f23e085f1d44fa6284f072c1440a, type: 3}
+  hitVfx: {fileID: 3156256388958477678, guid: ac2341ad4952d8643ba6a72ca41a4aab, type: 3}
+  myStats: {fileID: 0}
+  isAerial: 0
 --- !u!1 &5435066893676276146
 GameObject:
   m_ObjectHideFlags: 0

@@ -72,32 +72,35 @@ public class Hitbox : MonoBehaviour
         
         GameObject[] vfx = GameObject.FindGameObjectsWithTag("Particles");
         
-        if (CompareTag("Kick"))
+        // Safety check to prevent index out of bounds if particles aren't found
+        if (vfx.Length > 0)
         {
-            hitVfx = vfx[0].GetComponent<ParticleSystem>();
-        } else
-        {
-            hitVfx = vfx[1].GetComponent<ParticleSystem>();
+            if (CompareTag("Kick") && vfx.Length > 0)
+            {
+                hitVfx = vfx[0].GetComponent<ParticleSystem>();
+            } 
+            else if (vfx.Length > 1)
+            {
+                hitVfx = vfx[1].GetComponent<ParticleSystem>();
+            }
         }
-        //hitVfx.Play();
     }
 
     IEnumerator FindGameFeel()
     {
         GameObject feelManager = GameObject.FindGameObjectWithTag("GameFeel");
-        gameFeel = feelManager.GetComponent<GameFeelManager>();
+        if(feelManager != null) 
+            gameFeel = feelManager.GetComponent<GameFeelManager>();
         yield return new WaitUntil(() => gameFeel != null);
     }
 
     void EmitParticle(Vector3 position)
     {
-        // var emitParams = new ParticleSystem.EmitParams();
-        // emitParams.position = position;
-        // emitParams.startLifetime = 0.2f;
-        hitVfx.gameObject.transform.position = position;
-
-        // hitVfx.Emit(emitParams, 7);
-        hitVfx.Play();
+        if (hitVfx != null)
+        {
+            hitVfx.gameObject.transform.position = position;
+            hitVfx.Play();
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -108,48 +111,61 @@ public class Hitbox : MonoBehaviour
         // 2. Check if we hit the correct enemy
         if (collision.CompareTag(enemyTag) || collision.gameObject.name == enemyTag)
         {
+            // --- VFX SECTION ---
             CameraShake shaker = Camera.main.GetComponent<CameraShake>();
             if (shaker != null) StartCoroutine(shaker.Shake(0.4f, 0.05f));
-            else Debug.LogError("Shaker is null");
+            // else Debug.LogError("Shaker is null");
 
-            //if (screenDimmer != null) screenDimmer.TriggerDim(0.1f);
-             // spawn hiteffect
             Vector3 collisionPoint = collision.ClosestPoint(transform.position);
             collisionPoint.x += Random.Range(-maxOffset, maxOffset);
             collisionPoint.y += Random.Range(-maxOffset, maxOffset);
 
-            //Instantiate(testHitEffect, collisionPoint, Quaternion.identity);
             EmitParticle(collisionPoint);
 
+            // --- DAMAGE LOGIC ---
+            bool hitConfirmed = false;
 
+            // CHECK 1: Standard Character Script
             CharacterScript enemyScript = collision.GetComponentInParent<CharacterScript>();
-            // Fallback: Check parent if we hit a child hurtbox
             if (enemyScript == null) enemyScript = collision.GetComponent<CharacterScript>();
 
             if (enemyScript != null)
             {
+                enemyScript.GetHit(damage, stun, isAerial);
+                hitConfirmed = true;
+                Debug.Log("HIT CONFIRMED (Standard): " + collision.name);
+            }
+            // CHECK 2: Luffy Combat Controller (If standard check failed)
+            else 
+            {
+                LuffyCombatController luffyScript = collision.GetComponentInParent<LuffyCombatController>();
+                if (luffyScript == null) luffyScript = collision.GetComponent<LuffyCombatController>();
+
+                if (luffyScript != null)
+                {
+                    luffyScript.GetHit(damage, stun, isAerial);
+                    hitConfirmed = true;
+                    Debug.Log("HIT CONFIRMED (Luffy): " + collision.name);
+                }
+            }
+
+            // --- COMMON SUCCESS LOGIC ---
+            if (hitConfirmed)
+            {
                 // 3. Mark as hit immediately
                 hasHit = true; 
 
-                Debug.Log("HIT CONFIRMED: " + collision.name);
-
-                // 4. Deal Damage & Stun
-                enemyScript.GetHit(damage, stun, isAerial);
-
-                // 5. Reward Meter to Attacker
+                // 4. Reward Meter to Attacker
                 if (myStats != null)
                 {
                     myStats.AddHyperMeter(meterGainOnHit);
                 }
 
-                // 6. Trigger Hitstop (Game Feel)
-                // 0.08f is snappy for melee hits
-                gameFeel.HitStop(hitStop); 
-                //else
-                // {
-                //     Debug.LogWarning("And a little bit of.. SPICE");
-                //     gameFeel.HitStop(0.08f);
-                // }
+                // 5. Trigger Hitstop (Game Feel)
+                if (gameFeel != null)
+                {
+                    gameFeel.HitStop(hitStop);
+                }
             }
         } 
     }

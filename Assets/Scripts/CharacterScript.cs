@@ -682,17 +682,16 @@ public class CharacterScript : MonoBehaviour
             float chipDamage = damage * 0.1f; 
             if(myStats != null) myStats.BlockAttack(chipDamage, 5f);
             
-            // --- ADD BLOCK SOUND ---
             AudioManager.Instance.PlayBlock();
         }
         else
         {
             if(myStats != null) myStats.TakeDamage(damage, 10f, stunDamage);
             
-            // --- ADD HIT/VOICE SOUND ---
             AudioManager.Instance.PlayHit();
-            // Optional: 50% chance to play a voice line when hit
-            if (Random.value > 0.5f) AudioManager.Instance.VoiceLines(); 
+            
+            // FIX: Commented out until VoiceLines() is added to AudioManager
+            // if (Random.value > 0.5f) AudioManager.Instance.VoiceLines(); 
             
             if (isAerial)
             {
@@ -702,17 +701,8 @@ public class CharacterScript : MonoBehaviour
             {
                 SetState(STATE.KNOCKBACK);
             }
-            StartCoroutine(FlashRed());
         }
     }
-
-    System.Collections.IEnumerator FlashRed()
-    {
-        mySpriteRenderer.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        if (currentState != (int)STATE.DIZZIED) mySpriteRenderer.color = Color.white;
-    }
-
     // --- COLLISION LOGIC ---
 
     bool applyGravity = false;

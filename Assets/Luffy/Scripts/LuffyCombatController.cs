@@ -2,6 +2,15 @@ using UnityEngine;
 
 public class LuffyCombatController : MonoBehaviour
 {
+    [Header("--- Integration References ---")]
+    public FighterStatsManager myStats; 
+    public bool isDead = false;
+    public bool isHurt = false;
+
+    [Header("--- Hitboxes ---")]
+    public GameObject punchHitbox; 
+    public GameObject kickHitbox;  
+
     [Header("Movement Settings")]
     public float moveSpeed = 6f;
     public float jumpForce = 12f;
@@ -18,10 +27,10 @@ public class LuffyCombatController : MonoBehaviour
     public KeyCode keyCrouch = KeyCode.S; 
 
     [Header("Effects")]
-    public ChildEffectHandler fxChild; // The reference to your Child Object Script
+    public ChildEffectHandler fxChild; 
 
     // --- CURRENT ACTIVE STATE ---
-    [Header("Active Action IDs (Do not edit)")]
+    [Header("Active Action IDs")]
     public int ID_IDLE;
     public int ID_RUN_FWD;
     public int ID_RUN_BACK;
@@ -33,6 +42,11 @@ public class LuffyCombatController : MonoBehaviour
     public int ID_CROUCH_OUT; 
     public int ID_GUARD;
     
+    // Animation IDs
+    public int ID_HURT_GROUND = 5000; 
+    public int ID_HURT_AIR = 5010;
+    public int ID_DEATH = 5150; 
+
     public int[] currentComboA;
     public int[] currentComboB;
 
@@ -90,16 +104,39 @@ public class LuffyCombatController : MonoBehaviour
     private float lastAttackTime = 0f;
     private float comboTimeout = 1.0f; 
 
+    private float hurtTimer = 0f;
+
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        
+        // Fetch Stats Manager
+        myStats = GetComponent<FighterStatsManager>();
+        if(myStats != null)
+        {
+            myStats.OnDeath.AddListener(HandleDeath);
+        }
+
         SetBaseStats();
         PlayAction(ID_IDLE);
     }
 
     void Update()
     {
+        // --- PRIORITY CHECKS ---
+        if (isDead) 
+        {
+            rb.linearVelocity = Vector2.zero;
+            return; 
+        }
+
+        if (isHurt)
+        {
+            HandleHurtState();
+            return; 
+        }
+
         // 1. TRANSFORMATION
         if (isTransforming)
         {
@@ -140,38 +177,15 @@ public class LuffyCombatController : MonoBehaviour
         {
             if (isGrounded) rb.linearVelocity = Vector2.zero; 
 
-            // Base Form: Grab Logic
-            if (!isGear5 && isGrabbing)
-            {
-                HandleBaseGrab();
-                return;
-            }
+            if (!isGear5 && isGrabbing) { HandleBaseGrab(); return; }
 
-            // Gear 5: O Key Chain
-            if (isGear5 && currentActionID == ID_SPECIAL_O_1 && IsAnimationFinished())
-            {
-                PlayAction(ID_SPECIAL_O_2); 
-                return;
-            }
-            if (isGear5 && currentActionID == ID_SPECIAL_O_2 && IsAnimationFinished())
-            {
-                EndAttack(); 
-                return;
-            }
+            // Gear 5 Chains
+            if (isGear5 && currentActionID == ID_SPECIAL_O_1 && IsAnimationFinished()) { PlayAction(ID_SPECIAL_O_2); return; }
+            if (isGear5 && currentActionID == ID_SPECIAL_O_2 && IsAnimationFinished()) { EndAttack(); return; }
+            if (isGear5 && currentActionID == ID_ULTIMATE_1 && IsAnimationFinished()) { PlayAction(ID_ULTIMATE_2); return; }
+            if (isGear5 && currentActionID == ID_ULTIMATE_2 && IsAnimationFinished()) { EndAttack(); return; }
 
-            // Gear 5: Ultimate Chain
-            if (isGear5 && currentActionID == ID_ULTIMATE_1 && IsAnimationFinished())
-            {
-                PlayAction(ID_ULTIMATE_2); 
-                return;
-            }
-            if (isGear5 && currentActionID == ID_ULTIMATE_2 && IsAnimationFinished())
-            {
-                EndAttack(); 
-                return;
-            }
-
-            // Normal End Logic
+            // Jump/Crouch Attack End
             if ((currentActionID == ID_CROUCH_OUT || currentActionID == ID_JUMP_START) && IsAnimationFinished())
             {
                 if(currentActionID == ID_JUMP_START) {
@@ -192,17 +206,88 @@ public class LuffyCombatController : MonoBehaviour
         // 4. INPUTS
         if (Input.GetKeyDown(keyTransform) && !isGear5)
         {
-            isTransforming = true;
-            PlayAction(G5_TRANSFORM);
+             isTransforming = true;
+             PlayAction(G5_TRANSFORM);
         }
         else if (Input.GetKeyDown(keyComboA)) ExecuteCombo(currentComboA);
         else if (Input.GetKeyDown(keyComboB)) ExecuteCombo(currentComboB);
-        else if (Input.GetKeyDown(keySpecial1)) PerformSpecial(ID_SPECIAL_I);
-        else if (Input.GetKeyDown(keySpecial2)) PerformSpecial(ID_SPECIAL_O_1); 
-        else if (Input.GetKeyDown(keyUltimate)) PerformSpecial(ID_ULTIMATE_1);  
+        
+        // Meter Moves
+        else if (Input.GetKeyDown(keySpecial1)) 
+        {
+            if (myStats != null && myStats.TrySpendMeter(100f)) PerformSpecial(ID_SPECIAL_I);
+        }
+        else if (Input.GetKeyDown(keySpecial2)) 
+        {
+            if (myStats != null && myStats.TrySpendMeter(200f)) PerformSpecial(ID_SPECIAL_O_1); 
+        }
+        else if (Input.GetKeyDown(keyUltimate)) 
+        {
+            if (myStats != null && myStats.TrySpendMeter(300f)) PerformSpecial(ID_ULTIMATE_1);  
+        }
         
         else HandleMovement();
     }
+
+    // =========================================================
+    //               INTEGRATION LOGIC (HIT / DEATH)
+    // =========================================================
+
+    public void GetHit(float damage, float stunDamage, bool isAerial)
+    {
+        if (isDead) return;
+
+        // 1. Take Damage via Stats Manager
+        if (myStats != null)
+        {
+            // FIXED: Now passing all 3 arguments required by your script
+            myStats.TakeDamage(damage, 10f, stunDamage); 
+        }
+
+        // 2. Interrupt Current Actions
+        isAttacking = false;
+        isTransforming = false;
+        isGrabbing = false;
+        isLanding = false;
+        
+        // 3. Set Hurt State
+        isHurt = true;
+        hurtTimer = 0.5f; 
+        
+        // Play Hurt Animation
+        if(isAerial || !isGrounded)
+            PlayAction(ID_HURT_AIR);
+        else
+            PlayAction(ID_HURT_GROUND);
+
+        // Physics Knockback
+        float knockDir = facingRight ? -1f : 1f;
+        rb.linearVelocity = new Vector2(knockDir * 3f, isAerial ? 5f : 0f);
+    }
+
+    void HandleHurtState()
+    {
+        hurtTimer -= Time.deltaTime;
+        if(hurtTimer <= 0)
+        {
+            isHurt = false;
+            PlayAction(ID_IDLE);
+        }
+    }
+
+    void HandleDeath()
+    {
+        isDead = true;
+        isHurt = false;
+        isAttacking = false;
+        PlayAction(ID_DEATH);
+        rb.linearVelocity = Vector2.zero;
+        rb.isKinematic = true; 
+    }
+
+    // =========================================================
+    //               COMBAT & MOVEMENT
+    // =========================================================
 
     void HandleBaseGrab()
     {
@@ -302,7 +387,6 @@ public class LuffyCombatController : MonoBehaviour
             if (x != 0)
             {
                 rb.linearVelocity = new Vector2(x * moveSpeed, rb.linearVelocity.y);
-                // FIGHTING GAME LOGIC:
                 bool movingFwd = (x > 0 && facingRight) || (x < 0 && !facingRight);
                 if (movingFwd) PlayAction(ID_RUN_FWD); else PlayAction(ID_RUN_BACK);
             }
@@ -314,27 +398,51 @@ public class LuffyCombatController : MonoBehaviour
         }
     }
 
+    // =========================================================
+    //               HELPER METHODS
+    // =========================================================
+
     void PlayAction(int id)
     {
-        if (currentActionID == id && !isAttacking) return;
+        if (currentActionID == id && !isAttacking && !isHurt && !isDead) return;
         currentActionID = id;
         animator.Play($"Action_{id}");
 
-        // --- EFFECT TRIGGER LOGIC (UPDATED) ---
-        // Uses TriggerVisualEffect instead of Instantiate
+        // --- AUTOMATIC HITBOX ACTIVATION ---
+        if (id == 200 || id == 205 || id == 210 || id == 2200 || id == 2205 || id == 2220) 
+        {
+            ActivateHitbox(punchHitbox, 50f); 
+        }
+        else if (id == 300 || id == 305 || id == 320 || id == 2300 || id == 2310 || id == 2320)
+        {
+            ActivateHitbox(kickHitbox, 70f); 
+        }
+
         if (id == 210) TriggerVisualEffect(1552, 1.5f, 0.5f);
         else if (id == 211) TriggerVisualEffect(1553, 1.5f, 0.5f);
     }
 
+    void ActivateHitbox(GameObject hitboxObj, float damage)
+    {
+        if (hitboxObj != null)
+        {
+            hitboxObj.SetActive(true); 
+            Hitbox hb = hitboxObj.GetComponent<Hitbox>();
+            if (hb != null) hb.damage = damage;
+            StartCoroutine(DisableHitboxDelay(hitboxObj, 0.2f));
+        }
+    }
+
+    System.Collections.IEnumerator DisableHitboxDelay(GameObject obj, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if(obj.activeInHierarchy) obj.SetActive(false);
+    }
+
     void TriggerVisualEffect(int effectID, float xOffset, float yOffset)
     {
-        // Safety Check
         if (fxChild == null) return;
-
-        // Z is -1 to draw in front of Luffy
         Vector3 offset = new Vector3(xOffset, yOffset, -1f);
-        
-        // Tell the child to wake up and play
         fxChild.PlayEffect(effectID, offset);
     }
 
@@ -356,7 +464,7 @@ public class LuffyCombatController : MonoBehaviour
         {
             isGrounded = true; isAttacking = false; isGrabbing = false;
             comboIndex = 0; isLanding = true; rb.linearVelocity = Vector2.zero; 
-            PlayAction(ID_LAND);
+            if(!isHurt && !isDead) PlayAction(ID_LAND);
         }
         if (!isGear5 && isGrabbing && currentActionID == ID_SPECIAL_O_1 && collision.gameObject.CompareTag("Enemy"))
         {

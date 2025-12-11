@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5712916890831399222}
   - component: {fileID: 8380039870773692769}
   - component: {fileID: 2030271146489398345}
+  - component: {fileID: 8365745471798398788}
   m_Layer: 0
   m_Name: MeleeHitbox
   m_TagString: Untagged
@@ -97,6 +98,28 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.8459855, y: 2.2143986}
   m_EdgeRadius: 0
+--- !u!114 &8365745471798398788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631301536806858085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42d8670191a404badb7d026bb727a6d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Hitbox
+  damage: 50
+  stun: 15
+  meterGainOnHit: 10
+  hitStop: 0.2
+  maxOffset: 0.2
+  enemyTag: Player2
+  testHitEffect: {fileID: 7057478824990846583, guid: ac2341ad4952d8643ba6a72ca41a4aab, type: 3}
+  hitVfx: {fileID: 3156256388958477678, guid: ac2341ad4952d8643ba6a72ca41a4aab, type: 3}
+  myStats: {fileID: 0}
+  isAerial: 0
 --- !u!1 &8335640833978000201
 GameObject:
   m_ObjectHideFlags: 0

@@ -164,8 +164,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MadaraCombat
   animator: {fileID: 3330891369419364236}
   movementScript: {fileID: 8654338231074345468}
-  meleeScript: {fileID: 9110268492141303514}
   bodyCollider: {fileID: 0}
+  hitboxScript: {fileID: 0}
   buttonA: 106
   buttonB: 107
   comboWindow: 1
@@ -175,14 +175,10 @@ MonoBehaviour:
   shadowClonePrefab: {fileID: 8004295836526267375, guid: ca94bc83f6d2544cbbe7cdaeec3e9525, type: 3}
   smokeVFX: {fileID: 0}
   susanooAuraObject: {fileID: 0}
-  susanooAnimator: {fileID: 0}
   susanooDuration: 15
-  susanooWalkSpeed: 4
   normalSize: {x: 1, y: 2}
   susanooSize: {x: 4, y: 6}
-  susanooOffset: {x: 0, y: 3}
   isSusanooActive: 0
-  isCharging: 0
 --- !u!114 &8654338231074345468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,8 +275,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7763876352861498178}
-  - component: {fileID: 9110268492141303514}
   - component: {fileID: 9152584889455145135}
+  - component: {fileID: 6044909069272672364}
   m_Layer: 0
   m_Name: MeleeHitbox_M
   m_TagString: Untagged
@@ -297,30 +293,12 @@ Transform:
   m_GameObject: {fileID: 8826802228970885928}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.05, y: -0.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1419871528222254459}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9110268492141303514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8826802228970885928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 175ccae3361ab48f8848fdecd5a84f9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MeleeDamage
-  combatScript: {fileID: 537168465654461545}
-  damage: 10
-  stunDamage: 20
-  knockback: {x: 2, y: 0}
-  hitEffectPrefab: {fileID: 0}
-  facingDirection: 1
 --- !u!61 &9152584889455145135
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -351,7 +329,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -367,3 +345,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &6044909069272672364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8826802228970885928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42d8670191a404badb7d026bb727a6d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Hitbox
+  damage: 50
+  stun: 15
+  meterGainOnHit: 10
+  hitStop: 0.2
+  maxOffset: 0.2
+  enemyTag: Player2
+  testHitEffect: {fileID: 7057478824990846583, guid: ac2341ad4952d8643ba6a72ca41a4aab, type: 3}
+  hitVfx: {fileID: 3156256388958477678, guid: ac2341ad4952d8643ba6a72ca41a4aab, type: 3}
+  myStats: {fileID: 0}
+  isAerial: 0

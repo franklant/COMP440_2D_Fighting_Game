@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class SpawnCharacterScript : MonoBehaviour
 {
-    [Header("UI Connection")]
-    // DRAG YOUR UI OBJECT (The one with StatsUIHandler) HERE
+    [Header("UI & Managers")]
     public StatsUIHandler statsUIHandler; 
+    // 1. NEW: Reference to the RoundManager
+    public RoundManager roundManager; 
 
     [Header("Characters to Spawn")]
     public GameObject Gojo;
     public GameObject Sukuna;
     public GameObject Naruto;
-    // NEW CHARACTERS
     public GameObject Madara;
     public GameObject Luffy;
 
@@ -19,59 +19,55 @@ public class SpawnCharacterScript : MonoBehaviour
         string selectedCharacter = PlayerPrefs.GetString("selectedCharacter");
         GameObject prefabToSpawn = null;
 
-        // 1. Choose the character
+        // 2. Select Prefab
         if (!string.IsNullOrEmpty(selectedCharacter))
         {
             switch (selectedCharacter)
             {
-                case "Gojo":
-                    prefabToSpawn = Gojo;
-                    break;
-                case "Sukuna":
-                    prefabToSpawn = Sukuna;
-                    break;
-                case "Naruto":
-                    prefabToSpawn = Naruto;
-                    break;
-                // NEW CASES
-                case "Madara":
-                    prefabToSpawn = Madara;
-                    break;
-                case "Luffy":
-                    prefabToSpawn = Luffy;
-                    break;
+                case "Gojo": prefabToSpawn = Gojo; break;
+                case "Sukuna": prefabToSpawn = Sukuna; break;
+                case "Naruto": prefabToSpawn = Naruto; break;
+                case "Madara": prefabToSpawn = Madara; break;
+                case "Luffy": prefabToSpawn = Luffy; break;
                 default:
-                    Debug.LogWarning("Selected character '" + selectedCharacter + "' not found in Spawn list!");
+                    Debug.LogWarning($"Character '{selectedCharacter}' not found in Spawn list!");
                     break;
             }
         }
         else
         {
-            Debug.LogError("Could not find selected character in PlayerPrefs");
+            Debug.LogError("No selected character found in PlayerPrefs.");
             return;
         }
 
-        // 2. Spawn and Connect
+        // 3. Spawn and Connect
         if (prefabToSpawn != null)
         {
             // Spawn the character
             GameObject newCharacter = Instantiate(prefabToSpawn, transform.position, transform.rotation);
+            
+            // IMPORTANT: Force the tag to Player1 so hitboxes know who this is
+            newCharacter.tag = "Player1"; 
 
-            // Find the Stats Manager on the new character
+            // Get the stats component
             FighterStatsManager characterStats = newCharacter.GetComponent<FighterStatsManager>();
 
-            // Debug.LogWarning("Character Stats: " + characterStats);
-            // Debug.LogWarning("statsUIHandler");
-
-            // Connect it to the UI
+            // Connect to Health Bar UI
             if (statsUIHandler != null && characterStats != null)
             {
                 statsUIHandler.SetTarget(characterStats);
-                Debug.Log($"Spawned {selectedCharacter} and connected to UI.");
+            }
+
+            // 4. NEW: Connect to Round Manager
+            if (roundManager != null && characterStats != null)
+            {
+                roundManager.player1 = characterStats;     // Assign the stats
+                roundManager.p1Name = selectedCharacter;   // Assign the name (e.g., "Luffy")
+                Debug.Log($"Assigned {selectedCharacter} to RoundManager Player 1.");
             }
             else
             {
-                Debug.LogWarning("Missing StatsUIHandler ref or FighterStatsManager on character!");
+                Debug.LogWarning("RoundManager not assigned in Inspector!");
             }
         }
     }
