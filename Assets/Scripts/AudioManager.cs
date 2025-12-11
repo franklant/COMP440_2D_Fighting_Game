@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-
+using UnityEngine.SceneManagement;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
@@ -46,6 +46,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip[] Naruto;
     public AudioClip[] Sukuna;
     public AudioClip[] Madara;
+    public AudioClip[] Luffy;
 
     [Header("Pitch Variation")]
     public float minPitch = 0.90f;
@@ -134,6 +135,15 @@ public class AudioManager : MonoBehaviour
     public void SukunaVL() => PlayRandomClip(Sukuna);
     public void NarutoVL() => PlayRandomClip(Naruto);
     public void MadaraVL() => PlayRandomClip(Madara);
+    public void LuffyVL() => PlayRandomClip(Luffy);
+
+    public void VoiceLines()
+    {
+        
+    }
+
+        
+    
 
     // For UI sliders
     public void SetMusicVolume(float v)
@@ -145,6 +155,18 @@ public class AudioManager : MonoBehaviour
     public void SetSFXVolume(float v)
     {
         sfxVolume = v;
+    }
+
+     public void StopMusic()
+    {
+        musicSource.Stop();
+    }
+
+    public void RestartMusic()
+    {
+        musicSource.Stop();
+        musicSource.Play();
+        Announcer();
     }
 }
 

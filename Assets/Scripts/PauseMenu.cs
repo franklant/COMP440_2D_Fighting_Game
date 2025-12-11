@@ -43,6 +43,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         AudioManager.Instance.UIClicks();
+        AudioManager.Instance.RestartMusic();
     }
 
     public void OpenCommandList()
@@ -62,8 +63,9 @@ public class PauseMenu : MonoBehaviour
     public void Quit()
     {
         Time.timeScale = 1f;
-        Application.Quit();
+        SceneManager.LoadScene("GameMenu");
         AudioManager.Instance.UIClicks();
+        AudioManager.Instance.StopMusic();
     }
 }
 

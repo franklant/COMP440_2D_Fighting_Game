@@ -8,6 +8,7 @@ public class FighterInput : MonoBehaviour
     public bool isSukuna = false;
     public bool isNaruto = false;
     public bool isMadara = false;
+    public bool isLuffy = false;
     public Animator animator;
     //public Rigidbody2D myRigidBody;
     // Assign in Inspector or use default keys
@@ -113,10 +114,13 @@ public class FighterInput : MonoBehaviour
         {
             AudioManager.Instance.SukunaVL();
         }
-
         else if (isMadara)
         {
             AudioManager.Instance.MadaraVL();
+        }
+        else if (isLuffy)
+        {
+            AudioManager.Instance.LuffyVL();
         }
     }
 }
