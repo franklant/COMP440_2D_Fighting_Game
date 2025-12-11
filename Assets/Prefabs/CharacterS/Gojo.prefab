@@ -127,7 +127,7 @@ MonoBehaviour:
   meterGainOnHit: 10
   hitStop: 0.09
   maxOffset: 0.5
-  enemyTag: Player1
+  enemyTag: Player2
   testHitEffect: {fileID: 3560096165090776704, guid: 4bf1bbf49963269498581c65182ceb62, type: 3}
   hitVfx: {fileID: 687222731137008926, guid: 2c79f23e085f1d44fa6284f072c1440a, type: 3}
   myStats: {fileID: 0}
@@ -616,7 +616,7 @@ MonoBehaviour:
   meterGainOnHit: 10
   hitStop: 0.09
   maxOffset: 0.5
-  enemyTag: Player1
+  enemyTag: Player2
   testHitEffect: {fileID: 3560096165090776704, guid: 4bf1bbf49963269498581c65182ceb62, type: 3}
   hitVfx: {fileID: 3156256388958477678, guid: ac2341ad4952d8643ba6a72ca41a4aab, type: 3}
   myStats: {fileID: 0}
